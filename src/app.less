@@ -1,0 +1,108 @@
+@import "all";
+// BODY
+body {
+    width: 600px;
+    max-width: 600px;
+    height: 300px;
+    max-height: 300px;
+}
+// NAVBAR
+.navbar-default .navbar-brand {
+    @pointer();
+    color: @black;
+    @font-weight();
+}
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+    color: @yellow;
+}
+.navigation .btn-menu {
+    float: left;
+    margin-top: 8px;
+    margin-left: 10px;
+}
+.navigation .btn-menu:focus, .navigation .btn-menu:hover {
+    color: @yellow;
+    background-color: @white;
+    border-color: @yellow;
+}
+.navigation .progress {
+    float: right;
+    width: 40%;
+    height: 30px;
+    margin: 10px;
+    background-color: darken(@white, 5%);
+}
+.navigation .progress .progress-bar {
+    background-color: @yellow;
+}
+.navigation .navbar {
+    margin-bottom: 0;
+}
+.progress-bar-value {
+    position: absolute;
+    right: 25px;
+    top: 12px;
+    color: @black;
+    font-size: 18px;
+    @font-weight();
+}
+// CONTENT
+.content {
+    padding: 10px;
+}
+.content > .row {
+    padding: 0 10px;
+}
+
+// FOR ALL
+small {
+    color: @smoke;
+}
+
+.nav-pills>li>a {
+    color: @black;
+    @font-weight();
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    background-color: @yellow;
+    color: @black;
+}
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: @yellow;
+}
+.nav-pills>.active>a>.badge, a.list-group-item.active>.badge {
+    color: @black;
+}
+.nav>li>a:focus .badge , .nav>li>a:hover .badge {
+    background-color: @white;
+}
+ul.nav > li, {
+    @pointer();
+}
+
+.badge {
+    color: @black;
+    background-color: @yellow;
+}
+
+#loading-bar .bar {
+    background-color: @yellow;
+}
+
+.btn {
+    @font-weight();
+}
+
+.btn-default.active, .btn-default:active, .btn-default:focus, .btn-default:hover, .open>.dropdown-toggle.btn-default {
+    color: @yellow;
+    border-color: @yellow;
+    background-color: @white;
+}
+
+.dropdown-menu>li>a {
+    @font-weight();
+}
+
+.dropdown-menu>li>a .badge {
+    float: right;
+}

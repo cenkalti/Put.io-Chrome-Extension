@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/video.min.css" />
+    </head>
+    <body ng-app="videoApp" ng-csp>
+
+        <div ng-controller="videoController">
+            <div ng-if="loading" class="whirly"></div>
+            <div class="alert alert-danger" ng-if="!loading && error">{{error.error_message || error}}</div>
+            <div ng-hide="loading" class="videogular-container" ng-if="!error">
+                <video id="video_player" class="video-js vjs-default-skin vjs-macpie-skin">
+                </video>
+                <img ng-src="{{config.images.base_url + config.images.poster_sizes[2] + info.poster}}" class="info" ng-if="!loading && info.poster" />
+                <div class="info title" ng-if="info.type == 'tv'" ng-if="!loading">
+                    <h1>{{info.title}}</h1>
+                    <h1>Season {{info.season | pad}} Episode {{info.episode_number | pad}}</h1>
+                    <h1>{{info.episode_title}}</h1>
+                </div>
+                <div class="info title" ng-if="info.type == 'movie'" ng-if="!loading">
+                    <h1>{{info.title}}</h1>
+                    <p>{{info.overview}}</p>
+                </div>
+                <div class="info vote" ng-if="!loading">
+                    <h2>{{info.episode_vote_average || info.vote_average || 0 | number:1}} / Rating</h2>
+                    <h2>{{info.episode_vote_count || info.vote_count || 0}} / Votes</h2>
+                    <h2>{{info.resolution}} {{info.quality}}</h2>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/bower-video.min.js"></script>
+        <script type="text/javascript" src="js/video.min.js"></script>
+    </body>
+</html>

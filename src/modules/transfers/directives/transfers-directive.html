@@ -1,0 +1,36 @@
+<div class="transfers">
+    <div class="alert alert-warning alert-dismissible" ng-if="transfers.length == 0 && !loading">
+        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+        No Transfers
+    </div>
+    <button class="btn btn-default" ng-click="transfers_clean()" ng-if="transfers.length > 0">Clean Finished</button>
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="transfer in transfers">
+            <div class="transfer-name">{{transfer.name | limitTo:55}}</div>
+            <a href="#files/{{transfer.file_id}}" class="btn btn-success" ng-if="transfer.status == 'COMPLETED'">Go To File</a>
+            <span ng-if="transfer.status != 'COMPLETED'" class="badge" >{{transfer.percent_done}}%</span>
+            <button ng-if="transfer.status != 'COMPLETED'" class="close" ng-click="maybe_cancel_transfer(transfer)"><span>&times;</span></button>
+            <div ng-if="transfer.status != 'COMPLETED'" class="status">{{transfer.status_message}}</div>
+            <div class="footer">
+                <div class="bar" ng-class="{success:transfer.status == 'COMPLETED'}" style="width: {{transfer.percent_done}}%;"></div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="modal fade" id="transfer_cancel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
+                <h4 class="modal-title">Cancel Transfer</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to cancel <span class="label label-danger">{{cancel.name}}</span> ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" ng-click="cancel_transfer(cancel.id)">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

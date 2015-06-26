@@ -1,0 +1,58 @@
+@import "all";
+.transfers .alert {
+    text-align: center;
+}
+.transfers .btn-default {
+    margin-bottom: 10px;
+    float: right;
+}
+.transfers .list-group {
+    float: left;
+    width: 100%;
+}
+.transfers .list-group-item:first-child, .transfers .list-group-item:last-child {
+    border-radius: 0;
+}
+.transfers .list-group-item {
+    margin-bottom: 5px;
+    position: relative;
+    height: 50px;
+    @font-weight();
+    background-color: lighten(@grey, 10%);
+    border: none;
+}
+.transfers .list-group-item .transfer-name {
+    position: absolute;
+    top: 14px;
+}
+.transfers .list-group-item .btn-success {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+}
+.transfers .list-group-item .badge {
+    position: absolute;
+    right: 35px;
+    top: 14px;
+}
+.transfers .list-group-item .status {
+    position: absolute;
+    bottom: 3px;
+    left: 10px;
+    font-size: 10px;
+    font-weight: 200;
+}
+.transfers .list-group-item .footer {
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+.transfers .list-group-item .footer .bar {
+    background-color: @yellow;
+    height: 100%
+}
+.transfers .list-group-item .footer .bar.success {
+    background-color: @green;
+}

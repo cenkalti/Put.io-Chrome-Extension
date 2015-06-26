@@ -1,0 +1,37 @@
+<div class="menu">
+    <ul class="nav nav-pills nav-stacked">
+        <li role="presentation" class="active">
+            <a class="text-center" ng-click="close()">Menu</a>
+        </li>
+        <li role="presentation" ng-class="{active:is_active('/home')}">
+            <a href="#home">
+            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home
+            </a>
+        </li>
+        <li role="presentation" ng-class="{active:is_active('/transfers')}">
+            <a href="#transfers">
+            <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>Transfers <span class="badge pull-right">{{transfers_count}}</span>
+            </a>
+        </li>
+        <li role="presentation" ng-class="{active:is_active('/files')}">
+            <a href="#files">
+            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>Files <span class="badge pull-right">{{files_size | bytes : 0}}</span>
+            </a>
+        </li>
+        <li role="presentation" ng-class="{active:is_active('/library')}">
+            <a href="#library">
+            <span class="glyphicon glyphicon-book" aria-hidden="true"></span>Library
+            </a>
+        </li>
+        <li role="presentation" ng-class="{active:is_active('/friends')}">
+            <a href="#friends">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>Friends <span class="badge pull-right">{{friend_requests}}</span>
+            </a>
+        </li>
+        <li role="presentation" ng-class="{active:is_active('/options')}">
+            <a href="#options">
+            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>Options
+            </a>
+        </li>
+    </ul>
+</div>

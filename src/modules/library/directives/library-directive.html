@@ -1,0 +1,78 @@
+<div class="library">
+    <button class="btn btn-default reset" ng-click="reset()">
+    <span class="show-on-hover">Updated {{library_update | between}}</span>
+    <span class="glyphicon glyphicon-refresh"></span>
+    </button>
+    <div role="tabpanel">
+        <ul class="nav nav-pills">
+            <li class="active">
+                <a data-target="#movies" data-toggle="tab">
+                Movies <span class="badge">{{library.movies | obj_count}}</span>
+                </a>
+            </li>
+            <li>
+                <a data-target="#shows" data-toggle="tab">
+                Shows <span class="badge">{{library.shows | obj_count}}</span>
+                </a>
+            </li>
+            <li>
+                <a data-target="#unkown" data-toggle="tab">
+                Unknown <span class="badge">{{library.unknown | obj_count}}</span>
+                </a>
+            </li>
+        </ul>
+        <div class="spinner" ng-if="loading">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+        </div>
+        <div class="tab-content" ng-if="!loading">
+            <div role="tabpanel" class="tab-pane active" id="movies">
+                <div ng-repeat="info in library.movies" class="movie">
+                    <img ng-src="{{moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + info.poster}}"/>
+                    <div class="info">
+                        <span class="glyphicon glyphicon-play-circle" ng-click="play(info.file_id)"></span>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="shows">
+                <div ng-repeat="(name, show) in library.shows" class="show">
+                    <img ng-src="{{moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + show.poster}}"/>
+                    <div class="info">
+                        <span class="glyphicon glyphicon-play-circle" ng-click="play_show(show.episodes)"></span>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="unkown"> <div class="panel-body">
+                <ul>
+                    <li ng-repeat="info in library.unknown">
+                        <a ng-click="play(info.file_id)">
+                        {{info.file_name}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="play_show">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Play Episode</h4>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li ng-repeat="episode in seleted_show">
+                        <a ng-click="play(episode.file_id)">
+                        Season {{episode.season| pad}} Episode {{episode.episode_number | pad}} : {{episode.episode_title}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

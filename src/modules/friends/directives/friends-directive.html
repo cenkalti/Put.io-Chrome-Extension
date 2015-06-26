@@ -1,0 +1,36 @@
+<div class="friends">
+    <div class="panel panel-warning friend_requests" ng-if="friend_requests">
+        <div class="panel-heading">Friend Requests</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-4" ng-repeat="request in friend_requests">
+                    <div class="thumbnail">
+                        <img ng-src="{{request.avatar_url}}" alt="{{request.name}}" class="img-circle" />
+                        <div class="caption">
+                            <h3 class="text-center">{{request.name}}</h3>
+                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                <a class="btn btn-success" role="button" ng-click="friend_approve(request.name)">
+                                <span class="glyphicon glyphicon-ok"></span>
+                                </a>
+                                <a class="btn btn-danger" role="button" ng-click="friend_deny(request.name)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4" ng-repeat="friend in friends">
+            <div class="thumbnail">
+                <img ng-src="{{friend.avatar_url}}" alt="{{friend.name}}" class="img-circle" />
+                <div class="caption">
+                    <h3 class="text-center">{{friend.name}}</h3>
+                    <button class="btn btn-block btn-default" ng-click="friend_unfriend(friend)">Unfriend</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+@import "all";
+.menu {
+    height: 100%;
+    width: 200px;
+    display: none;
+    position: absolute;
+    background-color: darken(@white, 2%);
+    z-index: 10;
+    left: 0;
+    top: 0;
+    opacity: 0.95;
+    .box-shadow(5px, 0px, 10px);
+    @font-weight();
+    color: @black;
+}
+.menu a {
+    color: @black;
+}
+.menu li:first-child {
+    @pointer();
+}
+.menu .glyphicon {
+    margin-right: 10px;
+}
