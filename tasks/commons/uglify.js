@@ -6,10 +6,10 @@ module.exports = function(grunt) {
             "mangle": false,
             "banner": "/* <%= pkg.short_name %> - <%= pkg.version %> <%= grunt.template.today('dd-mm-yyyy') %> */\n"
         },
-        "putio": {
+        "main": {
             "files": {
-                "build/js/<%= pkg.short_name %>.min.js": ["build/js/<%= pkg.short_name %>.js"],
-                "build/js/bower-<%= pkg.short_name %>.min.js": ["build/js/bower-<%= pkg.short_name %>.js"]
+                "build/js/main.min.js": ["build/js/main.js"],
+                "build/js/bower.min.js": ["build/js/bower.js"]
             }
         },
         "video": {
