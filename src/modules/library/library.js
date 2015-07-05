@@ -5,6 +5,8 @@
         function($scope, putio, Log, moviedb, $filter, library) {
             var log = new Log(module);
 
+            ga('send', 'pageview', '/library');
+
             $scope.library = {
                 "shows": {},
                 "movies": {},
@@ -41,6 +43,8 @@
             };
 
             $scope.play = function(file_id) {
+                ga('send', 'event', 'library', 'play');
+
                 chrome.windows.create({
                     "url": "video.html#?file=" + file_id,
                     "type": "panel"
@@ -50,6 +54,8 @@
             };
 
             $scope.reset = function() {
+                ga('send', 'event', 'library', 'reset');
+
                 $scope.loading = true;
                 $scope.library = {
                     "shows": {},

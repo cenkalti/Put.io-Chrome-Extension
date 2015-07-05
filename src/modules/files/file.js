@@ -19,6 +19,8 @@
         function($scope, $routeParams, $location, $route, $filter, putio) {
             var file_id = $routeParams.file_id;
 
+            ga('send', 'pageview', '/file');
+
             $scope.file = {};
             $scope.loading = true;
             $scope.moveFileId = null;
@@ -48,21 +50,28 @@
             });
 
             $scope.maybe_rename_file = function(name) {
+                ga('send', 'event', 'file', 'maybe_rename_file');
+
                 $("#rename_file").modal("show");
                 $scope.file.name = name;
             };
 
             $scope.rename_file = function() {
-                $("#rename_file").modal("hide");
+                ga('send', 'event', 'file', 'rename_file');
 
+                $("#rename_file").modal("hide");
                 putio.file_rename($scope.file.id, $scope.file.name, function(err, data) {});
             };
 
             $scope.maybe_delete_file = function() {
+                ga('send', 'event', 'file', 'maybe_delete_file');
+
                 $("#delete_file").modal("show");
             };
 
             $scope.delete_file = function(id, parent_id) {
+                ga('send', 'event', 'file', 'delete_file');
+
                 $("#delete_file").modal("hide");
                 putio.files_delete(id, function(err, data) {
                     $scope.$root.$broadcast("refresh_file");
@@ -71,6 +80,8 @@
             };
 
             $scope.download_file = function(id) {
+                ga('send', 'event', 'file', 'download_file');
+
                 var url = putio.download_url(id);
 
                 chrome.downloads.download({
@@ -84,6 +95,8 @@
             };
 
             $scope.play = function(file) {
+                ga('send', 'event', 'file', 'play');
+
                 chrome.windows.create({
                     "url": "video.html#?file=" + file.id,
                     "type": "panel"
@@ -101,13 +114,16 @@
             };
 
             $scope.maybe_move_file = function() {
+                ga('send', 'event', 'file', 'maybe_move_file');
+
                 $scope.moveFileId = $scope.file.id;
                 $(".tree").modal("show");
             };
 
             $scope.move = function(node) {
-                $(".tree").modal("hide");
+                ga('send', 'event', 'file', 'move');
 
+                $(".tree").modal("hide");
                 putio.files_move($scope.moveFileId, node.id, function(err, data) {
                     $location.path("/files/" + node.id);
                 });

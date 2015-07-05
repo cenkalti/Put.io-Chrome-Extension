@@ -6,6 +6,8 @@
             var log = new Log(module),
                 message = new Message();
 
+            ga('send', 'pageview', '/options');
+
             $scope.home_pages = {
                 "home": "Home",
                 "transfers": "Transfers",
@@ -52,6 +54,8 @@
             });
 
             $scope.update_home_page = function() {
+                ga('send', 'event', 'options', 'update_home_page');
+
                 putio.options_get(function(err, options) {
                     options.home_page = $scope.home_page;
                     putio.options_set(options, function() {
@@ -63,6 +67,8 @@
             };
 
             $scope.update_notification = function() {
+                ga('send', 'event', 'options', 'update_notification');
+
                 putio.options_get(function(err, options) {
                     options.notification = $scope.notification;
 
@@ -82,12 +88,15 @@
             };
 
             $scope.maybe_update_default_folder = function(id) {
+                ga('send', 'event', 'options', 'maybe_update_default_folder');
+
                 $(".tree").modal("show");
             };
 
             $scope.update_default_folder = function(node) {
-                $(".tree").modal("hide");
+                ga('send', 'event', 'options', 'update_default_folder');
 
+                $(".tree").modal("hide");
                 putio.account_set_settings({
                     "default_download_folder": node.id
                 }, function(err, data) {
@@ -110,12 +119,16 @@
             };
 
             $scope.reset_auth = function() {
+                ga('send', 'event', 'options', 'reset_auth');
+
                 putio.auth_reset(function() {
                     window.close();
                 });
             };
 
             $scope.reset_app = function() {
+                ga('send', 'event', 'options', 'reset_app');
+
                 putio.reset_app(function() {
                     chrome.windows.create({
                         "url": "https://put.io/user/api/apps",

@@ -3,12 +3,10 @@ module.exports = function(grunt) {
 
     grunt.config.set("jshint", {
         "before_concat": [
-            "src/**.js"
+            "src/**.js",
+            "!src/tracker.js"
         ],
         "after_concat": [
-            "build/js/main.js",
-            "build/js/background.js",
-            "build/js/video.js"
         ]
     });
 };

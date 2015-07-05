@@ -13,6 +13,8 @@
             var parent_id = $routeParams.parent_id || 0,
                 $files = $(".files");
 
+            ga('send', 'pageview', '/files');
+
             $scope.files = [];
             $scope.selected_files = [];
             $scope.loading = true;
@@ -53,6 +55,8 @@
             };
 
             $scope.set_order = function(order, reverse) {
+                ga('send', 'event', 'files', 'order');
+
                 if ($scope.order === order) {
                     $scope.order_reverse = !$scope.order_reverse;
                 } else {
@@ -62,6 +66,8 @@
             };
 
             $scope.toggle_select = function(file_id) {
+                ga('send', 'event', 'files', 'select');
+
                 var $checkAll = $(".check-all", $files),
                     idx = $scope.selected_files.indexOf(file_id);
 
@@ -85,6 +91,8 @@
             };
 
             $scope.toggle_select_all = function() {
+                ga('send', 'event', 'files', 'select_all');
+
                 var $checkAll = $(".check-all", $files),
                     $checks = $(".check", $files);
 
@@ -102,6 +110,8 @@
             };
 
             $scope.maybe_rename_folder = function(id, name) {
+                ga('send', 'event', 'files', 'maybe_rename_folder');
+
                 $scope.folder = {};
                 $("#rename_folder").modal("show");
                 $scope.folder.name = name;
@@ -109,30 +119,36 @@
             };
 
             $scope.rename_folder = function() {
-                $("#rename_folder").modal("hide");
+                ga('send', 'event', 'files', 'rename_folder');
 
+                $("#rename_folder").modal("hide");
                 putio.file_rename($scope.folder.id, $scope.folder.name, function(err, data) {
                     $route.reload();
                 });
             };
 
             $scope.maybe_create_folder = function(parent_id) {
+                ga('send', 'event', 'files', 'maybe_create_folder');
+
                 $("#create_folder").modal("show");
                 $scope.folder = {};
                 $scope.folder.parent_id = parent_id;
             };
 
             $scope.create_folder = function() {
+                ga('send', 'event', 'files', 'create_folder');
+
                 var folder = $scope.folder;
 
                 $("#create_folder").modal("hide");
-
                 putio.folder_create(folder.name, folder.parent_id, function(err, data) {
                     $route.reload();
                 });
             };
 
             $scope.maybe_delete_folders = function() {
+                ga('send', 'event', 'files', 'maybe_delete_folders');
+
                 $scope.folder = {};
                 $("#delete_folders").modal("show");
                 $scope.folder.id = $scope.selected_files;
@@ -140,6 +156,8 @@
             };
 
             $scope.delete_folders = function(id) {
+                ga('send', 'event', 'files', 'delete_folders');
+
                 $("#delete_folders").modal("hide");
                 putio.files_delete(id, function(err, data) {
                     $scope.$root.$broadcast("refresh_file");
@@ -148,6 +166,8 @@
             };
 
             $scope.download_folders = function() {
+                ga('send', 'event', 'files', 'download_folders');
+
                 var url = putio.download_url($scope.selected_files);
 
                 chrome.downloads.download({
@@ -171,13 +191,16 @@
             };
 
             $scope.maybe_move_folders = function() {
+                ga('send', 'event', 'files', 'maybe_move_folders');
+
                 $scope.moveFileId = $scope.selected_files;
                 $(".tree").modal("show");
             };
 
             $scope.move = function(node) {
-                $(".tree").modal("hide");
+                ga('send', 'event', 'files', 'move');
 
+                $(".tree").modal("hide");
                 putio.files_move($scope.moveFileId, node.id, function(err, data) {
                     $location.path("/files/" + node.id);
                 });

@@ -9,6 +9,7 @@ module.exports = function(grunt) {
         "main": {
             "files": {
                 "build/js/main.js": [
+                    "src/tracker.js",
                     "src/config.js",
                     "src/filters/*.js",
                     "src/factories/*.js",
@@ -23,6 +24,7 @@ module.exports = function(grunt) {
         "background": {
             "files": {
                 "build/js/background.js": [
+                    "src/tracker.js",
                     "src/config.js",
                     "src/filters/*.js",
                     "src/factories/*.js",
@@ -34,6 +36,7 @@ module.exports = function(grunt) {
         "video": {
             "files": {
                 "build/js/video.js": [
+                    "src/tracker.js",
                     "src/config.js",
                     "src/filters/*.js",
                     "src/factories/*.js",

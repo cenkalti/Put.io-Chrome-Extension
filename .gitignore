@@ -6,6 +6,7 @@ packages/
 build/
 tmp/
 src/config.js
+src/tracker.js
 
 # Compiled source #
 ###################

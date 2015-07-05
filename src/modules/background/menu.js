@@ -38,6 +38,9 @@
                 });
 
                 function on_click(info, tab) {
+
+                    ga('send', 'send', 'background', 'add_transfer');
+
                     var options = {
                         "type": "basic",
                         "iconUrl": "img/icon48.png",

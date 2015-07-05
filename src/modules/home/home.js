@@ -4,6 +4,8 @@
     module.controller('homeController', ['$scope', '$location', 'putio',
         function($scope, $location, putio) {
 
+            ga('send', 'pageview', '/home');
+
             $scope.today_events = [];
             $scope.week_events = [];
             $scope.month_events = [];
@@ -18,7 +20,6 @@
                 for (var i in events) {
                     var ev = events[i],
                         d = moment(ev.created_at);
-
 
                     if (d.isAfter(day)) {
                         $scope.today_events.push(ev);
