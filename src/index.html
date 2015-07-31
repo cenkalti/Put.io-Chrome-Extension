@@ -24,6 +24,7 @@
                 </nav>
             </div>
             <div class="row content" ng-view ></div>
+            <div ng-joy-ride="joyride.start" config="joyride.config" on-finish="joyride.finish()" on-skip="joyride.skip()"></div>
         </div>
 
         <menu></menu>

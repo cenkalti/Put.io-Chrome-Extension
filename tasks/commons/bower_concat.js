@@ -14,7 +14,8 @@ module.exports = function(grunt) {
                 "angular-loading-bar": "angular",
                 "bootstrap": "jquery",
                 "angular-xeditable": "angular",
-                "angular-tree-control": "angular"
+                "angular-tree-control": "angular",
+                "ng-joyride": ["angular", "jquery", "bootstrap"]
             },
             "bowerOptions": {
                 "relative": false
@@ -27,7 +28,8 @@ module.exports = function(grunt) {
                 "angular-loading-bar",
                 "angular-xeditable",
                 "angular-tree-control",
-                "video.js"
+                "video.js",
+                "ng-joyride"
             ],
             "dependencies": {
                 "angular": "jquery",
@@ -43,7 +45,8 @@ module.exports = function(grunt) {
                 "bootstrap",
                 "angular-loading-bar",
                 "angular-xeditable",
-                "angular-tree-control"
+                "angular-tree-control",
+                "ng-joyride"
             ],
             "dependencies": {
                 "angular": "jquery",

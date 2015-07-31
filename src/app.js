@@ -14,9 +14,12 @@
                 'optionsModule',
                 'friendsModule',
                 'libraryModule',
-                'menuModule'
+                'menuModule',
+                'ngJoyRide',
+                'configModule',
+                'joyrideModule'
             ]
-    );
+        );
 
     module.config(['$routeProvider', 'cfpLoadingBarProvider',
 
@@ -122,12 +125,26 @@
         }
     ]);
 
-    module.controller('putioController', ['$scope', '$location', '$route', 'putio',
-        function($scope, $location, $route, putio) {
+    module.controller('putioController', ['$scope', '$location', '$route', 'putio', 'JOYRIDE_CONFIG',
+        function($scope, $location, $route, putio, JOYRIDE_CONFIG) {
             var logged = false;
 
             $scope.title = "";
             $scope.disk = {};
+
+            // JOYRIDE STUFF
+            $scope.joyride = {
+                start: false,
+                config: JOYRIDE_CONFIG,
+                finish: function() {
+                    ga('send', 'event', 'demo', 'finish');
+                    demo_seen();
+                },
+                skip: function() {
+                    ga('send', 'event', 'demo', 'skipped');
+                    demo_seen();
+                }
+            };
 
             $scope.reload = function() {
                 $route.reload();
@@ -158,9 +175,20 @@
                 if (options.home_page) {
                     $location.path(options.home_page);
                 }
+
+                if (!options.demo) {
+                    $scope.joyride.start = true;
+                }
             });
 
             // FUNCTIONS
+            function demo_seen() {
+                $location.path('/home');
+                putio.options_get(function(err, options) {
+                    options.demo = true;
+                    putio.options_set(options, function() {});
+                });
+            }
 
             function refresh_file() {
                 if (logged) {

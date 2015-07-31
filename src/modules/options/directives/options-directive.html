@@ -12,15 +12,22 @@
         <div class="form-group">
             <label for="inputEmail3" class="col-xs-offset-1 col-xs-3 control-label">Notifications</label>
             <div class="col-xs-7">
-                <input type="checkbox" ng-model="notification" ng-change="update_notification()"/>
+                <input type="checkbox" class="notif-en" ng-model="notification" ng-change="update_notification()"/>
                 <span class="help-block">Enable/Disable transfer notifications</span>
             </div>
         </div>
         <div class="form-group">
             <label for="inputEmail3" class="col-xs-offset-1 col-xs-3 control-label">Default folder</label>
             <div class="col-xs-7">
-                <button class="btn btn-default" ng-click="maybe_update_default_folder(default_folder.id)">{{default_folder.name | limitTo : 25}}</button>
+                <button class="btn btn-default default-folder" ng-click="maybe_update_default_folder(default_folder.id)">{{default_folder.name | limitTo : 25}}</button>
                 <span class="help-block">Default download folder</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail3" class="col-xs-offset-1 col-xs-3 control-label">Hide Demo</label>
+            <div class="col-xs-7">
+                <input type="checkbox" ng-model="demo" ng-change="update_demo()"/>
+                <span class="help-block">Hide/Show startup demo</span>
             </div>
         </div>
         <div class="form-group">

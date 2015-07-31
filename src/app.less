@@ -6,25 +6,30 @@ body {
     height: 300px;
     max-height: 300px;
 }
+
 // NAVBAR
 .navbar-default .navbar-brand {
     @pointer();
     color: @black;
     @font-weight();
 }
+
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
     color: @yellow;
 }
+
 .navigation .btn-menu {
     float: left;
     margin-top: 8px;
     margin-left: 10px;
 }
+
 .navigation .btn-menu:focus, .navigation .btn-menu:hover {
     color: @yellow;
     background-color: @white;
     border-color: @yellow;
 }
+
 .navigation .progress {
     float: right;
     width: 40%;
@@ -32,12 +37,15 @@ body {
     margin: 10px;
     background-color: darken(@white, 5%);
 }
+
 .navigation .progress .progress-bar {
     background-color: @yellow;
 }
+
 .navigation .navbar {
     margin-bottom: 0;
 }
+
 .progress-bar-value {
     position: absolute;
     right: 25px;
@@ -46,12 +54,69 @@ body {
     font-size: 18px;
     @font-weight();
 }
+
 // CONTENT
 .content {
     padding: 10px;
 }
+
 .content > .row {
     padding: 0 10px;
+}
+
+// JOYRIDE
+.ng-joyride-title {
+    margin: 0;
+    top: 30%;
+    left: 10%;
+    width: 80%
+}
+
+.ng-joyride.popover {
+    border: none;
+    padding: 0;
+}
+
+.ng-joyride hr {
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+
+.ng-joyride .popover-title {
+    color: @black;
+    background: @yellow;
+    @font-weight();
+}
+
+.ng-joyride-title .skip-class {
+    padding-top: 0;
+}
+
+.ng-joyride-title .skipBtn {
+    margin-top: 10px;
+    color: @yellow;
+    @pointer();
+}
+
+.popover .skipBtn {
+    color: @yellow;
+    @pointer();
+}
+
+.skipBtn:focus, .skipBtn:hover {
+    text-decoration: none;
+}
+
+.ng-joyride .nextBtn, .ng-joyride .prevBtn {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.ng-joyride .nextBtn.active, .ng-joyride .nextBtn:active, .ng-joyride .nextBtn:focus, .ng-joyride .nextBtn:hover, .ng-joyride .prevBtn.active, .ng-joyride .prevBtn:active, .ng-joyride .prevBtn:focus, .ng-joyride .prevBtn:hover {
+    color: @yellow;
+    border-color: @yellow;
+    background-color: @white;
 }
 
 // FOR ALL
@@ -63,19 +128,24 @@ small {
     color: @black;
     @font-weight();
 }
+
 .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
     background-color: @yellow;
     color: @black;
 }
+
 .nav>li>a:focus, .nav>li>a:hover {
     background-color: @yellow;
 }
+
 .nav-pills>.active>a>.badge, a.list-group-item.active>.badge {
     color: @black;
 }
-.nav>li>a:focus .badge , .nav>li>a:hover .badge {
+
+.nav>li>a:focus .badge, .nav>li>a:hover .badge {
     background-color: @white;
 }
+
 ul.nav > li, {
     @pointer();
 }

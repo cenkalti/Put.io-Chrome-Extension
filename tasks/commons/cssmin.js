@@ -29,7 +29,8 @@ module.exports = function(grunt) {
                     "bower_components/angular-xeditable/dist/css/xeditable.css",
                     "bower_components/angular-loading-bar/src/loading-bar.css",
                     "bower_components/angular-tree-control/css/tree-control.css",
-                    "bower_components/angular-tree-control/css/tree-control-attribute.css"
+                    "bower_components/angular-tree-control/css/tree-control-attribute.css",
+                    "bower_components/ng-joyride/ng-joyride.css"
                 ]
             }
         }
