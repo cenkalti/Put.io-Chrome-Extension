@@ -1,7 +1,8 @@
 <div class="library">
     <button class="btn btn-default reset" ng-click="reset()">
-    <span class="show-on-hover">Updated {{library_update | between}}</span>
-    <span class="glyphicon glyphicon-refresh"></span>
+        <span ng-if="!loading" class="show-on-hover">Updated {{library_update | between}}</span>
+        <span ng-if="loading" class="show-on-hover">Refreshing</span>
+        <span class="glyphicon glyphicon-refresh"></span>
     </button>
     <div role="tabpanel">
         <ul class="nav nav-pills">
@@ -21,29 +22,6 @@
                 </a>
             </li>
         </ul>
-        <div class="progresses" ng-if="loading">
-            <div class="panel panel-default" ng-if="process.putio">
-                <div class="panel-heading">Searching videos in put.io</div>
-                <div class="panel-body">
-                    <div class="progress">
-                        <div class="progress-bar" ng-class="get_class(process.putio)" role="progressbar" aria-valuenow="{{process.putio | number:2}}" aria-valuemin="0" aria-valuemax="100" style="width: {{process.putio | number:2}}%">
-                            {{process.putio | number:2}}%
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default" ng-if="process.moviedb">
-                <div class="panel-heading">Searching for metadata</div>
-                <div class="panel-body">
-                    <div class="progress">
-                        <div class="progress-bar"  ng-class="get_class(process.moviedb)" role="progressbar" aria-valuenow="{{process.moviedb | number:2}}" aria-valuemin="0" aria-valuemax="100" style="width: {{process.moviedb | number:2}}%">
-                            {{process.moviedb | number:2}}%
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
         <div class="tab-content" ng-if="!loading">
             <div role="tabpanel" class="tab-pane active" id="movies">
                 <div ng-repeat="info in library.movies" class="movie">
@@ -69,6 +47,30 @@
                         </a>
                     </li>
                 </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade reset-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{process.putio == 100 ? 'Searching for metadata' : 'Searching for files'}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="progresses">
+                    <div class="progress" ng-show="process.moviedb == 0">
+                        <div class="progress-bar" ng-class="get_class(process.putio)" role="progressbar" aria-valuenow="{{process.putio | number:2}}" aria-valuemin="0" aria-valuemax="100" style="width: {{process.putio | number:2}}%">
+                            {{process.putio | number:2}}%
+                        </div>
+                    </div>
+                    <div class="progress" ng-show="process.putio == 100">
+                        <div class="progress-bar"  ng-class="get_class(process.moviedb)" role="progressbar" aria-valuenow="{{process.moviedb | number:2}}" aria-valuemin="0" aria-valuemax="100" style="width: {{process.moviedb | number:2}}%">
+                            {{process.moviedb | number:2}}%
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

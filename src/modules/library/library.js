@@ -4,7 +4,8 @@
     module.controller('libraryController', ['$scope', 'putio', 'log', 'moviedb', '$filter', 'library',
         function($scope, putio, Log, moviedb, $filter, Library) {
             var log = new Log(module),
-                library = new Library();
+                library = new Library(),
+                $resetModal = $('.reset-modal');
 
             ga('send', 'pageview', '/library');
 
@@ -27,11 +28,53 @@
             });
 
             $scope.get_class = function(data) {
-                if(data < 50) return 'progress-bar-danger';
-                if(data < 80) return 'progress-bar-warning';
-                if(data < 100) return 'progress-bar-info';
+                if (data < 50) return 'progress-bar-danger';
+                if (data < 80) return 'progress-bar-warning';
+                if (data < 100) return 'progress-bar-info';
 
                 return 'progress-bar-success';
+            };
+
+            $scope.reset = function() {
+                $resetModal.modal('show');
+
+                if (!$scope.loading) {
+                    ga('send', 'event', 'library', 'reset');
+
+                    $scope.loading = true;
+                    $scope.library = {
+                        "shows": {},
+                        "movies": {},
+                        "unknown": {}
+                    };
+
+                    var inter = setInterval(function() {
+                        $scope.$apply(function() {
+                            $scope.process = library.process;
+                        });
+                    }, 500);
+
+                    library.reset(0, function(videos) {
+                        clearInterval(inter);
+
+                        $scope.process = library.process;
+
+                        add_to_lib(videos, function() {
+                            $scope.$apply(function() {
+                                $scope.loading = false;
+                            });
+                            $scope.get_library_update();
+                        });
+                    });
+                }
+            };
+
+            $scope.get_library_update = function() {
+                library.local.get_update(function(data) {
+                    $scope.$apply(function() {
+                        $scope.library_update = data;
+                    });
+                });
             };
 
             $scope.play_show = function(episodes) {
@@ -47,44 +90,6 @@
                     "type": "panel"
                 }, function(new_window) {
                     $("#play_show").modal("hide");
-                });
-            };
-
-            $scope.reset = function() {
-                ga('send', 'event', 'library', 'reset');
-
-                $scope.loading = true;
-                $scope.library = {
-                    "shows": {},
-                    "movies": {},
-                    "unknown": {}
-                };
-
-                var inter = setInterval(function() {
-                    $scope.$apply(function() {
-                        $scope.process = library.process;
-                    });
-                }, 500);
-
-                library.reset(0, function(videos) {
-                    clearInterval(inter);
-
-                    $scope.process = library.process;
-
-                    add_to_lib(videos, function() {
-                        $scope.$apply(function() {
-                            $scope.loading = false;
-                        });
-                        $scope.get_library_update();
-                    });
-                });
-            };
-
-            $scope.get_library_update = function() {
-                library.local.get_update(function(data) {
-                    $scope.$apply(function() {
-                        $scope.library_update = data;
-                    });
                 });
             };
 
