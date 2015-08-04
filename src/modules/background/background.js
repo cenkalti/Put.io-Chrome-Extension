@@ -5,7 +5,8 @@
             'badgeService',
             'menuService',
             'transfersCheckService',
-            'messageFactory'
+            'messageFactory',
+            'libraryFactory'
         ],
         module = angular.module('BackgroundApp', deps);
 
@@ -16,7 +17,8 @@
         'badge',
         'menu',
         'transfersCheck',
-        function(Log, Message, putio, badge, menu, transfersCheck) {
+        'library',
+        function(Log, Message, putio, badge, menu, transfersCheck, Library) {
             var log = new Log(module),
                 message = new Message();
 

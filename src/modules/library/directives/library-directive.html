@@ -21,12 +21,28 @@
                 </a>
             </li>
         </ul>
-        <div class="spinner" ng-if="loading">
-            <div class="rect1"></div>
-            <div class="rect2"></div>
-            <div class="rect3"></div>
-            <div class="rect4"></div>
-            <div class="rect5"></div>
+        <div class="progresses" ng-if="loading">
+            <div class="panel panel-default" ng-if="process.putio">
+                <div class="panel-heading">Searching videos in put.io</div>
+                <div class="panel-body">
+                    <div class="progress">
+                        <div class="progress-bar" ng-class="get_class(process.putio)" role="progressbar" aria-valuenow="{{process.putio | number:2}}" aria-valuemin="0" aria-valuemax="100" style="width: {{process.putio | number:2}}%">
+                            {{process.putio | number:2}}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" ng-if="process.moviedb">
+                <div class="panel-heading">Searching for metadata</div>
+                <div class="panel-body">
+                    <div class="progress">
+                        <div class="progress-bar"  ng-class="get_class(process.moviedb)" role="progressbar" aria-valuenow="{{process.moviedb | number:2}}" aria-valuemin="0" aria-valuemax="100" style="width: {{process.moviedb | number:2}}%">
+                            {{process.moviedb | number:2}}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="tab-content" ng-if="!loading">
             <div role="tabpanel" class="tab-pane active" id="movies">

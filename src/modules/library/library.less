@@ -1,37 +1,54 @@
 @import "all";
+.library .progresses .panel {
+    margin-top: 20px
+}
+
+.library .progresses .progress {
+    margin-bottom: 0px
+}
+
 .library .reset {
     position: absolute;
     right: 10px;
 }
+
 .library .reset:hover .show-on-hover {
     display: inline-block;
 }
-.library .reset .show-on-hover{
+
+.library .reset .show-on-hover {
     display: none;
 }
+
 .library .reset:hover .glyphicon {
     display: none;
 }
+
 .library .reset .glyphicon {
     display: inline-block;
 }
+
 .library img {
     border-radius: 20px;
 }
+
 .library .movie {
     float: left;
     margin: 10px;
     position: relative;
 }
+
 .library .show {
     float: left;
     margin: 10px;
     position: relative;
 }
+
 .library .show .info select {
     width: 90%;
     margin-left: 5%;
 }
+
 .library .info {
     position: absolute;
     width: 100%;
@@ -45,6 +62,7 @@
     border-radius: 20px;
     font-size: 300%;
 }
+
 .library .info .glyphicon-play-circle {
     @pointer();
     color: @yellow;
@@ -52,12 +70,15 @@
     top: 38%;
     left: 37%;
 }
+
 .library .movie:hover .info {
     opacity: 0.5;
 }
+
 .library .show:hover .info {
     opacity: 0.5;
 }
+
 #play_show .modal-body {
     min-height: 60px;
     max-height: 200px;

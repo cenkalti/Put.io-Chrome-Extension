@@ -1,5 +1,5 @@
 (function() {
-    var module = angular.module('videoApp', ['putioService', 'moviedbService', 'logFactory', 'stringFilter', 'libraryService']);
+    var module = angular.module('videoApp', ['putioService', 'moviedbService', 'logFactory', 'stringFilter']);
 
     module.config([
         '$compileProvider',
@@ -10,8 +10,8 @@
         }
     ]);
 
-    module.controller('videoController', ['$scope', '$location', 'putio', 'moviedb', 'log', '$filter', 'library',
-        function($scope, $location, putio, moviedb, Log, $filter, library) {
+    module.controller('videoController', ['$scope', '$location', 'putio', 'moviedb', 'log', '$filter',
+        function($scope, $location, putio, moviedb, Log, $filter) {
             var params = $location.search(),
                 log = new Log(module);
 
@@ -45,7 +45,6 @@
                     },
                     function(err, results) {
                         if (err) {
-                            maybe_remove_from_library(err, params.file);
                             $scope.loading = false;
                             $scope.error = err;
                         } else {
@@ -138,19 +137,6 @@
 
                     $("#video_player_html5_api")
                         .append('<track kind="subtitles" src="' + src + '" srclang="en" label="' + language + '">');
-                }
-            }
-
-            function maybe_remove_from_library(err, file) {
-                if (err.status_code === 404) {
-                    library.local.get(function(data) {
-                        if (data[file]) {
-                            delete data[file];
-                            library.local.set(data, function() {});
-                        }
-                    });
-                } else {
-                    log.warning("ignoring unknown error");
                 }
             }
         }

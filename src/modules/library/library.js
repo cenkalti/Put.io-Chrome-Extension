@@ -1,9 +1,10 @@
 (function() {
-    var module = angular.module('libraryModule', ['logFactory', 'moviedbService', 'objectFilter', 'stringFilter', 'datesFilter', 'libraryService']);
+    var module = angular.module('libraryModule', ['logFactory', 'moviedbService', 'objectFilter', 'stringFilter', 'datesFilter', 'libraryFactory']);
 
     module.controller('libraryController', ['$scope', 'putio', 'log', 'moviedb', '$filter', 'library',
-        function($scope, putio, Log, moviedb, $filter, library) {
-            var log = new Log(module);
+        function($scope, putio, Log, moviedb, $filter, Library) {
+            var log = new Log(module),
+                library = new Library();
 
             ga('send', 'pageview', '/library');
 
@@ -15,27 +16,23 @@
             $scope.seleted_show = {};
             $scope.moviedb_configs = moviedb.configs;
             $scope.loading = true;
-
+            $scope.process = {
+                moviedb: 0,
+                putio: 0,
+            };
 
             crawl(function() {
                 $scope.get_library_update();
                 $scope.loading = false;
             });
 
-            function crawl(callback) {
-                library.local.get(function(data) {
-                    if (_.isEmpty(data)) {
-                        library.get(0, function(data) {
-                            add_to_lib(data, callback);
-                        });
-                    } else {
-                        $scope.$apply(function() {
-                            add_to_lib(data, callback);
-                        });
+            $scope.get_class = function(data) {
+                if(data < 50) return 'progress-bar-danger';
+                if(data < 80) return 'progress-bar-warning';
+                if(data < 100) return 'progress-bar-info';
 
-                    }
-                });
-            }
+                return 'progress-bar-success';
+            };
 
             $scope.play_show = function(episodes) {
                 $scope.seleted_show = episodes;
@@ -63,10 +60,22 @@
                     "unknown": {}
                 };
 
-                library.local.set({}, function() {
-                    crawl(function() {
+                var inter = setInterval(function() {
+                    $scope.$apply(function() {
+                        $scope.process = library.process;
+                    });
+                }, 500);
+
+                library.reset(0, function(videos) {
+                    clearInterval(inter);
+
+                    $scope.process = library.process;
+
+                    add_to_lib(videos, function() {
+                        $scope.$apply(function() {
+                            $scope.loading = false;
+                        });
                         $scope.get_library_update();
-                        $scope.loading = false;
                     });
                 });
             };
@@ -78,6 +87,27 @@
                     });
                 });
             };
+
+            function crawl(callback) {
+                var inter = setInterval(function() {
+                    $scope.$apply(function() {
+                        $scope.process = library.process;
+                    });
+                }, 500);
+
+                library.get_videos(0, function(videos) {
+                    clearInterval(inter);
+
+                    $scope.process = library.process;
+
+                    add_to_lib(videos, function() {
+
+                        $scope.loading = false;
+                        callback();
+                    });
+                });
+
+            }
 
             function add_to_lib(data, callback) {
                 async.forEachOf(

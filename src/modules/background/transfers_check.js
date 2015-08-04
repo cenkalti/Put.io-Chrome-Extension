@@ -1,14 +1,15 @@
 (function() {
-    var module = angular.module('transfersCheckService', ['putioService', 'datesFilter', 'moviedbService', 'stringFilter', 'storageFactory', 'libraryService']);
+    var module = angular.module('transfersCheckService', ['putioService', 'datesFilter', 'moviedbService', 'stringFilter', 'storageFactory', 'libraryFactory']);
 
     module.service('transfersCheck', ['$interval', '$timeout', 'putio', '$filter', 'moviedb', 'storage', 'library',
-        function($interval, $timeout, putio, $filter, moviedb, Storage, library) {
+        function($interval, $timeout, putio, $filter, moviedb, Storage, Library) {
 
             var storage = new Storage("local"),
                 transfersCheck = this,
                 notif = chrome.notifications,
                 interval = null,
-                cleanInterval = 0;
+                cleanInterval = 0,
+                lib = new Library();
 
             transfersCheck.start = function() {
                 console.debug("started transfers checks");
@@ -112,7 +113,7 @@
             }
 
             function maybe_add_to_library(transfer) {
-                library.get(transfer.file_id, function(data) {});
+                lib.add_videos(transfer.file_id, function(data) {});
             }
 
             function get_title(info) {
