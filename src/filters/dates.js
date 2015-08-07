@@ -4,11 +4,11 @@
     module.filter('duration', function() {
         return function(seconds) {
             if (seconds == -1) {
-                return "forever";
+                return 'forever';
             } else if (seconds) {
-                return moment.duration(seconds, "seconds").humanize();
+                return moment.duration(seconds, 'seconds').humanize();
             } else {
-                return "none";
+                return 'none';
             }
         };
     });
@@ -17,9 +17,9 @@
         return function(date) {
             if (date) {
                 var localTime = moment.utc(date).toDate();
-                return moment(localTime).format("DD/MM/YY @ HH:mm:ss");
+                return moment(localTime).format('DD/MM/YY @ HH:mm:ss');
             } else {
-                return "none";
+                return 'none';
             }
         };
     });
@@ -43,7 +43,7 @@
 
                 return duration.humanize(humanize);
             } else {
-                return "none";
+                return 'none';
             }
         };
     });

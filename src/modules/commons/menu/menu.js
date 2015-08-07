@@ -4,13 +4,13 @@
     module.directive('menu',
         function() {
             return {
-                "restrict": "E",
-                "templateUrl": "html/menu-directive.html",
-                "controller": "menuController",
-                "scope": {
-                    "toggle": "&",
-                    "open": "&",
-                    "close": "&"
+                restrict: 'E',
+                templateUrl: 'html/menu-directive.html',
+                controller: 'menuController',
+                scope: {
+                    toggle: '&',
+                    open: '&',
+                    close: '&'
                 }
             };
         }
@@ -18,7 +18,7 @@
 
     module.controller('menuController', ['$scope', '$location', '$route', 'putio',
         function($scope, $location, $route, putio) {
-            var $menu = $(".menu");
+            var $menu = $('.menu');
 
             $scope.transfers_count = 0;
             $scope.files_size = 0;
@@ -27,22 +27,22 @@
 
             $scope.toggle = function() {
                 $menu.animate({
-                    "width": "toggle",
-                    "easing": "easeOutQuad"
+                    width: 'toggle',
+                    easing: 'easeOutQuad'
                 }, 300);
             };
 
             $scope.open = function() {
                 $menu.animate({
-                    "width": "show",
-                    "easing": "easeOutQuad"
+                    width: 'show',
+                    easing: 'easeOutQuad'
                 }, 300);
             };
 
             $scope.close = function() {
                 $menu.animate({
-                    "width": "hide",
-                    "easing": "easeOutQuad"
+                    width: 'hide',
+                    easing: 'easeOutQuad'
                 }, 300);
             };
 
@@ -50,31 +50,31 @@
                 return route === $location.path();
             };
 
-            $scope.$root.$on("$locationChangeStart", function(event, args) {
+            $scope.$root.$on('$locationChangeStart', function(event, args) {
                 $scope.close();
             });
 
-            $scope.$on("menu_open", function(event, args) {
+            $scope.$on('menu_open', function(event, args) {
                 $scope.open();
             });
 
-            $scope.$on("menu_close", function(event, args) {
+            $scope.$on('menu_close', function(event, args) {
                 $scope.close();
             });
 
-            $scope.$on("menu_toggle", function(event, args) {
+            $scope.$on('menu_toggle', function(event, args) {
                 $scope.toggle();
             });
 
-            $scope.$on("refresh_file", function(event, args) {
+            $scope.$on('refresh_file', function(event, args) {
                 refresh_file();
             });
 
-            $scope.$on("refresh_transfers_count", function(event, args) {
+            $scope.$on('refresh_transfers_count', function(event, args) {
                 refresh_transfers_count();
             });
 
-            $scope.$on("refresh_friends_req", function(event, args) {
+            $scope.$on('refresh_friends_req', function(event, args) {
                 refresh_friends_req();
             });
 

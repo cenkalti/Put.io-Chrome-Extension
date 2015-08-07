@@ -98,12 +98,12 @@
                 var deferred = $q.defer();
 
                 putio.set_error_callback(function(err) {
-                    if (err.error_message === "Parent is not a folder") {
-                        console.log("ignoring error 'Parent is not a folder'");
+                    if (err.error_message === 'Parent is not a folder') {
+                        console.log('ignoring error: Parent is not a folder');
                     } else {
-                        var $error_modal = $("#error_modal");
+                        var $error_modal = $('#error_modal');
 
-                        $(".modal-body p", $error_modal).html(err.error_message);
+                        $('.modal-body p', $error_modal).html(err.error_message);
                         $error_modal.modal();
                     }
 
@@ -128,7 +128,7 @@
         function($scope, $location, $route, putio) {
             var logged = false;
 
-            $scope.title = "";
+            $scope.title = '';
             $scope.disk = {};
 
 
@@ -137,13 +137,13 @@
             };
 
             $scope.menu_toggle = function() {
-                $scope.$root.$broadcast("menu_toggle");
+                $scope.$root.$broadcast('menu_toggle');
             };
 
             $scope.$root.$on('$locationChangeSuccess', function(event, next, previous) {
                 var a = $location
                     .path()
-                    .split("/");
+                    .split('/');
 
                 $scope.title = a[1];
             });

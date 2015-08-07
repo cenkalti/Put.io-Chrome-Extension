@@ -9,31 +9,31 @@
             ga('send', 'pageview', '/options');
 
             $scope.home_pages = {
-                "home": "Home",
-                "transfers": "Transfers",
-                "files": "Files",
-                "options": "Options",
-                "friends": "Friends",
-                "library": "Library"
+                home: 'Home',
+                transfers: 'Transfers',
+                files: 'Files',
+                options: 'Options',
+                friends: 'Friends',
+                library: 'Library'
             };
-            $scope.home_page = "home";
+            $scope.home_page = 'home';
 
             $scope.notification = true;
 
             $scope.default_folder = {
-                "name": "Loading ..."
+                name: 'Loading ...'
             };
             $scope.modalOptions = {
-                "title": "Files",
-                "saveBtn": {
-                    "text": "Move",
-                    "disabled": true
+                title: 'Files',
+                saveBtn: {
+                    text: 'Move',
+                    disabled: true
                 }
             };
 
             $scope.demo = false;
 
-            $scope.notification_text = "Saved";
+            $scope.notification_text = 'Saved';
 
             putio.options_get(function(err, options) {
                 $scope.$apply(function() {
@@ -65,7 +65,7 @@
                     options.home_page = $scope.home_page;
                     putio.options_set(options, function() {
                         $scope.$apply(function() {
-                            $scope.notify("Default page set to " + $scope.home_pages[$scope.home_page]);
+                            $scope.notify('Default page set to ' + $scope.home_pages[$scope.home_page]);
                         });
                     });
                 });
@@ -78,14 +78,14 @@
                     options.notification = $scope.notification;
 
                     putio.options_set(options, function() {
-                        log.debug("sending notification message");
-                        message.send("notification", $scope.notification);
+                        log.debug('sending notification message');
+                        message.send('notification', $scope.notification);
 
                         $scope.$apply(function() {
                             if ($scope.notification) {
-                                $scope.notify("Notifications enabled");
+                                $scope.notify('Notifications enabled');
                             } else {
-                                $scope.notify("Notifications disabled");
+                                $scope.notify('Notifications disabled');
                             }
                         });
                     });
@@ -95,20 +95,20 @@
             $scope.maybe_update_default_folder = function(id) {
                 ga('send', 'event', 'options', 'maybe_update_default_folder');
 
-                $(".tree").modal("show");
+                $('.tree').modal('show');
             };
 
             $scope.update_default_folder = function(node) {
                 ga('send', 'event', 'options', 'update_default_folder');
 
-                $(".tree").modal("hide");
+                $('.tree').modal('hide');
                 putio.account_set_settings({
-                    "default_download_folder": node.id
+                    default_download_folder: node.id
                 }, function(err, data) {
-                    $scope.notify("Default folder set to " + node.name);
+                    $scope.notify('Default folder set to ' + node.name);
                     $scope.default_folder = {
-                        "name": node.name,
-                        "id": node.id
+                        name: node.name,
+                        id: node.id
                     };
                 });
             };
@@ -122,9 +122,9 @@
                     putio.options_set(options, function() {
                         $scope.$apply(function() {
                             if ($scope.demo) {
-                                $scope.notify("Hide demo enabled");
+                                $scope.notify('Hide demo enabled');
                             } else {
-                                $scope.notify("Hide demo disabled");
+                                $scope.notify('Hide demo disabled');
                             }
                         });
                     });
@@ -132,11 +132,11 @@
             };
 
             $scope.selected = function(node) {
-                if (node.content_type == "application/x-directory") {
+                if (node.content_type == 'application/x-directory') {
                     $scope.modalOptions.saveBtn.disabled = false;
-                    $scope.modalOptions.saveBtn.text = "Update to: '" + $filter('limitTo')(node.name, 25) + "'";
+                    $scope.modalOptions.saveBtn.text = 'Update to: ' + $filter('limitTo')(node.name, 25);
                 } else {
-                    $scope.modalOptions.saveBtn.text = "Nope Nope Nope";
+                    $scope.modalOptions.saveBtn.text = 'Nope Nope Nope';
                     $scope.modalOptions.saveBtn.disabled = true;
                 }
             };
@@ -154,8 +154,8 @@
 
                 putio.reset_app(function() {
                     chrome.windows.create({
-                        "url": "https://put.io/user/api/apps",
-                        "type": "normal"
+                        url: 'https://put.io/user/api/apps',
+                        type: 'normal'
                     }, function() {
                         window.close();
                     });
@@ -164,7 +164,7 @@
 
             $scope.notify = function(text) {
                 $scope.notification_text = text;
-                $(".notification")
+                $('.notification')
                     .hide()
                     .fadeIn()
                     .delay(2000)

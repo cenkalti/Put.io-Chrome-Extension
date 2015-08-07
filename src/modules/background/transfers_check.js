@@ -4,7 +4,7 @@
     module.service('transfersCheck', ['$interval', '$timeout', 'putio', '$filter', 'moviedb', 'storage', 'library',
         function($interval, $timeout, putio, $filter, moviedb, Storage, Library) {
 
-            var storage = new Storage("local"),
+            var storage = new Storage('local'),
                 transfersCheck = this,
                 notif = chrome.notifications,
                 interval = null,
@@ -12,7 +12,7 @@
                 lib = new Library();
 
             transfersCheck.start = function() {
-                console.debug("started transfers checks");
+                console.debug('started transfers checks');
                 putio.auth(function(err) {
                     if (err) {
                         console.error(err);
@@ -29,7 +29,7 @@
             transfersCheck.stop = function() {
                 if (interval) {
                     $interval.cancel(interval);
-                    console.debug("stopped transfers checks");
+                    console.debug('stopped transfers checks');
                 }
             };
 
@@ -40,7 +40,7 @@
             }
 
             function checks_transfers(callback) {
-                console.group("checking transfers %s", $filter('datesPrint')(new Date()));
+                console.group('checking transfers %s', $filter('datesPrint')(new Date()));
 
                 putio.transfers_list(function(err, data) {
                     if (err || !data.transfers) {
@@ -73,25 +73,25 @@
             function maybe_send_notification(transfer, callback) {
                 var completed = is_complete(transfer),
                     done = $filter('datesPrint')(transfer.finished_at),
-                    name = $filter("limitTo")(transfer.name, 40),
+                    name = $filter('limitTo')(transfer.name, 40),
                     options = {
-                        "type": "basic",
-                        "iconUrl": "img/icon48.png",
-                        "title": "Transfer complete",
-                        "message": name,
-                        "contextMessage": " Completed on " + done
+                        type: 'basic',
+                        iconUrl: 'img/icon48.png',
+                        title: 'Transfer complete',
+                        message: name,
+                        contextMessage: ' Completed on ' + done
                     };
 
                 if (completed && !transfer.notified) {
-                    console.debug("'%s' completed", name);
+                    console.debug('%s completed', name);
 
                     moviedb.detect(transfer.name, function(err, data) {
                         if (!err && data.title) {
-                            options.type = "image";
+                            options.type = 'image';
                             options.message = get_title(data);
-                            options.imageUrl = "http://image.tmdb.org/t/p/w154" + data.poster;
+                            options.imageUrl = 'http://image.tmdb.org/t/p/w154' + data.poster;
                         }
-                        notif.create("", options, function(notifId) {
+                        notif.create('', options, function(notifId) {
                             transfer.notified = true;
 
                             set_transfer(transfer, function() {
@@ -106,7 +106,7 @@
                         });
                     });
                 } else {
-                    console.debug("'%s' completion: %i %, notified: %s", name, transfer.percent_done, transfer.notified);
+                    console.debug('%s completion: %i %, notified: %s', name, transfer.percent_done, transfer.notified);
                     callback();
                 }
 
@@ -117,8 +117,8 @@
             }
 
             function get_title(info) {
-                if (info.type === "tv") {
-                    return "S" + $filter('pad')(info.season) + "E" + $filter('pad')(info.episode_number) + " : " + info.episode_title;
+                if (info.type === 'tv') {
+                    return 'S' + $filter('pad')(info.season) + 'E' + $filter('pad')(info.episode_number) + ' : ' + info.episode_title;
                 } else {
                     return info.title;
                 }
@@ -130,21 +130,21 @@
                 }
 
                 if (cleanInterval === 10) {
-                    console.group("cleaning transfers");
+                    console.group('cleaning transfers');
 
                     get_transfers(function(transfers) {
                         async.forEachOfSeries(transfers, function(transfer, id, cb) {
-                            var name = $filter("limitTo")(transfer.name, 40),
+                            var name = $filter('limitTo')(transfer.name, 40),
                                 found = _.findWhere(data, {
-                                    "id": transfer.id
+                                    id: transfer.id
                                 });
 
                             if (found) {
-                                console.debug("'%s' is still there", name);
+                                console.debug('%s is still there', name);
                                 cb();
                             } else {
                                 delete_transfer(id, function() {
-                                    console.debug("'%s' is not there anymore, removing", name);
+                                    console.debug('%s is not there anymore, removing', name);
                                     cb();
                                 });
 
@@ -160,15 +160,15 @@
             }
 
             function is_complete(transfer) {
-                return transfer.percent_done == 100 || transfer.status == "COMPLETED";
+                return transfer.percent_done == 100 || transfer.status == 'COMPLETED';
             }
 
             function get_transfers(callback) {
-                storage.get("transfers", callback);
+                storage.get('transfers', callback);
             }
 
             function get_transfer(id, callback) {
-                storage.get("transfers", function(data) {
+                storage.get('transfers', function(data) {
                     if (data && data[id]) {
                         callback(data[id]);
                     } else {
@@ -178,23 +178,23 @@
             }
 
             function set_transfer(transfer, callback) {
-                storage.get("transfers", function(data) {
+                storage.get('transfers', function(data) {
                     if (_.isEmpty(data)) {
                         data = {};
                     }
 
                     data[transfer.id] = transfer;
 
-                    storage.set("transfers", data, callback);
+                    storage.set('transfers', data, callback);
                 });
             }
 
             function delete_transfer(id, callback) {
-                storage.get("transfers", function(data) {
+                storage.get('transfers', function(data) {
                     if (data && data[id]) {
                         delete data[id];
                     }
-                    storage.set("transfers", data, callback);
+                    storage.set('transfers', data, callback);
                 });
             }
 

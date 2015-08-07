@@ -10,9 +10,9 @@
             ga('send', 'pageview', '/library');
 
             $scope.library = {
-                "shows": {},
-                "movies": {},
-                "unknown": {}
+                shows: {},
+                movies: {},
+                unknown: {}
             };
             $scope.seleted_show = {};
             $scope.moviedb_configs = moviedb.configs;
@@ -43,9 +43,9 @@
 
                     $scope.loading = true;
                     $scope.library = {
-                        "shows": {},
-                        "movies": {},
-                        "unknown": {}
+                        shows: {},
+                        movies: {},
+                        unknown: {}
                     };
 
                     var inter = setInterval(function() {
@@ -79,17 +79,17 @@
 
             $scope.play_show = function(episodes) {
                 $scope.seleted_show = episodes;
-                $("#play_show").modal("show");
+                $('#play_show').modal('show');
             };
 
             $scope.play = function(file_id) {
                 ga('send', 'event', 'library', 'play');
 
                 chrome.windows.create({
-                    "url": "video.html#?file=" + file_id,
-                    "type": "panel"
+                    url: 'video.html#?file=' + file_id,
+                    type: 'panel'
                 }, function(new_window) {
-                    $("#play_show").modal("hide");
+                    $('#play_show').modal('hide');
                 });
             };
 
@@ -119,14 +119,14 @@
                     data,
                     function(item, key, cb) {
                         switch (item.type) {
-                            case "tv":
+                            case 'tv':
                                 if (!$scope.library.shows[item.title]) {
                                     $scope.library.shows[item.title] = item;
                                     $scope.library.shows[item.title].episodes = [];
                                 }
                                 $scope.library.shows[item.title].episodes.push(item);
                                 break;
-                            case "movie":
+                            case 'movie':
                                 $scope.library.movies[item.title] = item;
                                 break;
                             default:

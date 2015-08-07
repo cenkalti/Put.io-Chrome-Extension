@@ -12,7 +12,7 @@
     ]);
 
     module.run(function(editableOptions) {
-        editableOptions.theme = "bs3";
+        editableOptions.theme = 'bs3';
     });
 
     module.controller('fileController', ['$scope', '$routeParams', '$location', '$route', '$filter', 'putio',
@@ -25,10 +25,10 @@
             $scope.loading = true;
             $scope.moveFileId = null;
             $scope.modalOptions = {
-                "title": "Files",
-                "saveBtn": {
-                    "text": "Move",
-                    "disabled": true
+                title: 'Files',
+                saveBtn: {
+                    text: 'Move',
+                    disabled: true
                 }
             };
 
@@ -52,30 +52,30 @@
             $scope.maybe_rename_file = function(name) {
                 ga('send', 'event', 'file', 'maybe_rename_file');
 
-                $("#rename_file").modal("show");
+                $('#rename_file').modal('show');
                 $scope.file.name = name;
             };
 
             $scope.rename_file = function() {
                 ga('send', 'event', 'file', 'rename_file');
 
-                $("#rename_file").modal("hide");
+                $('#rename_file').modal('hide');
                 putio.file_rename($scope.file.id, $scope.file.name, function(err, data) {});
             };
 
             $scope.maybe_delete_file = function() {
                 ga('send', 'event', 'file', 'maybe_delete_file');
 
-                $("#delete_file").modal("show");
+                $('#delete_file').modal('show');
             };
 
             $scope.delete_file = function(id, parent_id) {
                 ga('send', 'event', 'file', 'delete_file');
 
-                $("#delete_file").modal("hide");
+                $('#delete_file').modal('hide');
                 putio.files_delete(id, function(err, data) {
-                    $scope.$root.$broadcast("refresh_file");
-                    $location.path("/files/" + parent_id);
+                    $scope.$root.$broadcast('refresh_file');
+                    $location.path('/files/' + parent_id);
                 });
             };
 
@@ -85,8 +85,8 @@
                 var url = putio.download_url(id);
 
                 chrome.downloads.download({
-                    "url": url,
-                    "saveAs": true,
+                    url: url,
+                    saveAs: true,
                 }, function(downloadId) {});
             };
 
@@ -98,17 +98,17 @@
                 ga('send', 'event', 'file', 'play');
 
                 chrome.windows.create({
-                    "url": "video.html#?file=" + file.id,
-                    "type": "panel"
+                    url: 'video.html#?file=' + file.id,
+                    type: 'panel'
                 }, function(new_window) {});
             };
 
             $scope.selected = function(node) {
-                if (node.content_type == "application/x-directory") {
+                if (node.content_type == 'application/x-directory') {
                     $scope.modalOptions.saveBtn.disabled = false;
-                    $scope.modalOptions.saveBtn.text = "Move to: '" + $filter('limitTo')(node.name, 25) + "'";
+                    $scope.modalOptions.saveBtn.text = 'Move to: ' + $filter('limitTo')(node.name, 25);
                 } else {
-                    $scope.modalOptions.saveBtn.text = "Nope Nope Nope";
+                    $scope.modalOptions.saveBtn.text = 'Nope Nope Nope';
                     $scope.modalOptions.saveBtn.disabled = true;
                 }
             };
@@ -117,15 +117,15 @@
                 ga('send', 'event', 'file', 'maybe_move_file');
 
                 $scope.moveFileId = $scope.file.id;
-                $(".tree").modal("show");
+                $('.tree').modal('show');
             };
 
             $scope.move = function(node) {
                 ga('send', 'event', 'file', 'move');
 
-                $(".tree").modal("hide");
+                $('.tree').modal('hide');
                 putio.files_move($scope.moveFileId, node.id, function(err, data) {
-                    $location.path("/files/" + node.id);
+                    $location.path('/files/' + node.id);
                 });
             };
 

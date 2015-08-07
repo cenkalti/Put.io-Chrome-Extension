@@ -6,7 +6,7 @@
             var log = function(mod) {
                 var self = this;
 
-                self.name = mod.name || "unknown";
+                self.name = mod.name || 'unknown';
             };
 
             log.prototype.debug = function() {
@@ -39,7 +39,7 @@
                     date = $filter('date')(new Date(), '[yyyy-MM-dd HH:mm:ss:sss]'),
                     newArgs = Array.prototype.slice.call(args, 0);
 
-                newArgs.unshift("[" + self.name + "]");
+                newArgs.unshift('[' + self.name + ']');
                 newArgs.unshift(date);
 
                 return newArgs;

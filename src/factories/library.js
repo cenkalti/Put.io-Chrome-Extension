@@ -221,7 +221,7 @@
             }
 
             function is_dir(file) {
-                return file.content_type === "application/x-directory" && file.name !== "items shared with you";
+                return file.content_type === 'application/x-directory' && file.name !== 'items shared with you';
             }
 
             return library;

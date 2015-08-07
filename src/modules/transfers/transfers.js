@@ -28,15 +28,15 @@
                 ga('send', 'event', 'transfers', 'maybe_cancel');
 
                 $scope.cancel = transfer;
-                $("#transfer_cancel").modal("show");
+                $('#transfer_cancel').modal('show');
             };
 
             $scope.cancel_transfer = function(id) {
                 ga('send', 'event', 'transfers', 'cancel');
 
-                $("#transfer_cancel").modal("hide");
+                $('#transfer_cancel').modal('hide');
                 putio.transfers_cancel(id, function(err, data) {
-                    $scope.$root.$broadcast("refresh_transfers_count");
+                    $scope.$root.$broadcast('refresh_transfers_count');
                     $route.reload();
                 });
             };

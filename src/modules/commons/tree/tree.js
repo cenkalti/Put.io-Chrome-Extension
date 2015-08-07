@@ -4,15 +4,15 @@
     module.directive('tree',
         function() {
             return {
-                "restrict": "E",
-                "templateUrl": "html/tree-directive.html",
-                "controller": "treeController",
-                "scope": {
-                    "nodeSelected": "&",
-                    "nodeToggled": "&",
-                    "success": "&",
-                    "cancel": "&",
-                    "modalOptions": "="
+                restrict: 'E',
+                templateUrl: 'html/tree-directive.html',
+                controller: 'treeController',
+                scope: {
+                    nodeSelected: '&',
+                    nodeToggled: '&',
+                    success: '&',
+                    cancel: '&',
+                    modalOptions: '='
                 }
             };
         }
@@ -22,11 +22,11 @@
         function($scope, putio) {
 
             $scope.treeOptions = {
-                "nodeChildren": "children",
-                "dirSelectable": true
+                nodeChildren: 'children',
+                dirSelectable: true
             };
 
-            $(".tree").on("show.bs.modal", function(e) {
+            $('.tree').on('show.bs.modal', function(e) {
                 $scope.treeData = [];
                 $scope.expandedNodes = [];
                 $scope.selectedNode = undefined;
@@ -54,7 +54,7 @@
 
             $scope.onSelected = function(node) {
                 $scope.nodeSelected({
-                    "node": node
+                    node: node
                 });
             };
 
@@ -67,7 +67,7 @@
 
                         if (files.length === 0) {
                             node.children.push({
-                                name: "Nothing here",
+                                name: 'Nothing here',
                                 children: []
                             });
                         }
@@ -79,17 +79,17 @@
                         }
 
                         $scope.nodeToggled({
-                            "node": node,
-                            "expanded": expanded
+                            node: node,
+                            expanded: expanded
                         });
                     });
                 }
             };
 
             function formatFile(file) {
-                if (file.content_type == "application/x-directory") {
+                if (file.content_type == 'application/x-directory') {
                     file.children = [{
-                        name: "Loading ...",
+                        name: 'Loading ...',
                         children: []
                     }];
                 } else {

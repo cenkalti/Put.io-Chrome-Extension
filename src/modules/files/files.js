@@ -11,7 +11,7 @@
     module.controller('filesController', ['$scope', '$routeParams', '$location', '$route', '$filter', '$timeout', 'putio',
         function($scope, $routeParams, $location, $route, $filter, $timeout, putio) {
             var parent_id = $routeParams.parent_id || 0,
-                $files = $(".files");
+                $files = $('.files');
 
             ga('send', 'pageview', '/files');
 
@@ -20,20 +20,20 @@
             $scope.loading = true;
             $scope.folder = {};
             $scope.moveFileId = null;
-            $scope.order = "name";
+            $scope.order = 'name';
             $scope.order_reverse = false;
             $scope.modalOptions = {
-                "title": "Files",
-                "saveBtn": {
-                    "text": "Move",
-                    "disabled": true
+                title: 'Files',
+                saveBtn: {
+                    text: 'Move',
+                    disabled: true
                 }
             };
 
             putio.files_list(parent_id, function(err, data) {
                 if (err) {
-                    if (err.error_message === "Parent is not a folder") {
-                        $location.path("/file/" + parent_id);
+                    if (err.error_message === 'Parent is not a folder') {
+                        $location.path('/file/' + parent_id);
                     }
                 } else {
                     var files = data.files,
@@ -47,10 +47,10 @@
             });
 
             $scope.go_to = function(file) {
-                if (file.content_type == "application/x-directory") {
-                    $location.path("/files/" + file.id);
+                if (file.content_type == 'application/x-directory') {
+                    $location.path('/files/' + file.id);
                 } else {
-                    $location.path("/file/" + file.id);
+                    $location.path('/file/' + file.id);
                 }
             };
 
@@ -68,44 +68,44 @@
             $scope.toggle_select = function(file_id) {
                 ga('send', 'event', 'files', 'select');
 
-                var $checkAll = $(".check-all", $files),
+                var $checkAll = $('.check-all', $files),
                     idx = $scope.selected_files.indexOf(file_id);
 
                 if (idx > -1) {
                     $scope.selected_files.splice(idx, 1);
-                    $checkAll.prop("indeterminate", true);
+                    $checkAll.prop('indeterminate', true);
                 } else {
                     $scope.selected_files.push(file_id);
                     if ($scope.files.length == $scope.selected_files.length) {
-                        $checkAll.prop("indeterminate", false);
-                        $checkAll.prop("checked", true);
+                        $checkAll.prop('indeterminate', false);
+                        $checkAll.prop('checked', true);
                     } else {
-                        $checkAll.prop("indeterminate", true);
+                        $checkAll.prop('indeterminate', true);
                     }
                 }
 
                 if ($scope.selected_files.length === 0) {
-                    $checkAll.prop("indeterminate", false);
-                    $checkAll.prop("checked", false);
+                    $checkAll.prop('indeterminate', false);
+                    $checkAll.prop('checked', false);
                 }
             };
 
             $scope.toggle_select_all = function() {
                 ga('send', 'event', 'files', 'select_all');
 
-                var $checkAll = $(".check-all", $files),
-                    $checks = $(".check", $files);
+                var $checkAll = $('.check-all', $files),
+                    $checks = $('.check', $files);
 
                 $scope.selected_files = [];
 
-                if ($checkAll.prop("checked")) {
-                    $checks.prop("checked", true);
+                if ($checkAll.prop('checked')) {
+                    $checks.prop('checked', true);
                     for (var i in $scope.files) {
                         var id = $scope.files[i].id;
                         $scope.selected_files.push(id);
                     }
                 } else {
-                    $checks.prop("checked", false);
+                    $checks.prop('checked', false);
                 }
             };
 
@@ -113,7 +113,7 @@
                 ga('send', 'event', 'files', 'maybe_rename_folder');
 
                 $scope.folder = {};
-                $("#rename_folder").modal("show");
+                $('#rename_folder').modal('show');
                 $scope.folder.name = name;
                 $scope.folder.id = id;
             };
@@ -121,7 +121,7 @@
             $scope.rename_folder = function() {
                 ga('send', 'event', 'files', 'rename_folder');
 
-                $("#rename_folder").modal("hide");
+                $('#rename_folder').modal('hide');
                 putio.file_rename($scope.folder.id, $scope.folder.name, function(err, data) {
                     $route.reload();
                 });
@@ -130,7 +130,7 @@
             $scope.maybe_create_folder = function(parent_id) {
                 ga('send', 'event', 'files', 'maybe_create_folder');
 
-                $("#create_folder").modal("show");
+                $('#create_folder').modal('show');
                 $scope.folder = {};
                 $scope.folder.parent_id = parent_id;
             };
@@ -140,7 +140,7 @@
 
                 var folder = $scope.folder;
 
-                $("#create_folder").modal("hide");
+                $('#create_folder').modal('hide');
                 putio.folder_create(folder.name, folder.parent_id, function(err, data) {
                     $route.reload();
                 });
@@ -150,17 +150,17 @@
                 ga('send', 'event', 'files', 'maybe_delete_folders');
 
                 $scope.folder = {};
-                $("#delete_folders").modal("show");
+                $('#delete_folders').modal('show');
                 $scope.folder.id = $scope.selected_files;
-                $scope.folder.name = $scope.selected_files.length + " file(s)/folder(s)";
+                $scope.folder.name = $scope.selected_files.length + ' file(s)/folder(s)';
             };
 
             $scope.delete_folders = function(id) {
                 ga('send', 'event', 'files', 'delete_folders');
 
-                $("#delete_folders").modal("hide");
+                $('#delete_folders').modal('hide');
                 putio.files_delete(id, function(err, data) {
-                    $scope.$root.$broadcast("refresh_file");
+                    $scope.$root.$broadcast('refresh_file');
                     $route.reload();
                 });
             };
@@ -171,8 +171,8 @@
                 var url = putio.download_url($scope.selected_files);
 
                 chrome.downloads.download({
-                    "url": url,
-                    "saveAs": true,
+                    url: url,
+                    saveAs: true,
                 }, function(downloadId) {});
             };
 
@@ -181,11 +181,11 @@
             };
 
             $scope.selected = function(node) {
-                if (node.content_type == "application/x-directory") {
+                if (node.content_type == 'application/x-directory') {
                     $scope.modalOptions.saveBtn.disabled = false;
-                    $scope.modalOptions.saveBtn.text = "Move to: '" + $filter('limitTo')(node.name, 25) + "'";
+                    $scope.modalOptions.saveBtn.text = 'Move to: ' + $filter('limitTo')(node.name, 25);
                 } else {
-                    $scope.modalOptions.saveBtn.text = "Nope Nope Nope";
+                    $scope.modalOptions.saveBtn.text = 'Nope Nope Nope';
                     $scope.modalOptions.saveBtn.disabled = true;
                 }
             };
@@ -194,15 +194,15 @@
                 ga('send', 'event', 'files', 'maybe_move_folders');
 
                 $scope.moveFileId = $scope.selected_files;
-                $(".tree").modal("show");
+                $('.tree').modal('show');
             };
 
             $scope.move = function(node) {
                 ga('send', 'event', 'files', 'move');
 
-                $(".tree").modal("hide");
+                $('.tree').modal('hide');
                 putio.files_move($scope.moveFileId, node.id, function(err, data) {
-                    $location.path("/files/" + node.id);
+                    $location.path('/files/' + node.id);
                 });
             };
 

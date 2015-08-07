@@ -40,13 +40,13 @@
                 }
             });
 
-            message.listen("notification", function(data, send) {
-                log.debug("received notification message");
+            message.listen('notification', function(data, send) {
+                log.debug('received notification message');
                 maybe_transfers_check(data);
             });
 
             function maybe_transfers_check(start) {
-                log.debug("maybe_transfers_check", start);
+                log.debug('maybe_transfers_check', start);
                 if (start) {
                     transfersCheck.start();
                 } else {

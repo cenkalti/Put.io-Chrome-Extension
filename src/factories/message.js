@@ -20,10 +20,10 @@
 
             message.prototype.send = function(key, data, callback) {
                 chrome.runtime.sendMessage({
-                    "key": key,
-                    "data": data
+                    key: key,
+                    data: data
                 }, function(resp) {
-                    if (typeof callback === "function") {
+                    if (typeof callback === 'function') {
                         callback(resp);
                     }
                 });

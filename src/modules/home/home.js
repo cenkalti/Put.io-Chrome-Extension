@@ -48,9 +48,9 @@
             putio.events_list(function(err, data) {
                 var events = data.events;
 
-                var day = moment().subtract(1, "days"),
-                    week = moment().subtract(1, "weeks"),
-                    month = moment().subtract(1, "months");
+                var day = moment().subtract(1, 'days'),
+                    week = moment().subtract(1, 'weeks'),
+                    month = moment().subtract(1, 'months');
 
                 for (var i in events) {
                     var ev = events[i],

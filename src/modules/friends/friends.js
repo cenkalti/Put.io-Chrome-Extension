@@ -20,7 +20,7 @@
             $scope.friend_approve = function(friend) {
                 ga('send', 'event', 'friends', 'approve');
                 putio.friend_approve(friend, function(err, data) {
-                    $scope.$root.$broadcast("refresh_friends_req");
+                    $scope.$root.$broadcast('refresh_friends_req');
                     $route.reload();
                 });
             };
@@ -28,7 +28,7 @@
             $scope.friend_deny = function(friend) {
                 ga('send', 'event', 'friends', 'deny');
                 putio.friend_deny(friend, function(err, data) {
-                    $scope.$root.$broadcast("refresh_friends_req");
+                    $scope.$root.$broadcast('refresh_friends_req');
                     $route.reload();
                 });
             };
