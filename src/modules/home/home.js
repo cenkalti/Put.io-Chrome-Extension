@@ -38,10 +38,10 @@
                     scroll: true
                 }],
                 skip: function() {
-                    ga('send', 'event', 'hoe', 'demo_skip');
+                    ga('send', 'event', 'home', 'demo_skip');
                 },
                 finish: function() {
-                    ga('send', 'event', 'hoe', 'demo_finish');
+                    ga('send', 'event', 'home', 'demo_finish');
                 }
             };
 
