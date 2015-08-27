@@ -21,6 +21,7 @@
             document.title = 'Loading...';
             $scope.config = moviedb.configs;
             $scope.info = {};
+            $scope.error = null;
 
             putio.auth(function() {
                 async.parallel({
@@ -64,7 +65,7 @@
 
                                     player.src({
                                         type: 'video/mp4',
-                                        src: video_url(file)
+                                        src: putio.video_url(file)
                                     });
 
                                     add_subs(subtitles);
@@ -109,17 +110,6 @@
                 }
             }
 
-            function video_url(file) {
-                var id = file.id;
-
-                if (file.content_type == 'video/mp4') {
-                    return 'https://api.put.io/v2/files/' + id + '/stream';
-
-                } else {
-                    return 'https://api.put.io/v2/files/' + id + '/mp4/stream?jwt=extension';
-                }
-            }
-
             function add_subs(subtitles) {
                 var langs = {};
 
@@ -136,7 +126,7 @@
                     }
 
                     $('#video_player_html5_api')
-                        .append('<track kind='subtitles' src='' + src + '' srclang='en' label='' + language + ''>');
+                        .append('<track kind="subtitles" src="' + src + '" srclang="' + en + '" label="' + language + '">');
                 }
             }
         }

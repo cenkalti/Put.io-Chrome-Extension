@@ -207,6 +207,17 @@
                 return baseUrl + '/files/' + id + '/subtitles/' + key + '?format=webvtt';
             };
 
+            putio.video_url = function(file) {
+                var id = file.id;
+
+                if (file.content_type == 'video/mp4') {
+                    return get_url('/files/' + id + '/stream');
+
+                } else {
+                    return get_url('/files/' + id + '/mp4/stream?jwt=extension');
+                }
+            };
+
             putio.download_url = function(ids) {
                 var url = baseUrl + '/files';
 
