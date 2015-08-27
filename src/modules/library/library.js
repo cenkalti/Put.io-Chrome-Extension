@@ -95,6 +95,7 @@
 
             function crawl(callback) {
                 var inter = setInterval(function() {
+                    $resetModal.modal('show');
                     $scope.$apply(function() {
                         $scope.process = library.process;
                     });
