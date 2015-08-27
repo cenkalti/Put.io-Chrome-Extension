@@ -1,4 +1,26 @@
+@import "all";
 .tree .modal-body {
     height: 190px;
     overflow-y: auto;
+}
+
+.tree treecontrol.tree-classic li.tree-expanded i.tree-branch-head, .tree treecontrol.tree-classic li.tree-leaf i.tree-leaf-head {
+    background: none;
+    padding: 0;
+}
+
+.tree treecontrol.tree-classic .tree-label {
+    @font-weight();
+    @pointer();
+    margin-left: 5px;
+}
+
+.tree treecontrol.tree-classic .tree-label-selected {
+    color: @yellow;
+    @font-weight();
+    background-color: white;
+}
+
+.tree treecontrol.tree-classic .fa:hover, treecontrol.tree-classic .tree .tree-label:hover {
+    color: @yellow;
 }

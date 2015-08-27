@@ -23,7 +23,14 @@
 
             $scope.treeOptions = {
                 nodeChildren: 'children',
-                dirSelectable: true
+                dirSelectable: true,
+                injectClasses: {
+                    iLeaf: 'fa fa-file fa-lg fa-fw',
+                    iExpanded : 'fa fa-folder-open fa-lg fa-fw',
+                    iCollapsed: 'fa fa-folder fa-lg fa-fw',
+                    label: 'tree-label',
+                    labelSelected :  'tree-label-selected'
+                }
             };
 
             $('.tree').on('show.bs.modal', function(e) {

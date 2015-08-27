@@ -53,12 +53,12 @@
         <li class="list-group-item" ng-click="go_to(file)" ng-repeat="file in files  | orderBy:order:order_reverse">
             <input type="checkbox" value="{{file.id}}" class="check" ng-click="toggle_select(file.id);$event.stopPropagation()"/>
             <a ng-if="file.content_type == 'application/x-directory'" ng-href="{{download_url([file.id])}}" class="yellow">
-                <span class="glyphicon glyphicon-folder-open"></span>
+                <i class="fa fa-folder-open fa-lg fa-fw"></i>
             </a>
             <a ng-if="file.content_type != 'application/x-directory'" ng-href="{{download_url(file.id)}}" class="yellow">
-                <span class="glyphicon glyphicon-file"></span>
+                <i class="fa fa-file fa-lg fa-fw"></i>
             </a>
-            <span>{{file.name | limitTo:55}}</span>
+            <span>{{file.name | limitTo:50}}</span>
             <span class="badge">{{file.size | bytes : 2}}</span>
         </li>
     </ul>
