@@ -26,6 +26,10 @@
             <div role="tabpanel" class="tab-pane active" id="movies">
                 <div ng-repeat="info in library.movies" class="movie">
                     <img ng-src="{{moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + info.poster}}"/>
+                    <div ng-hide="info.poster" class="poster-fail">
+                        <h4 class="text-center">{{info.title}}</h4>
+                        <i class="fa fa-file-image-o"></i>
+                    </div>
                     <div class="info">
                         <i class="fa fa-play-circle-o fa-2x" ng-click="play(info.file_id)"></i>
                     </div>
@@ -33,7 +37,11 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="shows">
                 <div ng-repeat="(name, show) in library.shows" class="show">
-                    <img ng-src="{{moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + show.poster}}"/>
+                    <img ng-show="show.poster" ng-src="{{moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + show.poster}}"/>
+                    <div ng-hide="show.poster" class="poster-fail">
+                        <h4 class="text-center">{{show.title}}</h4>
+                        <i class="fa fa-file-image-o"></i>
+                    </div>
                     <div class="info">
                         <i class="fa fa-play-circle-o fa-2x" ng-click="play_show(show.episodes)"></i>
                     </div>
