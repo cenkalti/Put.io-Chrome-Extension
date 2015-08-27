@@ -17,14 +17,14 @@
                     heading: 'Menu',
                     text: 'Here is the menu.',
                     placement: 'right',
-                    scroll: true
+                    scroll: false
                 }, {
                     type: 'element',
                     selector: '.progress-bar-value',
                     heading: 'Storage',
                     text: 'Here you can find how much data is left in your account.',
                     placement: 'bottom',
-                    scroll: true
+                    scroll: false
                 }, {
                     type: 'title',
                     heading: 'Home',
