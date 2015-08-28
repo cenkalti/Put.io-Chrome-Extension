@@ -47,7 +47,7 @@
                         "title": "Transfer added"
                     };
 
-                    putio.transfer_add(info.linkUrl, default_folder, function(err, data) {
+                    putio.transfer_add(info.linkUrl, default_folder.id, function(err, data) {
                         if (err) {
                             log.warn(err.error_message);
                             options.message = err.error_message;

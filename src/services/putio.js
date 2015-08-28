@@ -353,7 +353,7 @@
                     data: options.data,
                     headers: {
                         Accept: 'application/json',
-                        ContentType: 'application/x-www-form-urlencoded'
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     },
                     transformRequest: function(obj) {
                         var str = [];
