@@ -126,7 +126,7 @@
                     }
 
                     $('#video_player_html5_api')
-                        .append('<track kind="subtitles" src="' + src + '" srclang="' + en + '" label="' + language + '">');
+                        .append('<track kind="subtitles" src="' + src + '" srclang="' + source + '" label="' + language + '">');
                 }
             }
         }
