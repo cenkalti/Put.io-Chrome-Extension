@@ -16,10 +16,10 @@
         "moment": "~2.8.4",
         "angular-xeditable": "~0.1.8",
         "angular-tree-control": "~0.2.8",
-        "video.js": "~4.12.1",
         "parse-torrent-name": "~0.5.1",
         "underscore": "~1.8.3",
         "async": "~1.1.0",
-        "ng-joyride": "~0.1.15"
+        "ng-joyride": "~0.1.15",
+        "video.js": "^5.9.0"
     }
 }

@@ -9,13 +9,17 @@ Play videos from the app (with subtitles)
 
 ### Bower Library Changes
 
+#### video.js
+
+CSS replace path `font` by `fonts`
+
 #### angular-tree-control
 
-CSS replace path "images" by "img"
+CSS replace path `images` by `img`
 
 #### parse-torrent-name
 
-Better regex 
+Better regex
 ``` Javascript
 var patterns = {
     season: /([Ss]?([0-9]{1,2}))[Eex]/,

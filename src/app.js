@@ -131,7 +131,6 @@
             $scope.title = '';
             $scope.disk = {};
 
-
             $scope.reload = function() {
                 $route.reload();
             };

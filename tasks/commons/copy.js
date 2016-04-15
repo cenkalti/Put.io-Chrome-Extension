@@ -8,7 +8,7 @@ module.exports = function(grunt) {
                 "flatten": true,
                 "src": [
                     "bower_components/bootstrap/dist/fonts/*",
-                    "bower_components/video.js/dist/video-js/font/*"
+                    "bower_components/video.js/dist/font/*"
                 ],
                 "dest": "build/fonts/"
             }]

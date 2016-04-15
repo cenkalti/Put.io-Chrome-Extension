@@ -15,7 +15,7 @@ module.exports = function(grunt) {
                 "build/css/video.min.css": [
                     "bower_components/angular/angular-csp.css",
                     "bower_components/bootstrap/dist/css/bootstrap.min.css",
-                    "bower_components/video.js/dist/video-js/video-js.css",
+                    "bower_components/video.js/dist/video-js.css",
                     "build/css/video.css"
 
                 ]
