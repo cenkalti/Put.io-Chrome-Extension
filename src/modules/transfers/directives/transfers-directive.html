@@ -1,18 +1,42 @@
 <div class="transfers">
     <div class="alert alert-warning alert-dismissible" ng-if="transfers.length == 0 && !loading">
-        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+        <button class="close" data-dismiss="alert" type="button">
+            <span>
+                ×
+            </span>
+        </button>
         No Transfers
     </div>
-    <button class="btn btn-default" ng-click="transfers_clean()" ng-if="transfers.length > 0">Clean Finished</button>
+    <div class="btn-group" role="group">
+        <button class="btn btn-default" ng-click="transfers_clean()" ng-if="transfers.length > 0">
+            Clean Finished
+        </button>
+    </div>
     <ul class="list-group">
         <li class="list-group-item" ng-repeat="transfer in transfers">
-            <div class="transfer-name">{{transfer.name | limitTo:55}}</div>
-            <a href="#files/{{transfer.file_id}}" class="btn btn-success" ng-if="transfer.status == 'COMPLETED'">Go To File</a>
-            <span ng-if="transfer.status != 'COMPLETED'" class="badge" >{{transfer.percent_done}}%</span>
-            <button ng-if="transfer.status != 'COMPLETED'" class="close" ng-click="maybe_cancel_transfer(transfer)"><span>&times;</span></button>
-            <div ng-if="transfer.status != 'COMPLETED'" class="status">{{transfer.status_message}}</div>
+            <div class="transfer-name">
+                {{transfer.name | limitTo:55}}
+            </div>
+            <a class="btn btn-success" href="#files/{{transfer.file_id}}" ng-if="transfer.status == 'COMPLETED'">
+                Go To File
+            </a>
+            <span class="badge time" ng-if="transfer.status != 'COMPLETED'">
+                {{transfer.estimated_time  | duration}}
+            </span>
+            <span class="badge" ng-if="transfer.status != 'COMPLETED'">
+                {{transfer.percent_done}}%
+            </span>
+            <button class="close" ng-click="maybe_cancel_transfer(transfer)" ng-if="transfer.status != 'COMPLETED'">
+                <span>
+                    ×
+                </span>
+            </button>
+            <div class="status" ng-if="transfer.status != 'COMPLETED'">
+                {{transfer.status_message}}
+            </div>
             <div class="footer">
-                <div class="bar" ng-class="{success:transfer.status == 'COMPLETED'}" style="width: {{transfer.percent_done}}%;"></div>
+                <div class="bar" ng-class="{success:transfer.status == 'COMPLETED'}" style="width: {{transfer.percent_done}}%;">
+                </div>
             </div>
         </li>
     </ul>
@@ -21,15 +45,31 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
-                <h4 class="modal-title">Cancel Transfer</h4>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span>
+                        ×
+                    </span>
+                </button>
+                <h4 class="modal-title">
+                    Cancel Transfer
+                </h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to cancel <span class="label label-danger">{{cancel.name}}</span> ?</p>
+                <p>
+                    Are you sure you want to cancel
+                    <span class="label label-danger">
+                        {{cancel.name}}
+                    </span>
+                    ?
+                </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" ng-click="cancel_transfer(cancel.id)">Cancel</button>
+                <button class="btn btn-default" data-dismiss="modal" type="button">
+                    Cancel
+                </button>
+                <button class="btn btn-danger" ng-click="cancel_transfer(cancel.id)" type="button">
+                    Cancel
+                </button>
             </div>
         </div>
     </div>
