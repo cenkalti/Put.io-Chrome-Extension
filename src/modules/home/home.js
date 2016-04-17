@@ -1,14 +1,36 @@
 (function() {
-    var module = angular.module('homeModule', ['datesFilter', 'demoModule']);
+    var module = angular.module('homeModule', ['datesFilter', 'demoModule', 'ui.bootstrap']);
 
-    module.controller('homeController', ['$scope', '$location', 'putio',
-        function($scope, $location, putio) {
+    module.controller('homeController', ['$scope', '$location', 'putio', '$http',
+        function($scope, $location, putio, $http) {
 
             ga('send', 'pageview', '/home');
 
             $scope.today_events = [];
             $scope.week_events = [];
             $scope.month_events = [];
+
+            $scope.fileSelected = null;
+
+            $scope.search = {
+                selected: null,
+                do: function(val) {
+                    return $http.get(putio.searchUrl(val, 1), {}).then(function(resp) {
+                        return resp.data.files;
+                    });
+                },
+                select: function(file, model, label, event) {
+                    if (putio.is_video(file.content_type)) {
+                        chrome.windows.create({
+                            url: 'video.html#?file=' + file.id,
+                            type: 'panel'
+                        }, function(new_window) {});
+                    } else {
+                        $location.path('/file/' + file.id);
+                    }
+
+                }
+            };
 
             $scope.demo = {
                 config: [{

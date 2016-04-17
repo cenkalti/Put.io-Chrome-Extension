@@ -338,6 +338,10 @@
                 }, callback);
             };
 
+            putio.searchUrl = function(query, page) {
+                return get_url('/files/search/' + query + '/page/' + page);
+            };
+
             putio.is_video = function(content_type) {
                 if (content_type.indexOf('video') == -1) {
                     return false;
