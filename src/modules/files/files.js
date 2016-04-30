@@ -46,6 +46,23 @@
 
             });
 
+            $scope.is_video = function(file) {
+                return putio.is_video(file.content_type);
+            }
+
+            $scope.maybe_go_to = function(file) {
+                if (putio.is_video(file.content_type)) {
+                    ga('send', 'event', 'file', 'play');
+
+                    chrome.windows.create({
+                        url: 'video.html#?file=' + file.id,
+                        type: 'panel'
+                    }, function(new_window) {});
+                } else {
+                    $location.path('/file/' + file.id);
+                }
+            }
+
             $scope.go_to = function(file) {
                 if (file.content_type == 'application/x-directory') {
                     $location.path('/files/' + file.id);

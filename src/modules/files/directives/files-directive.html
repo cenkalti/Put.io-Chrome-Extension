@@ -90,17 +90,17 @@
                 </ul>
             </div>
         </li>
-        <li class="list-group-item" ng-click="go_to(file)" ng-repeat="file in files  | orderBy:order:order_reverse">
+        <li class="list-group-item" ng-repeat="file in files  | orderBy:order:order_reverse">
             <input type="checkbox" value="{{ file.id }}" class="check" ng-click="toggle_select(file.id);$event.stopPropagation()"/>
             <a ng-if="file.content_type == 'application/x-directory'" ng-href="{{ download_url([file.id]) }}" class="yellow">
                 <i class="fa fa-folder-open fa-lg fa-fw">
                 </i>
             </a>
             <a ng-if="file.content_type != 'application/x-directory'" ng-href="{{ download_url(file.id) }}" class="yellow">
-                <i class="fa fa-file fa-lg fa-fw">
+                <i class="fa fa-lg fa-fw" ng-class="is_video(file) ? 'fa-play' : 'fa-file'" ng-click="maybe_go_to(file)">
                 </i>
             </a>
-            <span>
+            <span ng-click="go_to(file)">
                 {{ file.name | limitTo:50 }}
             </span>
             <span class="badge">
