@@ -2,12 +2,17 @@
     <div class="input-group" ng-class="search.no_results ? 'has-error' : ''">
         <input type="text" class="form-control" placeholder="Search" ng-model="search.selected"   typeahead-min-length="2" typeahead-no-results="search.no_results" typeahead-on-select="search.select($item, $model, $label, $event)" typeahead-wait-ms="500" uib-typeahead="file.name for file in search.do($viewValue)" typeahead-loading="search.loading"/>
         <span class="input-group-addon">
-            <i class="fa fa-video-camera" ng-class="search.filter ? 'yellow' : ''"></i>
-            <input type="checkbox" ng-model="search.filter" ng-click="search.filter_reset()" />
+            <i class="fa fa-video-camera" ng-class="search.filter ? 'yellow' : ''">
+            </i>
+            <input type="checkbox" ng-model="search.filter" ng-click="search.filter_reset()"/>
         </span>
     </div>
     <demo config="demo.config" on-finish="demo.finish()" on-skip="demo.skip()">
     </demo>
+    <div class="alert alert-info" ng-if="any_events()" ng-hide="loading">
+        Nothing here
+    </div>
+    <i class="fa fa-trash-o fa-2x fa-fw"  ng-click="clear()" ng-hide="any_events()"></i>
     <div ng-if="today_events.length> 0">
         <div class="page-header">
             <h1>

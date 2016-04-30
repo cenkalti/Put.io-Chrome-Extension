@@ -286,6 +286,13 @@
                 }, callback);
             };
 
+            putio.events_delete = function(callback) {
+                request({
+                    verb: 'POST',
+                    url: '/events/delete'
+                }, callback);
+            };
+
             putio.friends_list = function(callback) {
                 request({
                     verb: 'GET',

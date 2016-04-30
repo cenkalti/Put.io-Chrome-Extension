@@ -1,15 +1,16 @@
 (function() {
     var module = angular.module('homeModule', ['datesFilter', 'demoModule', 'ui.bootstrap', 'ngSanitize']);
 
-    module.controller('homeController', ['$scope', '$location', 'putio', '$http',
-        function($scope, $location, putio, $http) {
+    module.controller('homeController', ['$scope', '$location', 'putio', '$http', '$route',
+        function($scope, $location, putio, $http, $route) {
 
             ga('send', 'pageview', '/home');
 
+            $scope.loading = true;
+            $scope.today_events = [];
             $scope.today_events = [];
             $scope.week_events = [];
             $scope.month_events = [];
-
             $scope.fileSelected = null;
 
             $scope.search = {
@@ -40,6 +41,75 @@
                     $scope.search.selected = null;
                 }
             };
+
+            $scope.demo = {
+                config: [{
+                    type: 'element',
+                    selector: '.btn-menu',
+                    heading: 'Menu',
+                    text: 'Here is the menu.',
+                    placement: 'right',
+                    scroll: false
+                }, {
+                    type: 'element',
+                    selector: '.progress-bar-value',
+                    heading: 'Storage',
+                    text: 'Here you can find how much data is left in your account.',
+                    placement: 'bottom',
+                    scroll: false
+                }, {
+                    type: 'title',
+                    heading: 'Home',
+                    text: 'The Home page contains an history of your downloads.'
+                }, {
+                    type: 'element',
+                    selector: '.home > div:nth-child(2) a:first-child',
+                    heading: 'Go to file',
+                    text: 'Click to go to file/directory.',
+                    placement: 'bottom',
+                    scroll: true
+                }],
+                skip: function() {
+                    ga('send', 'event', 'home', 'demo_skip');
+                },
+                finish: function() {
+                    ga('send', 'event', 'home', 'demo_finish');
+                }
+            };
+
+            $scope.clear = function() {
+                putio.events_delete(function(err, data) {
+                    $route.reload();
+                });
+            };
+
+            $scope.any_events = function() {
+                return $scope.today_events.length == 0 && $scope.week_events.length == 0 && $scope.month_events.length == 0;
+            };
+
+            putio.events_list(function(err, data) {
+                var events = data.events,
+                    day = moment().subtract(1, 'days'),
+                    week = moment().subtract(1, 'weeks'),
+                    month = moment().subtract(1, 'months');
+
+                for (var i in events) {
+                    var ev = events[i],
+                        d = moment(ev.created_at);
+
+                    if (d.isAfter(day)) {
+                        $scope.today_events.push(ev);
+                    }
+                    if (d.isAfter(week) && d.isBefore(day)) {
+                        $scope.week_events.push(ev);
+                    }
+                    if (d.isAfter(month) && d.isBefore(week)) {
+                        $scope.month_events.push(ev);
+                    }
+                }
+
+                $scope.loading = false;
+            });
 
             function video_filter(file) {
                 return putio.is_video(file.content_type);
@@ -78,65 +148,6 @@
 
                 return file;
             }
-
-            $scope.demo = {
-                config: [{
-                    type: 'element',
-                    selector: '.btn-menu',
-                    heading: 'Menu',
-                    text: 'Here is the menu.',
-                    placement: 'right',
-                    scroll: false
-                }, {
-                    type: 'element',
-                    selector: '.progress-bar-value',
-                    heading: 'Storage',
-                    text: 'Here you can find how much data is left in your account.',
-                    placement: 'bottom',
-                    scroll: false
-                }, {
-                    type: 'title',
-                    heading: 'Home',
-                    text: 'The Home page contains an history of your downloads.'
-                }, {
-                    type: 'element',
-                    selector: '.home > div:nth-child(2) a:first-child',
-                    heading: 'Go to file',
-                    text: 'Click to go to file/directory.',
-                    placement: 'bottom',
-                    scroll: true
-                }],
-                skip: function() {
-                    ga('send', 'event', 'home', 'demo_skip');
-                },
-                finish: function() {
-                    ga('send', 'event', 'home', 'demo_finish');
-                }
-            };
-
-            putio.events_list(function(err, data) {
-                var events = data.events;
-
-                var day = moment().subtract(1, 'days'),
-                    week = moment().subtract(1, 'weeks'),
-                    month = moment().subtract(1, 'months');
-
-                for (var i in events) {
-                    var ev = events[i],
-                        d = moment(ev.created_at);
-
-                    if (d.isAfter(day)) {
-                        $scope.today_events.push(ev);
-                    }
-                    if (d.isAfter(week) && d.isBefore(day)) {
-                        $scope.week_events.push(ev);
-                    }
-                    if (d.isAfter(month) && d.isBefore(week)) {
-                        $scope.month_events.push(ev);
-                    }
-
-                }
-            });
         }
     ]);
 })();
