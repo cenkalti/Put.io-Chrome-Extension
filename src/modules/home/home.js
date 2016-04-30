@@ -13,10 +13,21 @@
             $scope.fileSelected = null;
 
             $scope.search = {
+                loading: false,
                 selected: null,
+                filter: true,
+                filter_reset: function() {
+                    $scope.search.selected = null;
+                },
                 do: function(val) {
                     return $http.get(putio.searchUrl(val, 1), {}).then(function(resp) {
-                        return resp.data.files;
+                        if($scope.search.filter) {
+                            return resp.data.files.filter(function(file) {
+                                return putio.is_video(file.content_type)
+                            });
+                        } else {
+                            return resp.data.files;
+                        }
                     });
                 },
                 select: function(file, model, label, event) {

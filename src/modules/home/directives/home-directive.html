@@ -1,86 +1,90 @@
 <div class="home">
-    <div class="form-group" ng-class="search.no_results ? 'has-error' : ''">
-        <input class="form-control" ng-model="search.selected" placeholder="Search" type="text" typeahead-min-length="2" typeahead-no-results="search.no_results" typeahead-on-select="search.select($item, $model, $label, $event)" typeahead-wait-ms="500" uib-typeahead="file.name for file in search.do($viewValue)" />
+    <div class="input-group" ng-class="search.no_results ? 'has-error' : ''">
+        <input type="text" class="form-control" placeholder="Search" ng-model="search.selected"   typeahead-min-length="2" typeahead-no-results="search.no_results" typeahead-on-select="search.select($item, $model, $label, $event)" typeahead-wait-ms="500" uib-typeahead="file.name for file in search.do($viewValue)" typeahead-loading="search.loading"/>
+        <span class="input-group-addon">
+            <i class="fa fa-video-camera" ng-class="search.filter ? 'yellow' : ''"></i>
+            <input type="checkbox" ng-model="search.filter" ng-click="search.filter_reset()" />
+        </span>
     </div>
     <demo config="demo.config" on-finish="demo.finish()" on-skip="demo.skip()">
     </demo>
-    <div ng-if="today_events.length > 0">
+    <div ng-if="today_events.length> 0">
         <div class="page-header">
             <h1>
                 Today
             </h1>
         </div>
         <ul class="list-group">
-            <a class="list-group-item" ng-href="#files/{{event.file_id}}" ng-repeat="event in today_events">
+            <a class="list-group-item" ng-href="#files/{{ event.file_id }}" ng-repeat="event in today_events">
                 <span>
-                    {{event.transfer_name || event.file_name | limitTo : 40}}
+                    {{ event.transfer_name || event.file_name | limitTo : 40 }}
                 </span>
                 <small>
-                    ({{event.transfer_size || event.file_size | bytes : 1}})
+                    ({{ event.transfer_size || event.file_size | bytes : 1 }})
                 </small>
                 <small>
                     <i class="fa fa-clock-o">
                     </i>
-                    {{event.created_at | between}}
+                    {{ event.created_at | between }}
                 </small>
                 <small ng-if="event.sharing_user_name">
                     <i class="fa fa-user">
                     </i>
-                    {{event.sharing_user_name | limitTo : 10}}
+                    {{ event.sharing_user_name | limitTo : 10 }}
                 </small>
             </a>
         </ul>
     </div>
-    <div ng-if="week_events.length > 0">
+    <div ng-if="week_events.length> 0">
         <div class="page-header">
             <h1>
                 This Week
             </h1>
         </div>
         <ul class="list-group">
-            <a class="list-group-item" ng-href="#files/{{event.file_id}}" ng-repeat="event in week_events">
+            <a class="list-group-item" ng-href="#files/{{ event.file_id }}" ng-repeat="event in week_events">
                 <span>
-                    {{event.transfer_name || event.file_name | limitTo : 40}}
+                    {{ event.transfer_name || event.file_name | limitTo : 40 }}
                 </span>
                 <small>
-                    ({{event.transfer_size || event.file_size | bytes : 1}})
+                    ({{ event.transfer_size || event.file_size | bytes : 1 }})
                 </small>
                 <small>
                     <i class="fa fa-clock-o">
                     </i>
-                    {{event.created_at | between}}
+                    {{ event.created_at | between }}
                 </small>
                 <small ng-if="event.sharing_user_name">
                     <i class="fa fa-user">
                     </i>
-                    {{event.sharing_user_name | limitTo : 10}}
+                    {{ event.sharing_user_name | limitTo : 10 }}
                 </small>
             </a>
         </ul>
     </div>
-    <div ng-if="month_events.length > 0">
+    <div ng-if="month_events.length> 0">
         <div class="page-header">
             <h1>
                 Last Month
             </h1>
         </div>
         <ul class="list-group">
-            <a class="list-group-item" ng-href="#files/{{event.file_id}}" ng-repeat="event in month_events">
+            <a class="list-group-item" ng-href="#files/{{ event.file_id }}" ng-repeat="event in month_events">
                 <span>
-                    {{event.transfer_name || event.file_name | limitTo : 40}}
+                    {{ event.transfer_name || event.file_name | limitTo : 40 }}
                 </span>
                 <small>
-                    ({{event.transfer_size || event.file_size | bytes : 1}})
+                    ({{ event.transfer_size || event.file_size | bytes : 1 }})
                 </small>
                 <small>
                     <i class="fa fa-clock-o">
                     </i>
-                    {{event.created_at | between}}
+                    {{ event.created_at | between }}
                 </small>
                 <small ng-if="event.sharing_user_name">
                     <i class="fa fa-user">
                     </i>
-                    {{event.sharing_user_name | limitTo : 10}}
+                    {{ event.sharing_user_name | limitTo : 10 }}
                 </small>
             </a>
         </ul>
