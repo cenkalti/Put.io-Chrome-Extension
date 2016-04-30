@@ -72,14 +72,14 @@
 
                                     if (err) {
                                         log.warn(err);
-                                        $scope.loading = false;
                                         document.title = data.parsed.title;
                                     } else {
-                                        $scope.$apply(function() {
-                                            $scope.loading = false;
-                                        });
                                         document.title = get_title(data);
                                     }
+
+                                    $scope.$apply(function() {
+                                        $scope.loading = false;
+                                    });
                                 });
                             });
                         }
