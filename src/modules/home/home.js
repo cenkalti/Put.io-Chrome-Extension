@@ -1,5 +1,5 @@
 (function() {
-    var module = angular.module('homeModule', ['datesFilter', 'demoModule', 'ui.bootstrap']);
+    var module = angular.module('homeModule', ['datesFilter', 'demoModule', 'ui.bootstrap', 'ngSanitize']);
 
     module.controller('homeController', ['$scope', '$location', 'putio', '$http',
         function($scope, $location, putio, $http) {
@@ -21,12 +21,10 @@
                 },
                 do: function(val) {
                     return $http.get(putio.searchUrl(val, 1), {}).then(function(resp) {
-                        if($scope.search.filter) {
-                            return resp.data.files.filter(function(file) {
-                                return putio.is_video(file.content_type)
-                            });
+                        if ($scope.search.filter) {
+                            return resp.data.files.filter(video_filter).map(video_detect);
                         } else {
-                            return resp.data.files;
+                            return resp.data.files.map(video_show);
                         }
                     });
                 },
@@ -39,9 +37,47 @@
                     } else {
                         $location.path('/file/' + file.id);
                     }
-
+                    $scope.search.selected = null;
                 }
             };
+
+            function video_filter(file) {
+                return putio.is_video(file.content_type);
+            }
+
+            function video_detect(file) {
+                var parsed = ptn(file.name),
+                    name = file.name;
+
+                file.name = '<i class="fa fa-play"></i> ';
+                file.name += parsed.title;
+
+                if (parsed.season && parsed.episode) {
+                    file.name += ' S' + parsed.season + 'E' + parsed.episode;
+                }
+
+                file.name += '<small>' + name + '</small>';
+
+                return file;
+            }
+
+            function video_show(file) {
+                if (putio.is_video(file.content_type)) {
+                    var parsed = ptn(file.name),
+                        name = file.name;
+
+                    file.name = '<i class="fa fa-play"></i> ';
+                    file.name += parsed.title;
+
+                    if (parsed.season && parsed.episode) {
+                        file.name += ' S' + parsed.season + 'E' + parsed.episode;
+                    }
+
+                    file.name += '<small>' + name + '</small>';
+                }
+
+                return file;
+            }
 
             $scope.demo = {
                 config: [{
