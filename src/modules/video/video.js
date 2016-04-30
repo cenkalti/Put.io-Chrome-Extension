@@ -72,7 +72,7 @@
 
                                     if (err) {
                                         log.warn(err);
-                                        document.title = data.parsed.title;
+                                        document.title = file.name;
                                     } else {
                                         document.title = get_title(data);
                                     }

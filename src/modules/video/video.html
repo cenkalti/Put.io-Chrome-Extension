@@ -21,7 +21,7 @@
                     <h1>{{info.title}}</h1>
                     <p>{{info.overview}}</p>
                 </div>
-                <div class="info vote">
+                <div class="info vote" ng-if="info.type">
                     <h2>{{info.episode_vote_average || info.vote_average || 0 | number:1}} / Rating</h2>
                     <h2>{{info.episode_vote_count || info.vote_count || 0}} / Votes</h2>
                     <h2>{{info.resolution}} {{info.quality}}</h2>
