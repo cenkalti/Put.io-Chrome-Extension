@@ -15,6 +15,7 @@ module.exports = function(grunt) {
                 "bootstrap": "jquery",
                 "angular-xeditable": "angular",
                 "angular-tree-control": "angular",
+                "angular-sanitize": "angular",
                 "ng-joyride": ["angular", "jquery", "bootstrap"]
             },
             "bowerOptions": {
