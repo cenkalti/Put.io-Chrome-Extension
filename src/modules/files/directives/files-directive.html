@@ -1,143 +1,200 @@
 <div class="files">
     <div class="page-header" ng-if="!loading">
         <h1>
-        {{parent.name | limitTo : 35}}
-        <small ng-if="parent.id" ng-click="maybe_rename_folder(parent.id, parent.name)">(Click To Edit)</small>
+            {{ parent.name | limitTo : 35 }}
+            <small ng-if="parent.id" ng-click="maybe_rename_folder(parent.id, parent.name)">
+                (Click To Edit)
+            </small>
         </h1>
     </div>
     <ol class="breadcrumb" ng-if="!loading">
-        <li ng-if="parent.breadcrumbs.length >= 0">
-            <a href="#files/0">Your Files</a>
+        <li ng-if="parent.breadcrumbs.length >= 0 && parent.id != 0">
+            <a href="#files/0">
+                Your Files
+            </a>
         </li>
         <li ng-repeat="crumb in parent.breadcrumbs">
-            <a href="#files/{{crumb[0]}}">{{crumb[1] | limitTo : 20}}</a>
+            <a href="#files/{{ crumb[0] }}">
+                {{ crumb[1] | limitTo : 20 }}
+            </a>
         </li>
-        <li class="active">{{parent.name | limitTo : 20}}</li>
+        <li class="active">
+            {{ parent.name | limitTo : 20 }}
+        </li>
     </ol>
     <ul class="list-group">
         <li class="list-group-item">
             <input type="checkbox" ng-click="toggle_select_all()" class="check-all"/>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    Sorted By {{order | capitalize}}
-                    <span class="caret" ng-class="{up:order_reverse}"></span>
+                    Sorted By {{ order | capitalize }}
+                    <span class="caret" ng-class="{up:order_reverse}">
+                    </span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right">
-                    <li><a ng-click="set_order('name', false)">By Name</a></li>
-                    <li><a ng-click="set_order('size', true)">By Size</a></li>
-                    <li><a ng-click="set_order('date', false)">By Date</a></li>
+                    <li>
+                        <a ng-click="set_order('name', false)">
+                            By Name
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="set_order('size', true)">
+                            By Size
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="set_order('date', false)">
+                            By Date
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     Actions
-                    <span class="caret"></span>
+                    <span class="caret">
+                    </span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right">
-                    <li><a ng-click="maybe_move_folders()">
-                        Move <span class="badge">{{selected_files.length}}</span>
-                    </a></li>
-                    <li><a ng-click="maybe_delete_folders()">
-                        Delete <span class="badge">{{selected_files.length}}</span>
-                    </a></li>
-                    <li><a ng-click="download_folders()">
-                        Download <span class="badge">{{selected_files.length}}</span>
-                    </a></li>
-                    <li class="divider"></li>
-                    <li><a ng-click="maybe_create_folder(parent.id)">
-                        New Folder
-                    </a></li>
+                    <li>
+                        <a ng-click="maybe_move_folders()">
+                            Move
+                            <span class="badge">
+                                {{ selected_files.length }}
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="maybe_delete_folders()">
+                            Delete
+                            <span class="badge">
+                                {{ selected_files.length }}
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="download_folders()">
+                            Download
+                            <span class="badge">
+                                {{ selected_files.length }}
+                            </span>
+                        </a>
+                    </li>
+                    <li class="divider">
+                    </li>
+                    <li>
+                        <a ng-click="maybe_create_folder(parent.id)">
+                            New Folder
+                        </a>
+                    </li>
                 </ul>
             </div>
         </li>
         <li class="list-group-item" ng-click="go_to(file)" ng-repeat="file in files  | orderBy:order:order_reverse">
-            <input type="checkbox" value="{{file.id}}" class="check" ng-click="toggle_select(file.id);$event.stopPropagation()"/>
-            <a ng-if="file.content_type == 'application/x-directory'" ng-href="{{download_url([file.id])}}" class="yellow">
-                <i class="fa fa-folder-open fa-lg fa-fw"></i>
+            <input type="checkbox" value="{{ file.id }}" class="check" ng-click="toggle_select(file.id);$event.stopPropagation()"/>
+            <a ng-if="file.content_type == 'application/x-directory'" ng-href="{{ download_url([file.id]) }}" class="yellow">
+                <i class="fa fa-folder-open fa-lg fa-fw">
+                </i>
             </a>
-            <a ng-if="file.content_type != 'application/x-directory'" ng-href="{{download_url(file.id)}}" class="yellow">
-                <i class="fa fa-file fa-lg fa-fw"></i>
+            <a ng-if="file.content_type != 'application/x-directory'" ng-href="{{ download_url(file.id) }}" class="yellow">
+                <i class="fa fa-file fa-lg fa-fw">
+                </i>
             </a>
-            <span>{{file.name | limitTo:50}}</span>
-            <span class="badge">{{file.size | bytes : 2}}</span>
+            <span>
+                {{ file.name | limitTo:50 }}
+            </span>
+            <span class="badge">
+                {{ file.size | bytes : 2 }}
+            </span>
         </li>
     </ul>
 </div>
-
 <div class="modal fade" id="rename_folder">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
                 </button>
-                <h4 class="modal-title">Rename Folder</h4>
+                <h4 class="modal-title">
+                    Rename Folder
+                </h4>
             </div>
             <div class="modal-body">
-                <input type="text" class="form-control" placeholder="Folder Name" ng-model="folder.name">
+                <input type="text" class="form-control" placeholder="Folder Name" ng-model="folder.name"/>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" ng-click="rename_folder()">Rename</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="rename_folder()">
+                    Rename
+                </button>
             </div>
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="create_folder">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
                 </button>
-                <h4 class="modal-title">Create Folder</h4>
+                <h4 class="modal-title">
+                    Create Folder
+                </h4>
             </div>
             <div class="modal-body">
-                <input type="text" class="form-control" placeholder="Folder Name" ng-model="folder.name">
+                <input type="text" class="form-control" placeholder="Folder Name" ng-model="folder.name"/>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" ng-click="create_folder()">Create</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="create_folder()">
+                    Create
+                </button>
             </div>
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="delete_folders">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
                 </button>
-                <h4 class="modal-title">Delete Folder</h4>
+                <h4 class="modal-title">
+                    Delete Folder
+                </h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete <span class="label label-danger">{{folder.name}}</span> ?</p>
+                <p>
+                    Are you sure you want to delete
+                    <span class="label label-danger">
+                        {{ folder.name }}
+                    </span>
+                    ?
+                </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" ng-click="delete_folders(folder.id)">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-danger" ng-click="delete_folders(folder.id)">
+                    Delete
+                </button>
             </div>
         </div>
     </div>
 </div>
-
-<tree
-    node-selected="selected(node)"
-    modal-options="modalOptions"
-    success="move(node)">
+<tree node-selected="selected(node)" modal-options="modalOptions" success="move(node)">
 </tree>
