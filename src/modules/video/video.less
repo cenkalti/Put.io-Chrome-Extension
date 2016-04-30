@@ -1,6 +1,7 @@
 body {
     background-color: black;
 }
+
 .video_player-dimensions {
     width: 100%;
     height: 320px;
@@ -12,51 +13,77 @@ body {
     left: 0;
     position: absolute;
 }
+
 @media (min-width: 1200px) {
     .video_player-dimensions {
-        width: 1170px;
         height: 658.125px;
-   }
+    }
 }
+
 @media (min-width: 992px) and (max-width: 1199px) {
     .video_player-dimensions {
-        width: 940px;
         height: 528.75px;
-   }
+    }
+
+    .info {
+        zoom: 0.80;
+    }
 }
+
 @media (min-width: 768px) and (max-width: 991px) {
     .video_player-dimensions {
-        width: 728px;
         height: 409.5px;
-   }
+    }
+
+    .info {
+        zoom: 0.65;
+    }
 }
+
+@media (max-width:768px) {
+    .video_player-dimensions {
+        height: 320px;
+    }
+
+    .info {
+        zoom: 0.50;
+    }
+}
+
 .vjs-macpie-skin .vjs-control-bar {
     background-color: black;
 }
+
 .vjs-macpie-skin .vjs-big-play-button {
     left: 45%;
     top: 45%;
     z-index: 3;
 }
+
 .vjs-macpie-skin .vjs-menu-button .vjs-menu .vjs-menu-content {
     width: 150px;
 }
+
 .info {
     opacity: 0;
     z-index: 2;
     position: absolute;
     transition: opacity .5s ease-in-out;
 }
+
 .videogular-container:hover .info {
     opacity: 0.85;
 }
+
 .videogular-container:hover img.info {
     opacity: 0.85;
 }
+
 img.info {
     top: 0;
     box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.85);
 }
+
 .info.title {
     top: 0;
     color: white;
@@ -64,28 +91,34 @@ img.info {
     text-align: center;
     left: 40%;
 }
+
 .info.title h1 {
     text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.85);
 }
+
 .info.title p {
     background: black;
     padding: 2px;
     border-radius: 5px;
 }
+
 .info.vote {
     top: 5%;
     right: 5%;
     color: #fff;
     padding: 5px;
 }
+
 .info.vote h2 {
     text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.55);
 }
+
 .alert {
     width: 80%;
     margin: auto;
     margin-top: 10%;
 }
+
 @-webkit-keyframes whirly {
     0% {
         -webkit-transform: rotate(0deg);
@@ -93,15 +126,16 @@ img.info {
         -ms-transform: rotate(0deg);
         -o-transform: rotate(0deg);
         transform: rotate(0deg);
-   }
-   100% {
-       -webkit-transform: rotate(360deg);
-       -moz-transform: rotate(360deg);
-       -ms-transform: rotate(360deg);
-       -o-transform: rotate(360deg);
-       transform: rotate(360deg);
-  }
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
+
 @-moz-keyframes whirly {
     0% {
         -webkit-transform: rotate(0deg);
@@ -109,15 +143,16 @@ img.info {
         -ms-transform: rotate(0deg);
         -o-transform: rotate(0deg);
         transform: rotate(0deg);
-   }
-   100% {
-       -webkit-transform: rotate(360deg);
-       -moz-transform: rotate(360deg);
-       -ms-transform: rotate(360deg);
-       -o-transform: rotate(360deg);
-       transform: rotate(360deg);
-  }
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
+
 @-o-keyframes whirly {
     0% {
         -webkit-transform: rotate(0deg);
@@ -125,15 +160,16 @@ img.info {
         -ms-transform: rotate(0deg);
         -o-transform: rotate(0deg);
         transform: rotate(0deg);
-   }
-   100% {
-       -webkit-transform: rotate(360deg);
-       -moz-transform: rotate(360deg);
-       -ms-transform: rotate(360deg);
-       -o-transform: rotate(360deg);
-       transform: rotate(360deg);
-  }
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
+
 @keyframes whirly {
     0% {
         -webkit-transform: rotate(0deg);
@@ -141,15 +177,17 @@ img.info {
         -ms-transform: rotate(0deg);
         -o-transform: rotate(0deg);
         transform: rotate(0deg);
-   }
-   100% {
-       -webkit-transform: rotate(360deg);
-       -moz-transform: rotate(360deg);
-       -ms-transform: rotate(360deg);
-       -o-transform: rotate(360deg);
-       transform: rotate(360deg);
-  }
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
+
+
 /* Styles for old versions of IE */
 
 .whirly {

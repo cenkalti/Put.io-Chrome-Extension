@@ -6,22 +6,22 @@
     <body ng-app="videoApp" ng-csp>
 
         <div ng-controller="videoController">
-            <div ng-if="loading" class="whirly"></div>
-            <div class="alert alert-danger" ng-if="!loading && error">{{error.error_message || error}}</div>
-            <div ng-hide="loading" class="videogular-container" ng-if="!error">
+            <div class="whirly" ng-if="loading"></div>
+            <div class="alert alert-danger ng-hide" ng-show="error">{{error.error_message || error}}</div>
+            <div class="videogular-container" ng-hide="loading" ng-if="!error">
                 <video id="video_player" class="video-js vjs-default-skin vjs-macpie-skin">
                 </video>
-                <img ng-src="{{config.images.base_url + config.images.poster_sizes[2] + info.poster}}" class="info" ng-if="!loading && info.poster" />
-                <div class="info title" ng-if="info.type == 'tv'" ng-if="!loading">
+                <img class="info" ng-src="{{config.images.base_url + config.images.poster_sizes[2] + info.poster}}" ng-if="info.poster" />
+                <div class="info title" ng-if="info.type == 'tv'">
                     <h1>{{info.title}}</h1>
                     <h1>Season {{info.season | pad}} Episode {{info.episode_number | pad}}</h1>
                     <h1>{{info.episode_title}}</h1>
                 </div>
-                <div class="info title" ng-if="info.type == 'movie'" ng-if="!loading">
+                <div class="info title" ng-if="info.type == 'movie'">
                     <h1>{{info.title}}</h1>
                     <p>{{info.overview}}</p>
                 </div>
-                <div class="info vote" ng-if="!loading">
+                <div class="info vote">
                     <h2>{{info.episode_vote_average || info.vote_average || 0 | number:1}} / Rating</h2>
                     <h2>{{info.episode_vote_count || info.vote_count || 0}} / Votes</h2>
                     <h2>{{info.resolution}} {{info.quality}}</h2>
