@@ -1,7 +1,7 @@
 {
     "name": "putio_extension",
     "short_name": "putio",
-    "version": "2.5.1",
+    "version": "2.5.2",
     "description": "Extension for put.io. Add torrent directly by right clicking, view your account informations",
     "main": "Gruntfile.js",
     "scripts": {},
