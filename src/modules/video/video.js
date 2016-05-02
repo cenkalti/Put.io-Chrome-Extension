@@ -15,8 +15,6 @@
             var params = $location.search(),
                 log = new Log(module);
 
-            ga('send', 'pageview', '/video');
-
             $scope.loading = true;
             document.title = 'Loading...';
             $scope.config = moviedb.configs;

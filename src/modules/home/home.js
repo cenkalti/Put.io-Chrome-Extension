@@ -4,8 +4,6 @@
     module.controller('homeController', ['$scope', '$location', 'putio', '$http', '$route',
         function($scope, $location, putio, $http, $route) {
 
-            ga('send', 'pageview', '/home');
-
             $scope.loading = true;
             $scope.today_events = [];
             $scope.today_events = [];
@@ -21,6 +19,8 @@
                     $scope.search.selected = null;
                 },
                 do: function(val) {
+                    wp.event(module, 'search', 'do', val);
+
                     return $http.get(putio.searchUrl(val, 1), {}).then(function(resp) {
                         if ($scope.search.filter) {
                             return resp.data.files.filter(video_filter).map(video_detect);
@@ -30,6 +30,8 @@
                     });
                 },
                 select: function(file, model, label, event) {
+                    wp.event(module, 'search', 'select');
+
                     if (putio.is_video(file.content_type)) {
                         chrome.windows.create({
                             url: 'video.html#?file=' + file.id,
@@ -70,21 +72,25 @@
                     scroll: true
                 }],
                 skip: function() {
-                    ga('send', 'event', 'home', 'demo_skip');
+                    wp.event(module, 'demo', 'skip');
                 },
                 finish: function() {
-                    ga('send', 'event', 'home', 'demo_finish');
+                    wp.event(module, 'demo', 'finish');
                 }
             };
 
             $scope.clear = function() {
+                wp.event(module, 'events', 'clear');
+
                 putio.events_delete(function(err, data) {
                     $route.reload();
                 });
             };
 
             $scope.any_events = function() {
-                return $scope.today_events.length == 0 && $scope.week_events.length == 0 && $scope.month_events.length == 0;
+                return $scope.today_events.length == 0 &&
+                    $scope.week_events.length == 0 &&
+                    $scope.month_events.length == 0;
             };
 
             putio.events_list(function(err, data) {

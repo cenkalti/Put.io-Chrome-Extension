@@ -6,8 +6,6 @@
             var log = new Log(module),
                 message = new Message();
 
-            ga('send', 'pageview', '/options');
-
             $scope.home_pages = {
                 home: 'Home',
                 transfers: 'Transfers',
@@ -59,7 +57,7 @@
             });
 
             $scope.update_home_page = function() {
-                ga('send', 'event', 'options', 'update_home_page');
+                wp.event(module, 'options_update', 'home_page', $scope.home_page);
 
                 putio.options_get(function(err, options) {
                     options.home_page = $scope.home_page;
@@ -72,7 +70,7 @@
             };
 
             $scope.update_notification = function() {
-                ga('send', 'event', 'options', 'update_notification');
+                wp.event(module, 'options_update', 'notification', $scope.notification.toString());
 
                 putio.options_get(function(err, options) {
                     options.notification = $scope.notification;
@@ -93,13 +91,13 @@
             };
 
             $scope.maybe_update_default_folder = function(id) {
-                ga('send', 'event', 'options', 'maybe_update_default_folder');
+                wp.event(module, 'options_update', 'maybe_default_folder');
 
                 $('.tree').modal('show');
             };
 
             $scope.update_default_folder = function(node) {
-                ga('send', 'event', 'options', 'update_default_folder');
+                wp.event(module, 'options_update', 'default_folder');
 
                 $('.tree').modal('hide');
                 putio.account_set_settings({
@@ -114,8 +112,6 @@
             };
 
             $scope.update_demo = function() {
-                ga('send', 'event', 'options', 'update_demo');
-
                 putio.options_get(function(err, options) {
                     options.demo = $scope.demo;
 
@@ -142,7 +138,7 @@
             };
 
             $scope.reset_auth = function() {
-                ga('send', 'event', 'options', 'reset_auth');
+                wp.event(module, 'authentication', 'reset');
 
                 putio.auth_reset(function() {
                     window.close();
@@ -150,7 +146,7 @@
             };
 
             $scope.reset_app = function() {
-                ga('send', 'event', 'options', 'reset_app');
+                wp.event(module, 'application', 'reset');
 
                 putio.reset_app(function() {
                     chrome.windows.create({

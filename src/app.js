@@ -98,6 +98,8 @@
                 var deferred = $q.defer();
 
                 putio.set_error_callback(function(err) {
+                    wp.error(err.error_type, err.error_message);
+
                     if (err.error_message === 'Parent is not a folder') {
                         console.log('ignoring error: Parent is not a folder');
                     } else {
@@ -140,11 +142,12 @@
             };
 
             $scope.$root.$on('$locationChangeSuccess', function(event, next, previous) {
-                var a = $location
-                    .path()
-                    .split('/');
+                var uri = $location.path(),
+                    title = uri.split('/');
 
-                $scope.title = a[1];
+                wp.page_view(title[1], uri);
+
+                $scope.title = title[1];
             });
 
             $scope.$root.$on('refresh_file', function(event, next, previous) {
@@ -172,6 +175,12 @@
                         $scope.disk.used = disk.used;
                         $scope.disk.size = disk.size;
                         $scope.disk.percent = Math.round(((100 * disk.used) / disk.size));
+
+                        wp.identify({
+                            email: data.info.mail,
+                            name: data.info.username
+                        });
+
                     });
                 }
             }

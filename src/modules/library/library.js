@@ -7,8 +7,6 @@
                 library = new Library(),
                 $resetModal = $('.reset-modal');
 
-            ga('send', 'pageview', '/library');
-
             $scope.library = {
                 shows: {},
                 movies: {},
@@ -36,11 +34,11 @@
             };
 
             $scope.reset = function() {
+                wp.event(module, 'library', 'reset');
+
                 $resetModal.modal('show');
 
                 if (!$scope.loading) {
-                    ga('send', 'event', 'library', 'reset');
-
                     $scope.loading = true;
                     $scope.library = {
                         shows: {},
@@ -83,7 +81,7 @@
             };
 
             $scope.play = function(file_id) {
-                ga('send', 'event', 'library', 'play');
+                wp.event(module, 'library', 'play');
 
                 chrome.windows.create({
                     url: 'video.html#?file=' + file_id,

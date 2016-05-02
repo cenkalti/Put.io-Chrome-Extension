@@ -19,8 +19,6 @@
         function($scope, $routeParams, $location, $route, $filter, putio) {
             var file_id = $routeParams.file_id;
 
-            ga('send', 'pageview', '/file');
-
             $scope.file = {};
             $scope.loading = true;
             $scope.moveFileId = null;
@@ -50,27 +48,27 @@
             });
 
             $scope.maybe_rename_file = function(name) {
-                ga('send', 'event', 'file', 'maybe_rename_file');
+                wp.event(module, 'file', 'maybe_rename');
 
                 $('#rename_file').modal('show');
                 $scope.file.name = name;
             };
 
             $scope.rename_file = function() {
-                ga('send', 'event', 'file', 'rename_file');
+                wp.event(module, 'file', 'rename');
 
                 $('#rename_file').modal('hide');
                 putio.file_rename($scope.file.id, $scope.file.name, function(err, data) {});
             };
 
             $scope.maybe_delete_file = function() {
-                ga('send', 'event', 'file', 'maybe_delete_file');
+                wp.event(module, 'file', 'maybe_delete');
 
                 $('#delete_file').modal('show');
             };
 
             $scope.delete_file = function(id, parent_id) {
-                ga('send', 'event', 'file', 'delete_file');
+                wp.event(module, 'file', 'delete');
 
                 $('#delete_file').modal('hide');
                 putio.files_delete(id, function(err, data) {
@@ -80,7 +78,7 @@
             };
 
             $scope.download_file = function(id) {
-                ga('send', 'event', 'file', 'download_file');
+                wp.event(module, 'file', 'download');
 
                 var url = putio.download_url(id);
 
@@ -95,7 +93,7 @@
             };
 
             $scope.play = function(file) {
-                ga('send', 'event', 'file', 'play');
+                wp.event(module, 'file', 'play');
 
                 chrome.windows.create({
                     url: 'video.html#?file=' + file.id,
@@ -114,14 +112,14 @@
             };
 
             $scope.maybe_move_file = function() {
-                ga('send', 'event', 'file', 'maybe_move_file');
+                wp.event(module, 'file', 'maybe_move');
 
                 $scope.moveFileId = $scope.file.id;
                 $('.tree').modal('show');
             };
 
             $scope.move = function(node) {
-                ga('send', 'event', 'file', 'move');
+                wp.event(module, 'file', 'move');
 
                 $('.tree').modal('hide');
                 putio.files_move($scope.moveFileId, node.id, function(err, data) {

@@ -25,12 +25,10 @@
             };
 
             $scope.finish = function() {
-                ga('send', 'event', 'demo', 'finish');
                 $scope.onFinish();
             };
 
             $scope.skip = function() {
-                ga('send', 'event', 'demo', 'skip');
                 $scope.onSkip();
             };
         }
