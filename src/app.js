@@ -179,7 +179,11 @@
                         wp.identify({
                             email: data.info.mail,
                             name: data.info.username
+                        }, function() {
+                            wp.event(module, 'logged', 'identify');
                         });
+
+
 
                     });
                 }
