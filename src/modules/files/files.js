@@ -50,7 +50,7 @@
                 return putio.is_video(file.content_type);
             }
 
-            $scope.maybe_go_to = function(file) {
+            $scope.go_to = function(file) {
                 if (putio.is_video(file.content_type)) {
                     ga('send', 'event', 'file', 'play');
 
@@ -62,14 +62,6 @@
                     $location.path('/file/' + file.id);
                 }
             }
-
-            $scope.go_to = function(file) {
-                if (file.content_type == 'application/x-directory') {
-                    $location.path('/files/' + file.id);
-                } else {
-                    $location.path('/file/' + file.id);
-                }
-            };
 
             $scope.set_order = function(order, reverse) {
                 ga('send', 'event', 'files', 'order');
@@ -185,19 +177,34 @@
             $scope.download_folders = function() {
                 ga('send', 'event', 'files', 'download_folders');
 
-                var url = putio.download_url($scope.selected_files);
+                    putio.zips_create($scope.selected_files, function(err, data) {
+                        var url = false;
 
-                chrome.downloads.download({
-                    url: url,
-                    saveAs: true,
-                }, function(downloadId) {});
+                        async.until(
+                            function() {
+                                return url !== false;
+                            },
+                            function(callback) {
+                                putio.zips_get(data.zip_id, function(err1, data1) {
+                                    url = data1.url;
+                                    callback(err1);
+                                });
+                            },
+                            function(err, n) {
+                                chrome.downloads.download({
+                                    url: url,
+                                    saveAs: true,
+                                }, function(downloadId) {});
+                            }
+                        );
+                    });
             };
 
             $scope.download_url = function(id) {
                 return putio.download_url(id);
             };
 
-            $scope.selected = function(node) {
+            $scope.move_selected = function(node) {
                 if (node.content_type == 'application/x-directory') {
                     $scope.modalOptions.saveBtn.disabled = false;
                     $scope.modalOptions.saveBtn.text = 'Move to: ' + $filter('limitTo')(node.name, 25);

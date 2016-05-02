@@ -88,23 +88,26 @@
             };
 
             putio.events_list(function(err, data) {
-                var events = data.events,
-                    day = moment().subtract(1, 'days'),
+                var day = moment().subtract(1, 'days'),
                     week = moment().subtract(1, 'weeks'),
                     month = moment().subtract(1, 'months');
 
+                var events = data.events.filter(function(event) {
+                    return event.type != "zip_created";
+                });
+
                 for (var i in events) {
-                    var ev = events[i],
-                        d = moment(ev.created_at);
+                    var event = events[i],
+                        d = moment(event.created_at);
 
                     if (d.isAfter(day)) {
-                        $scope.today_events.push(ev);
+                        $scope.today_events.push(event);
                     }
                     if (d.isAfter(week) && d.isBefore(day)) {
-                        $scope.week_events.push(ev);
+                        $scope.week_events.push(event);
                     }
                     if (d.isAfter(month) && d.isBefore(week)) {
-                        $scope.month_events.push(ev);
+                        $scope.month_events.push(event);
                     }
                 }
 

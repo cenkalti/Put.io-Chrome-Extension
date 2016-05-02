@@ -185,17 +185,6 @@
                 }, callback);
             };
 
-            putio.files_download = function(ids, callback) {
-                if (typeof ids === 'object') {
-                    ids = ids.join();
-                }
-
-                request({
-                    verb: 'GET',
-                    url: '/files/zip?file_ids=' + ids.toString()
-                }, callback);
-            };
-
             putio.subtitles = function(id, callback) {
                 request({
                     verb: 'GET',
@@ -203,31 +192,25 @@
                 }, callback);
             };
 
-            putio.subtitle_url = function(id, key) {
-                return baseUrl + '/files/' + id + '/subtitles/' + key + '?format=webvtt';
+            putio.zips_create = function(ids, callback) {
+                request({
+                    verb: 'POST',
+                    url: '/zips/create?file_ids=' + ids.join()
+                }, callback);
             };
 
-            putio.video_url = function(file) {
-                var id = file.id;
-
-                if (file.content_type == 'video/mp4') {
-                    return get_url('/files/' + id + '/stream');
-
-                } else {
-                    return get_url('/files/' + id + '/mp4/stream?jwt=extension');
-                }
+            putio.zips_list = function(callback) {
+                request({
+                    verb: 'GET',
+                    url: '/zips/list'
+                }, callback);
             };
 
-            putio.download_url = function(ids) {
-                var url = baseUrl + '/files';
-
-                if (typeof ids === 'object') {
-                    url += '/zip?file_ids=' + ids.join() + '&oauth_token=' + accessToken;
-                } else {
-                    url += '/' + ids + '/download?oauth_token=' + accessToken;
-                }
-
-                return url;
+            putio.zips_get = function(id, callback) {
+                request({
+                    verb: 'GET',
+                    url: '/zips/' + id
+                }, callback);
             };
 
             putio.transfers_list = function(callback) {
@@ -343,6 +326,29 @@
                     verb: 'POST',
                     url: '/files/' + id.toString() + '/mp4'
                 }, callback);
+            };
+
+            putio.subtitle_url = function(id, key) {
+                return baseUrl + '/files/' + id + '/subtitles/' + key + '?format=webvtt';
+            };
+
+            putio.video_url = function(file) {
+                var id = file.id;
+
+                if (file.content_type == 'video/mp4') {
+                    return get_url('/files/' + id + '/stream');
+
+                } else {
+                    return get_url('/files/' + id + '/mp4/stream?jwt=extension');
+                }
+            };
+
+            putio.download_url = function(id) {
+                var url = baseUrl + '/files';
+
+                url += '/' + id + '/download?oauth_token=' + accessToken;
+
+                return url;
             };
 
             putio.searchUrl = function(query, page) {
