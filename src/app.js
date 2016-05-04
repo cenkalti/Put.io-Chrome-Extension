@@ -27,6 +27,13 @@
             cfpLoadingBarProvider.includeSpinner = false;
 
             $routeProvider
+                .when('/', {
+                    templateUrl: 'html/home-directive.html',
+                    controller: 'homeController',
+                    resolve: {
+                        putio: putioAuth
+                    }
+                })
                 .when('/home', {
                     templateUrl: 'html/home-directive.html',
                     controller: 'homeController',
@@ -89,9 +96,6 @@
                     resolve: {
                         putio: putioAuth
                     }
-                })
-                .otherwise({
-                    'redirectTo': '/home'
                 });
 
             function putioAuth($q, putio) {
@@ -112,8 +116,6 @@
                     return err;
                 });
 
-                putio.set_ask_to_log(true);
-
                 putio.auth(function(err) {
                     if (err) {
                         deferred.reject(null);
@@ -126,8 +128,8 @@
         }
     ]);
 
-    module.controller('putioController', ['$scope', '$location', '$route', 'putio',
-        function($scope, $location, $route, putio) {
+    module.controller('putioController', ['$scope', '$location', '$route', '$rootScope', 'putio',
+        function($scope, $location, $route, $rootScope, putio) {
 
             $scope.title = '';
             $scope.disk = {};
@@ -137,10 +139,10 @@
             };
 
             $scope.menu_toggle = function() {
-                $scope.$root.$broadcast('menu_toggle');
+                $rootScope.$broadcast('menu_toggle');
             };
 
-            $scope.$root.$on('$locationChangeSuccess', function(event, next, previous) {
+            $rootScope.$on('$locationChangeSuccess', function(event, next, previous) {
                 var uri = $location.path(),
                     title = uri.split('/');
 
@@ -149,12 +151,12 @@
                 $scope.title = title[1];
             });
 
-            $scope.$root.$on('refresh_info', function(event, next, previous) {
+            $rootScope.$on('refresh_info', function(event, next, previous) {
                 refresh_info();
             });
 
-            putio.auth(function(err) {
-                if (!err) refresh_info();
+            $scope.$on('putio.authenticated', function() {
+                refresh_info();
             });
 
             putio.options_get(function(err, options) {

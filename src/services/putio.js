@@ -1,22 +1,17 @@
 (function() {
     var module = angular.module('putioService', ['storageFactory']);
 
-    module.service('putio', ['storage', '$http',
-        function(Storage, $http) {
+    module.service('putio', ['storage', '$http', '$rootScope',
+        function(Storage, $http, $rootScope) {
 
             var putio = this,
                 storage = new Storage('sync'),
                 baseUrl = 'https://api.put.io/v2',
                 errorCallback = null,
-                accessToken = null,
-                askToLog = false;
+                accessToken = null;
 
             putio.set_error_callback = function(callback) {
                 errorCallback = callback;
-            };
-
-            putio.set_ask_to_log = function(bool) {
-                askToLog = bool;
             };
 
             putio.auth = function(callback) {
@@ -25,8 +20,11 @@
                 storage.get('putio', function(putioStorage) {
                     if (putioStorage && putioStorage.access_token) {
                         accessToken = putioStorage.access_token;
+                        $rootScope.$broadcast('putio.authenticated');
                         callback(null, accessToken);
                     } else {
+                        wp.event(module, 'authenticate', 'try');
+
                         if (!putioStorage) {
                             putioStorage = {};
                         }
@@ -42,16 +40,16 @@
                                     accessToken = data.access_token;
                                     putioStorage.access_token = data.access_token;
 
+                                    $rootScope.$broadcast('putio.authenticated');
+
                                     storage.set('putio', putioStorage, function() {
                                         callback(null, data.access_token);
                                     });
                                 } else {
-                                    if (askToLog) {
-                                        chrome.windows.create({
-                                            url: baseUrl + url,
-                                            type: 'panel'
-                                        }, function() {});
-                                    }
+                                    chrome.windows.create({
+                                        url: baseUrl + url,
+                                        type: 'panel'
+                                    }, function() {});
                                     callback(true, null);
                                 }
                             }

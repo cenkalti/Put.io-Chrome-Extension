@@ -77,12 +77,10 @@
                 refresh_friends_req();
             });
 
-            putio.auth(function(err) {
-                if (!err) {
-                    refresh_info();
-                    refresh_transfers_count();
-                    refresh_friends_req();
-                }
+            $scope.$on('putio.authenticated', function() {
+                refresh_info();
+                refresh_transfers_count();
+                refresh_friends_req();
             });
 
             $(document).mouseup(function(e) {
