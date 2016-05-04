@@ -30,14 +30,16 @@
                     });
                 },
                 select: function(file, model, label, event) {
-                    wp.event(module, 'search', 'select');
-
                     if (putio.is_video(file.content_type)) {
+                        wp.event(module, 'search', 'play');
+
                         chrome.windows.create({
                             url: 'video.html#?file=' + file.id,
                             type: 'panel'
                         }, function(new_window) {});
                     } else {
+                        wp.event(module, 'search', 'select');
+
                         $location.path('/file/' + file.id);
                     }
                     $scope.search.selected = null;
