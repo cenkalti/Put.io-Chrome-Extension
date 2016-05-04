@@ -1,8 +1,8 @@
 (function() {
     var module = angular.module('transfersModule', ['bytesFilter', 'datesFilter']);
 
-    module.controller('transfersController', ['$scope', '$route', 'putio', '$interval',
-        function($scope, $route, putio, $interval) {
+    module.controller('transfersController', ['$scope', '$route', 'putio', '$interval', '$rootScope',
+        function($scope, $route, putio, $interval, $rootScope) {
 
             $scope.loading = true;
             $scope.transfers = [];
@@ -46,7 +46,7 @@
 
                 $('#transfer_cancel').modal('hide');
                 putio.transfers_cancel(id, function(err, data) {
-                    $scope.$root.$broadcast('refresh_transfers_count');
+                    $rootScope.$broadcast('transfers_count.refresh');
                     $route.reload();
                 });
             };

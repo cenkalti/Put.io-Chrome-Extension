@@ -8,8 +8,8 @@
         }
     ]);
 
-    module.controller('filesController', ['$scope', '$routeParams', '$location', '$route', '$filter', '$timeout', 'putio',
-        function($scope, $routeParams, $location, $route, $filter, $timeout, putio) {
+    module.controller('filesController', ['$scope', '$routeParams', '$location', '$route', '$filter', '$timeout', 'putio', '$rootScope',
+        function($scope, $routeParams, $location, $route, $filter, $timeout, putio, $rootScope) {
             var parent_id = $routeParams.parent_id || 0,
                 $files = $('.files');
 
@@ -163,7 +163,7 @@
 
                 $('#delete_folders').modal('hide');
                 putio.files_delete(id, function(err, data) {
-                    $scope.$root.$broadcast('refresh_info');
+                    $rootScope.$broadcast('info.refresh');
                     $route.reload();
                 });
             };

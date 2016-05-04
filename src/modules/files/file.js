@@ -15,8 +15,8 @@
         editableOptions.theme = 'bs3';
     });
 
-    module.controller('fileController', ['$scope', '$routeParams', '$location', '$route', '$filter', 'putio',
-        function($scope, $routeParams, $location, $route, $filter, putio) {
+    module.controller('fileController', ['$scope', '$routeParams', '$location', '$route', '$filter', 'putio', '$rootScope',
+        function($scope, $routeParams, $location, $route, $filter, putio, $rootScope) {
             var file_id = $routeParams.file_id;
 
             $scope.file = {};
@@ -72,7 +72,7 @@
 
                 $('#delete_file').modal('hide');
                 putio.files_delete(id, function(err, data) {
-                    $scope.$root.$broadcast('refresh_info');
+                    $rootScope.$broadcast('info.refresh');
                     $location.path('/files/' + parent_id);
                 });
             };

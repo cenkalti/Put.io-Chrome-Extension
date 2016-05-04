@@ -139,7 +139,7 @@
             };
 
             $scope.menu_toggle = function() {
-                $rootScope.$broadcast('menu_toggle');
+                $rootScope.$broadcast('menu.toggle');
             };
 
             $rootScope.$on('$locationChangeSuccess', function(event, next, previous) {
@@ -151,12 +151,12 @@
                 $scope.title = title[1];
             });
 
-            $rootScope.$on('refresh_info', function(event, next, previous) {
-                refresh_info();
+            $rootScope.$on('info.refresh', function(event, next, previous) {
+                info_refresh();
             });
 
             $scope.$on('putio.authenticated', function() {
-                refresh_info();
+                info_refresh();
             });
 
             putio.options_get(function(err, options) {
@@ -166,7 +166,7 @@
             });
 
             // FUNCTIONS
-            function refresh_info() {
+            function info_refresh() {
                 putio.account_info(function(err, data) {
                     var disk = data.info.disk,
                         used = Math.round((disk.used * 100) / disk.size);

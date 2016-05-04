@@ -1,8 +1,8 @@
 (function() {
     var module = angular.module('friendsModule', []);
 
-    module.controller('friendsController', ['$scope', '$route', 'putio',
-        function($scope, $route, putio) {
+    module.controller('friendsController', ['$scope', '$route', '$rootScope', 'putio',
+        function($scope, $route, $rootScope, putio) {
 
             $scope.friends = [];
             $scope.friend_requests = [];
@@ -19,7 +19,7 @@
                 wp.event(module, 'friends', 'approve');
 
                 putio.friend_approve(friend, function(err, data) {
-                    $scope.$root.$broadcast('refresh_friends_req');
+                    $rootScope.$broadcast('friends_req.refresh');
                     $route.reload();
                 });
             };
@@ -28,7 +28,7 @@
                 wp.event(module, 'friends', 'deny');
 
                 putio.friend_deny(friend, function(err, data) {
-                    $scope.$root.$broadcast('refresh_friends_req');
+                    $rootScope.$broadcast('friends_req.refresh');
                     $route.reload();
                 });
             };
