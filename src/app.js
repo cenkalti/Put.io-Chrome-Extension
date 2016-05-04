@@ -156,6 +156,18 @@
             });
 
             $scope.$on('putio.authenticated', function() {
+                putio.account_info(function(err, data) {
+                    var disk = data.info,
+                        manifest = chrome.runtime.getManifest();
+
+                    wp.identify({
+                        email: data.info.mail,
+                        name: data.info.username,
+                        version: manifest.version
+                    }, function(alreadyLogged) {
+                        if(!alreadyLogged) wp.event(module, 'logged', 'identify');
+                    });
+                });
                 info_refresh();
             });
 
@@ -174,17 +186,6 @@
                     $scope.disk.used = disk.used;
                     $scope.disk.size = disk.size;
                     $scope.disk.percent = Math.round(((100 * disk.used) / disk.size));
-
-                    var manifest = chrome.runtime.getManifest();
-
-                    wp.identify({
-                        email: data.info.mail,
-                        name: data.info.username,
-                        version: manifest.version
-                    }, function() {
-                        wp.event(module, 'logged', 'identify');
-                    });
-
                 });
             }
         }
