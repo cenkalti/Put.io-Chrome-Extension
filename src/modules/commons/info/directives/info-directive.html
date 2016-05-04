@@ -1,0 +1,9 @@
+<div class="info">
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{ disk.percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ disk.percent }}%;">
+        </div>
+    </div>
+    <div class="progress-bar-value">
+        {{ disk.percent }}% {{ disk.used | bytes : 2 }} / {{ disk.size | bytes : 0 }}
+    </div>
+</div>

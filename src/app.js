@@ -16,7 +16,8 @@
                 'libraryModule',
                 'menuModule',
                 'ngJoyRide',
-                'configModule'
+                'configModule',
+                'infoModule'
             ]
         );
 
@@ -132,7 +133,6 @@
         function($scope, $location, $route, $rootScope, putio) {
 
             $scope.title = '';
-            $scope.disk = {};
 
             $scope.reload = function() {
                 $route.reload();
@@ -141,19 +141,6 @@
             $scope.menu_toggle = function() {
                 $rootScope.$broadcast('menu.toggle');
             };
-
-            $rootScope.$on('$locationChangeSuccess', function(event, next, previous) {
-                var uri = $location.path(),
-                    title = uri.split('/');
-
-                wp.page_view(title[1], uri);
-
-                $scope.title = title[1];
-            });
-
-            $rootScope.$on('info.refresh', function(event, next, previous) {
-                info_refresh();
-            });
 
             $scope.$on('putio.authenticated', function() {
                 putio.account_info(function(err, data) {
@@ -168,7 +155,15 @@
                         if(!alreadyLogged) wp.event(module, 'logged', 'identify');
                     });
                 });
-                info_refresh();
+            });
+
+            $rootScope.$on('$locationChangeSuccess', function(event, next, previous) {
+                var uri = $location.path(),
+                    title = uri.split('/');
+
+                wp.page_view(title[1], uri);
+
+                $scope.title = title[1];
             });
 
             putio.options_get(function(err, options) {
@@ -176,18 +171,6 @@
                     $location.path(options.home_page);
                 }
             });
-
-            // FUNCTIONS
-            function info_refresh() {
-                putio.account_info(function(err, data) {
-                    var disk = data.info.disk,
-                        used = Math.round((disk.used * 100) / disk.size);
-
-                    $scope.disk.used = disk.used;
-                    $scope.disk.size = disk.size;
-                    $scope.disk.percent = Math.round(((100 * disk.used) / disk.size));
-                });
-            }
         }
     ]);
 
