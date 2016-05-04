@@ -23,7 +23,6 @@
             $scope.transfers_count = 0;
             $scope.files_size = 0;
             $scope.friend_requests = 0;
-            $scope.logged = false;
 
             $scope.toggle = function() {
                 $menu.animate({
@@ -66,8 +65,8 @@
                 $scope.toggle();
             });
 
-            $scope.$on('refresh_file', function(event, args) {
-                refresh_file();
+            $scope.$on('refresh_info', function(event, args) {
+                refresh_info();
             });
 
             $scope.$on('refresh_transfers_count', function(event, args) {
@@ -79,10 +78,11 @@
             });
 
             putio.auth(function(err) {
-                if (!err) $scope.logged = true;
-                refresh_file();
-                refresh_transfers_count();
-                refresh_friends_req();
+                if (!err) {
+                    refresh_info();
+                    refresh_transfers_count();
+                    refresh_friends_req();
+                }
             });
 
             $(document).mouseup(function(e) {
@@ -91,31 +91,25 @@
                 }
             });
 
-            function refresh_file() {
-                if ($scope.logged) {
-                    putio.account_info(function(err, data) {
-                        var info = data.info;
-                        $scope.files_size = info.disk.used;
-                    });
-                }
+            function refresh_info() {
+                putio.account_info(function(err, data) {
+                    var info = data.info;
+                    $scope.files_size = info.disk.used;
+                });
+
             }
 
             function refresh_transfers_count() {
-                if ($scope.logged) {
-                    putio.transfers_count(function(err, data) {
-                        $scope.transfers_count = data.count;
-                    });
-                }
+                putio.transfers_count(function(err, data) {
+                    $scope.transfers_count = data.count;
+                });
             }
 
             function refresh_friends_req() {
-                if ($scope.logged) {
-                    putio.friends_req(function(err, data) {
-                        $scope.friend_requests = data.friends.length;
-                    });
-                }
+                putio.friends_req(function(err, data) {
+                    $scope.friend_requests = data.friends.length;
+                });
             }
         }
     ]);
-
 })();

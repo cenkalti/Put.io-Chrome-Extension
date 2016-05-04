@@ -128,7 +128,6 @@
 
     module.controller('putioController', ['$scope', '$location', '$route', 'putio',
         function($scope, $location, $route, putio) {
-            var logged = false;
 
             $scope.title = '';
             $scope.disk = {};
@@ -150,13 +149,12 @@
                 $scope.title = title[1];
             });
 
-            $scope.$root.$on('refresh_file', function(event, next, previous) {
-                refresh_file();
+            $scope.$root.$on('refresh_info', function(event, next, previous) {
+                refresh_info();
             });
 
             putio.auth(function(err) {
-                if (!err) logged = true;
-                refresh_file();
+                if (!err) refresh_info();
             });
 
             putio.options_get(function(err, options) {
@@ -166,30 +164,26 @@
             });
 
             // FUNCTIONS
-            function refresh_file() {
-                if (logged) {
-                    putio.account_info(function(err, data) {
-                        var disk = data.info.disk,
-                            used = Math.round((disk.used * 100) / disk.size);
+            function refresh_info() {
+                putio.account_info(function(err, data) {
+                    var disk = data.info.disk,
+                        used = Math.round((disk.used * 100) / disk.size);
 
-                        $scope.disk.used = disk.used;
-                        $scope.disk.size = disk.size;
-                        $scope.disk.percent = Math.round(((100 * disk.used) / disk.size));
+                    $scope.disk.used = disk.used;
+                    $scope.disk.size = disk.size;
+                    $scope.disk.percent = Math.round(((100 * disk.used) / disk.size));
 
-                        var manifest = chrome.runtime.getManifest();
+                    var manifest = chrome.runtime.getManifest();
 
-                        wp.identify({
-                            email: data.info.mail,
-                            name: data.info.username,
-                            version: manifest.version
-                        }, function() {
-                            wp.event(module, 'logged', 'identify');
-                        });
-
-
-
+                    wp.identify({
+                        email: data.info.mail,
+                        name: data.info.username,
+                        version: manifest.version
+                    }, function() {
+                        wp.event(module, 'logged', 'identify');
                     });
-                }
+
+                });
             }
         }
     ]);

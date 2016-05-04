@@ -72,7 +72,7 @@
 
                 $('#delete_file').modal('hide');
                 putio.files_delete(id, function(err, data) {
-                    $scope.$root.$broadcast('refresh_file');
+                    $scope.$root.$broadcast('refresh_info');
                     $location.path('/files/' + parent_id);
                 });
             };
