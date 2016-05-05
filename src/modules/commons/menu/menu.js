@@ -1,5 +1,5 @@
 (function() {
-    var module = angular.module('menuModule', ['putioService']);
+    var module = angular.module('menuModule', ['putioService', 'ui.bootstrap', 'ngCookies']);
 
     module.directive('menu',
         function() {
@@ -16,13 +16,25 @@
         }
     );
 
-    module.controller('menuController', ['$scope', '$location', '$route', '$rootScope', 'putio',
-        function($scope, $location, $route, $rootScope, putio) {
-            var $menu = $('.menu');
+    module.controller('menuController', ['$scope', '$location', '$route', '$rootScope', 'putio', '$cookies',
+        function($scope, $location, $route, $rootScope, putio, $cookies) {
+            var $menu = $('.menu'),
+                version = chrome.runtime.getManifest().version;
 
             $scope.transfers_count = 0;
             $scope.files_size = 0;
             $scope.friend_requests = 0;
+            $scope.rate = {
+                value: $cookies.get('rate.' + version) || 0,
+                version: version,
+            };
+
+            $scope.rate.do = function() {
+                var val = $scope.rate.value;
+
+                $cookies.put('rate.' + version, val);
+                wp.rate(val, version);
+            };
 
             $scope.toggle = function() {
                 $menu.animate({

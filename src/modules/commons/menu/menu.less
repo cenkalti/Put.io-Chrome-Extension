@@ -13,13 +13,30 @@
     @font-weight();
     color: @black;
 }
+
+.menu ul {
+    height: 100%;
+}
+
+.menu li:first-child {
+    @pointer();
+}
+
+.menu li:last-child {
+    text-align: center;
+    padding: 10px 15px;
+}
+
+.menu li:last-child span {
+    float: left;
+    width: 100%;
+}
+
 .menu a {
     color: @black;
     border-radius: 0;
 }
-.menu li:first-child {
-    @pointer();
-}
+
 .menu .glyphicon {
     margin-right: 10px;
 }

@@ -16,6 +16,7 @@ module.exports = function(grunt) {
                 "angular-xeditable": "angular",
                 "angular-tree-control": "angular",
                 "angular-sanitize": "angular",
+                "angular-cookies": "angular",
                 "ng-joyride": ["angular", "jquery", "bootstrap"]
             },
             "bowerOptions": {
@@ -34,7 +35,8 @@ module.exports = function(grunt) {
             ],
             "dependencies": {
                 "angular": "jquery",
-                "ng-underscore": "angular"
+                "ng-underscore": "angular",
+                "angular-cookies": "angular",
             },
             "bowerOptions": {
                 "relative": false
@@ -51,6 +53,7 @@ module.exports = function(grunt) {
             ],
             "dependencies": {
                 "angular": "jquery",
+                "angular-cookies": "angular",
                 "angular-route": "angular"
             },
             "bowerOptions": {

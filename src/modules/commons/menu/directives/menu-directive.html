@@ -1,37 +1,65 @@
 <div class="menu">
     <ul class="nav nav-pills nav-stacked">
         <li class="active">
-            <a class="text-center" ng-click="close()">Menu</a>
+            <a class="text-center" ng-click="close()">
+                Menu
+            </a>
         </li>
         <li ng-class="{active:is_active('/home')}">
             <a href="#home">
-                <i class="fa fa-home fa-lg fa-fw"></i> Home
+                <i class="fa fa-home fa-lg fa-fw">
+                </i>
+                Home
             </a>
         </li>
         <li ng-class="{active:is_active('/transfers')}">
             <a href="#transfers">
-                <i class="fa fa-download fa-lg fa-fw"></i> Transfers <span class="badge pull-right">{{transfers_count}}</span>
+                <i class="fa fa-download fa-lg fa-fw">
+                </i>
+                Transfers
+                <span class="badge pull-right">
+                    {{ transfers_count }}
+                </span>
             </a>
         </li>
         <li ng-class="{active:is_active('/files')}">
             <a href="#files">
-            <i class="fa fa-folder-open fa-lg fa-fw"></i> Files <span class="badge pull-right">{{files_size | bytes : 0}}</span>
+                <i class="fa fa-folder-open fa-lg fa-fw">
+                </i>
+                Files
+                <span class="badge pull-right">
+                    {{ files_size | bytes : 0 }}
+                </span>
             </a>
         </li>
         <li ng-class="{active:is_active('/library')}">
             <a href="#library">
-                <i class="fa fa-book fa-lg fa-fw"></i> Library
+                <i class="fa fa-book fa-lg fa-fw">
+                </i>
+                Library
             </a>
         </li>
         <li ng-class="{active:is_active('/friends')}">
             <a href="#friends">
-                <i class="fa fa-users fa-lg fa-fw"></i> Friends <span class="badge pull-right">{{friend_requests}}</span>
+                <i class="fa fa-users fa-lg fa-fw">
+                </i>
+                Friends
+                <span class="badge pull-right">
+                    {{ friend_requests }}
+                </span>
             </a>
         </li>
         <li ng-class="{active:is_active('/settings')}">
             <a href="#settings">
-                <i class="fa fa-wrench fa-lg fa-fw"></i> Settings
+                <i class="fa fa-wrench fa-lg fa-fw">
+                </i>
+                Settings
             </a>
+        </li>
+        <li>
+            <span>Rate v{{rate.version}}</span>
+            <uib-rating ng-model="rate.value" max="5" aria-labelledby="default-rating" ng-click="rate.do(rate.value, rate.version)">
+            </uib-rating>
         </li>
     </ul>
 </div>
