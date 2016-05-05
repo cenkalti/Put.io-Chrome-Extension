@@ -1,12 +1,35 @@
 @import "all";
+
+.info demo {
+    float: right;
+    margin: 10px 5px;
+}
+
 .info .progress {
     float: right;
     width: 40%;
     height: 30px;
-    margin: 10px;
+    margin: 10px 5px;
     background-color: darken(@white, 5%);
 }
 
 .info .progress .progress-bar {
     background-color: @yellow;
+}
+
+.info .progress-bar-value {
+    position: absolute;
+    right: 55px;
+    top: 12px;
+    color: @black;
+    font-size: 18px;
+    @font-weight();
+}
+
+.info .avatar {
+    float: right;
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    margin: 10px 5px;
 }

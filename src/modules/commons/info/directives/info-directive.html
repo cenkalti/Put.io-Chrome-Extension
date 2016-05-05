@@ -1,9 +1,12 @@
 <div class="info">
-    <div class="progress">
+    <img class="avatar" ng-show="avatar" ng-src="{{ avatar }}"/>
+    <div class="progress" ng-show="disk.percent">
         <div class="progress-bar" role="progressbar" aria-valuenow="{{ disk.percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ disk.percent }}%;">
         </div>
     </div>
-    <div class="progress-bar-value">
+    <demo config="demo.config" on-finish="demo.finish()" on-skip="demo.skip()">
+    </demo>
+    <div class="progress-bar-value" ng-show="disk.percent">
         {{ disk.percent }}% {{ disk.used | bytes : 2 }} / {{ disk.size | bytes : 0 }}
     </div>
 </div>

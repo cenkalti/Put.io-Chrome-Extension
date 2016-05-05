@@ -1,5 +1,5 @@
 (function() {
-    var module = angular.module('homeModule', ['datesFilter', 'demoModule', 'ui.bootstrap', 'ngSanitize']);
+    var module = angular.module('homeModule', ['datesFilter', 'ui.bootstrap', 'ngSanitize']);
 
     module.controller('homeController', ['$scope', '$location', 'putio', '$http', '$route',
         function($scope, $location, putio, $http, $route) {
@@ -43,41 +43,6 @@
                         $location.path('/file/' + file.id);
                     }
                     $scope.search.selected = null;
-                }
-            };
-
-            $scope.demo = {
-                config: [{
-                    type: 'element',
-                    selector: '.btn-menu',
-                    heading: 'Menu',
-                    text: 'Here is the menu.',
-                    placement: 'right',
-                    scroll: false
-                }, {
-                    type: 'element',
-                    selector: '.progress-bar-value',
-                    heading: 'Storage',
-                    text: 'Here you can find how much data is left in your account.',
-                    placement: 'bottom',
-                    scroll: false
-                }, {
-                    type: 'title',
-                    heading: 'Home',
-                    text: 'The Home page contains an history of your downloads.'
-                }, {
-                    type: 'element',
-                    selector: '.home > div:nth-child(2) a:first-child',
-                    heading: 'Go to file',
-                    text: 'Click to go to file/directory.',
-                    placement: 'bottom',
-                    scroll: true
-                }],
-                skip: function() {
-                    wp.event(module, 'demo', 'skip');
-                },
-                finish: function() {
-                    wp.event(module, 'demo', 'finish');
                 }
             };
 

@@ -159,11 +159,12 @@
 
             $rootScope.$on('$locationChangeSuccess', function(event, next, previous) {
                 var uri = $location.path(),
-                    title = uri.split('/');
+                    titleArray = uri.split('/'),
+                    title = titleArray[1] || 'home';
 
-                wp.page_view(title[1], uri);
+                wp.page_view(title, uri);
 
-                $scope.title = title[1];
+                $scope.title = title;
             });
 
             putio.options_get(function(err, options) {
