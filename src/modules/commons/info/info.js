@@ -1,5 +1,5 @@
 (function() {
-    var module = angular.module('infoModule', ['putioService', 'demoModule']);
+    var module = angular.module('infoModule', ['putioService', 'demoModule', 'ui.bootstrap']);
 
     module.directive('info',
         function() {
@@ -34,6 +34,16 @@
                     $scope.disk.used = disk.used;
                     $scope.disk.size = disk.size;
                     $scope.disk.percent = Math.round(((100 * disk.used) / disk.size));
+
+                    if ($scope.disk.percent < 25) {
+                        $scope.disk.type = 'success';
+                    } else if ($scope.disk.percent < 50) {
+                        $scope.disk.type = 'info';
+                    } else if ($scope.disk.percent < 75) {
+                        $scope.disk.type = 'warning';
+                    } else {
+                        $scope.disk.type = 'danger';
+                    }
                 });
             }
         }

@@ -1,8 +1,5 @@
 <div class="info">
-    <div class="progress" ng-show="disk.percent">
-        <div class="progress-bar" role="progressbar" aria-valuenow="{{ disk.percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ disk.percent }}%;">
-        </div>
-    </div>
+    <uib-progressbar ng-show="disk.percent" animate="false" value="disk.percent" type="{{disk.type}}" ></uib-progressbar>
     <demo config="demo.config" on-finish="demo.finish()" on-skip="demo.skip()">
     </demo>
     <div class="progress-bar-value" ng-show="disk.percent">
