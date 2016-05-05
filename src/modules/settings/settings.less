@@ -1,15 +1,13 @@
 @import "all";
-.settings .form-horizontal {
-    margin-top: 20px;
+.settings .nav li a {
+    color: @black;
+    @font-weight();
 }
 
-.settings .notification {
-    position: absolute;
-    top: 60px;
-    right: 10px;
-    width: 200px;
-    text-align: center;
-    opacity: 0.85;
-    padding: 5px;
-    display: none;
+.settings .nav li.active a {
+    color: @yellow;
+}
+
+.settings .form-horizontal {
+    margin-top: 20px;
 }

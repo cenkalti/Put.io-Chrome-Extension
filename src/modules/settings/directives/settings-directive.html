@@ -1,65 +1,70 @@
 <div class="settings">
-    <form class="form-horizontal">
-        <div class="form-group">
-            <label for="inputEmail3" class="col-xs-offset-1 col-xs-3 control-label">
-                Default Page
-            </label>
-            <div class="col-xs-7">
-                <select class="form-control" ng-options="key as value for (key , value) in home_pages" ng-model="home_page" ng-change="update_home_page()">
-                </select>
-                <span class="help-block">
-                    Default landing page
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputEmail3" class="col-xs-offset-1 col-xs-3 control-label">
-                Notifications
-            </label>
-            <div class="col-xs-7">
-                <input type="checkbox" class="notif-en" ng-model="notification" ng-change="update_notification()"/>
-                <span class="help-block">
-                    Enable/Disable transfer notifications
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="inputEmail3" class="col-xs-offset-1 col-xs-3 control-label">
-                Default folder
-            </label>
-            <div class="col-xs-7">
-                <button class="btn btn-default default-folder" ng-click="maybe_update_default_folder(default_folder.id)">
-                    {{ default_folder.name | limitTo : 25 }}
-                </button>
-                <span class="help-block">
-                    Default download folder
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-offset-4 col-xs-7">
-                <button class="btn btn-default" ng-click="reset_auth()">
-                    Reset Authentication
-                </button>
-                <span class="help-block">
-                    This will reset the authentication token.
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-offset-4 col-xs-7">
-                <button class="btn btn-default" ng-click="reset_app()">
-                    Reset App
-                </button>
-                <span class="help-block">
-                    This will reset all extension settings (authentication token also) & open a window to revoke app access.
-                </span>
-            </div>
-        </div>
-    </form>
-    <div class="alert alert-success notification" role="alert">
-        {{ notification_text }}
-    </div>
+    <uib-tabset active="active">
+        <uib-tab index="0" heading="Put.io">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-xs-offset-1 col-xs-3 control-label">
+                        Default folder
+                    </label>
+                    <div class="col-xs-7">
+                        <button class="btn btn-default default-folder" ng-click="maybe_update_default_folder(putio.default_folder.id)">
+                            {{ putio.default_folder.name | limitTo : 25 }}
+                        </button>
+                        <span class="help-block">
+                            Default download folder
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </uib-tab>
+        <uib-tab index="1" heading="Extension">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-xs-offset-1 col-xs-3 control-label">
+                        Default Page
+                    </label>
+                    <div class="col-xs-7">
+                        <select class="form-control" ng-options="key as value for (key , value) in app.home_pages" ng-model="app.home_page" ng-change="update_home_page()">
+                        </select>
+                        <span class="help-block">
+                            Default landing page
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-xs-offset-1 col-xs-3 control-label">
+                        Notifications
+                    </label>
+                    <div class="col-xs-7">
+                        <input type="checkbox" class="notif-en" ng-model="app.notification" ng-change="update_notification()"/>
+                        <span class="help-block">
+                            Enable/Disable transfer notifications
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-offset-4 col-xs-7">
+                        <button class="btn btn-default" ng-click="reset_auth()">
+                            Reset Authentication
+                        </button>
+                        <span class="help-block">
+                            This will reset the authentication token.
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-offset-4 col-xs-7">
+                        <button class="btn btn-default" ng-click="reset_app()">
+                            Reset App
+                        </button>
+                        <span class="help-block">
+                            This will reset all extension settings (authentication token also) & open a window to revoke app access.
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </uib-tab>
+    </uib-tabset>
 </div>
-<tree node-selected="selected(node)" modal-options="modalOptions" success="update_default_folder(node)">
+<tree node-selected="selected(node)" modal-options="treeModalOptions" success="update_default_folder(node)">
 </tree>
