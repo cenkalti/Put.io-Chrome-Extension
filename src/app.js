@@ -155,7 +155,7 @@
                         name: data.info.username,
                         version: manifest.version
                     }, function(alreadyLogged) {
-                        if(!alreadyLogged) wp.event(module, 'logged', 'identify');
+                        if(!alreadyLogged) wp.event(module, 'authenticated', 'app');
                     });
                 });
             });

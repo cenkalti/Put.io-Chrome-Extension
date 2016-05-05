@@ -1,40 +1,31 @@
 (function() {
-    var module = angular.module('menuService', ['putioService', 'logFactory', 'moviedbService', 'stringFilter']);
+    var module = angular.module('menuService', ['logFactory', 'moviedbService', 'stringFilter']);
 
-    module.service('menu', ['$timeout', 'putio', 'log', 'moviedb',
-        function($timeout, putio, Log, moviedb) {
+    module.service('menu', ['$timeout', 'log', 'moviedb',
+        function($timeout, Log, moviedb) {
             var menu = this,
                 log = new Log(module),
                 notif = chrome.notifications;
 
-            menu.display = function() {
+            menu.display = function(putio) {
                 var default_folder = {
                     "id": 0,
                     "name": "Your Files"
                 };
 
-                putio.auth(function(err) {
-                    if (err) {
-                        log.warn(err);
-                        $timeout(function() {
-                            menu.display();
-                        }, 20000);
-                    } else {
-                        putio.account_settings(function(err, data) {
-                            default_folder.id = data.settings.default_download_folder;
+                putio.account_settings(function(err, data) {
+                    default_folder.id = data.settings.default_download_folder;
 
-                            putio.file(default_folder.id, function(err, data1) {
-                                default_folder.name = data1.file.name;
+                    putio.file(default_folder.id, function(err, data1) {
+                        default_folder.name = data1.file.name;
 
-                                chrome.contextMenus.create({
-                                    "title": "Upload to put.io (" + default_folder.name + ")",
-                                    "contexts": ["link", "selection"],
-                                    "onclick": on_click
-                                });
-                            });
-
+                        chrome.contextMenus.create({
+                            "title": "Upload to put.io (" + default_folder.name + ")",
+                            "contexts": ["link", "selection"],
+                            "onclick": on_click
                         });
-                    }
+                    });
+
                 });
 
                 function on_click(info, tab) {

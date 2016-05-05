@@ -1,29 +1,23 @@
 (function() {
-    var module = angular.module('transfersCheckService', ['putioService', 'datesFilter', 'moviedbService', 'stringFilter', 'storageFactory', 'libraryFactory']);
+    var module = angular.module('transfersCheckService', ['logFactory', 'datesFilter', 'moviedbService', 'stringFilter', 'storageFactory', 'libraryFactory']);
 
-    module.service('transfersCheck', ['$interval', '$timeout', 'putio', '$filter', 'moviedb', 'storage', 'library',
-        function($interval, $timeout, putio, $filter, moviedb, Storage, Library) {
+    module.service('transfersCheck', ['$interval', '$timeout', '$filter', 'moviedb', 'storage', 'library', 'log',
+        function($interval, $timeout, $filter, moviedb, Storage, Library, Log) {
 
             var storage = new Storage('local'),
                 transfersCheck = this,
                 notif = chrome.notifications,
                 interval = null,
                 cleanInterval = 0,
-                lib = new Library();
+                lib = new Library(),
+                putio = null,
+                log = new Log(module);
 
-            transfersCheck.start = function() {
-                console.debug('started transfers checks');
-                putio.auth(function(err) {
-                    if (err) {
-                        console.error(err);
-                        $timeout(function() {
-                            transfersCheck.start();
-                        }, 20000);
-                    } else {
-                        checks();
-                        interval = $interval(checks, 60000);
-                    }
-                });
+            transfersCheck.start = function(p) {
+                log.debug('started transfers checks');
+                putio = p;
+                checks();
+                interval = $interval(checks, 60000);
             };
 
             transfersCheck.stop = function() {
@@ -125,7 +119,7 @@
             }
 
             function maybe_clean(data) {
-                if(!data) {
+                if (!data) {
                     data = [];
                 }
 
