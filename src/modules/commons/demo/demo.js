@@ -16,7 +16,7 @@
         function($scope, $location, $rootScope) {
 
             $scope.start = false;
-            $scope.config = [];
+            $scope.config = demoData[get_title()];
 
             $rootScope.$on('$locationChangeSuccess', function(event, next, previous) {
                 $scope.config = demoData[get_title()] || [];
@@ -28,10 +28,12 @@
 
             $scope.finish = function() {
                 wp.event(module, 'demo', 'skip', $scope.title);
+                $scope.start = false;
             };
 
             $scope.skip = function() {
                 wp.event(module, 'demo', 'skip', $scope.title);
+                $scope.start = false;
             };
 
             function get_title() {
