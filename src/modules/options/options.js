@@ -15,9 +15,7 @@
                 library: 'Library'
             };
             $scope.home_page = 'home';
-
             $scope.notification = true;
-
             $scope.default_folder = {
                 name: 'Loading ...'
             };
@@ -29,8 +27,6 @@
                 }
             };
 
-            $scope.demo = false;
-
             $scope.notification_text = 'Saved';
 
             putio.options_get(function(err, options) {
@@ -40,9 +36,6 @@
                     }
                     if (options.notification !== undefined) {
                         $scope.notification = options.notification;
-                    }
-                    if (options.demo !== undefined) {
-                        $scope.demo = options.demo;
                     }
                 });
             });
@@ -108,22 +101,6 @@
                         name: node.name,
                         id: node.id
                     };
-                });
-            };
-
-            $scope.update_demo = function() {
-                putio.options_get(function(err, options) {
-                    options.demo = $scope.demo;
-
-                    putio.options_set(options, function() {
-                        $scope.$apply(function() {
-                            if ($scope.demo) {
-                                $scope.notify('Hide demo enabled');
-                            } else {
-                                $scope.notify('Hide demo disabled');
-                            }
-                        });
-                    });
                 });
             };
 
