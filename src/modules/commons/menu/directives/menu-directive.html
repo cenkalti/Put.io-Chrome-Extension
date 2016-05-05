@@ -1,36 +1,36 @@
 <div class="menu">
     <ul class="nav nav-pills nav-stacked">
-        <li role="presentation" class="active">
+        <li class="active">
             <a class="text-center" ng-click="close()">Menu</a>
         </li>
-        <li role="presentation" ng-class="{active:is_active('/home')}">
+        <li ng-class="{active:is_active('/home')}">
             <a href="#home">
                 <i class="fa fa-home fa-lg fa-fw"></i> Home
             </a>
         </li>
-        <li role="presentation" ng-class="{active:is_active('/transfers')}">
+        <li ng-class="{active:is_active('/transfers')}">
             <a href="#transfers">
                 <i class="fa fa-download fa-lg fa-fw"></i> Transfers <span class="badge pull-right">{{transfers_count}}</span>
             </a>
         </li>
-        <li role="presentation" ng-class="{active:is_active('/files')}">
+        <li ng-class="{active:is_active('/files')}">
             <a href="#files">
             <i class="fa fa-folder-open fa-lg fa-fw"></i> Files <span class="badge pull-right">{{files_size | bytes : 0}}</span>
             </a>
         </li>
-        <li role="presentation" ng-class="{active:is_active('/library')}">
+        <li ng-class="{active:is_active('/library')}">
             <a href="#library">
                 <i class="fa fa-book fa-lg fa-fw"></i> Library
             </a>
         </li>
-        <li role="presentation" ng-class="{active:is_active('/friends')}">
+        <li ng-class="{active:is_active('/friends')}">
             <a href="#friends">
                 <i class="fa fa-users fa-lg fa-fw"></i> Friends <span class="badge pull-right">{{friend_requests}}</span>
             </a>
         </li>
-        <li role="presentation" ng-class="{active:is_active('/options')}">
-            <a href="#options">
-                <i class="fa fa-wrench fa-lg fa-fw"></i> Options
+        <li ng-class="{active:is_active('/settings')}">
+            <a href="#settings">
+                <i class="fa fa-wrench fa-lg fa-fw"></i> Settings
             </a>
         </li>
     </ul>

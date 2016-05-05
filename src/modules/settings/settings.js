@@ -1,7 +1,7 @@
 (function() {
-    var module = angular.module('optionsModule', ['messageFactory', 'logFactory']);
+    var module = angular.module('settingsModule', ['messageFactory', 'logFactory']);
 
-    module.controller('optionsController', ['$scope', 'putio', 'message', '$filter', 'log',
+    module.controller('settingsController', ['$scope', 'putio', 'message', '$filter', 'log',
         function($scope, putio, Message, $filter, Log) {
             var log = new Log(module),
                 message = new Message();
@@ -10,7 +10,7 @@
                 home: 'Home',
                 transfers: 'Transfers',
                 files: 'Files',
-                options: 'Options',
+                settings: 'Settings',
                 friends: 'Friends',
                 library: 'Library'
             };

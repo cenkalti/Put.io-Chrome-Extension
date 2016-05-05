@@ -11,7 +11,7 @@
                 'transfersModule',
                 'filesModule',
                 'fileModule',
-                'optionsModule',
+                'settingsModule',
                 'friendsModule',
                 'libraryModule',
                 'menuModule',
@@ -77,9 +77,9 @@
                         putio: putioAuth
                     }
                 })
-                .when('/options', {
-                    templateUrl: 'html/options-directive.html',
-                    controller: 'optionsController',
+                .when('/settings', {
+                    templateUrl: 'html/settings-directive.html',
+                    controller: 'settingsController',
                     resolve: {
                         putio: putioAuth
                     }
@@ -97,6 +97,9 @@
                     resolve: {
                         putio: putioAuth
                     }
+                })
+                .otherwise({
+                    redirectTo: '/home'
                 });
 
             function putioAuth($q, putio) {
@@ -164,11 +167,17 @@
 
                 wp.page_view(title, uri);
 
+                console.log(title);
+
                 $scope.title = title;
             });
 
             putio.options_get(function(err, options) {
-                if (options.home_page) {
+                var uri = $location.path(),
+                    titleArray = uri.split('/'),
+                    title = titleArray[1] || 'home';
+
+                if (options.home_page && options.home_page != title) {
                     $location.path(options.home_page);
                 }
             });

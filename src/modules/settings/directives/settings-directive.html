@@ -1,4 +1,4 @@
-<div class="options">
+<div class="settings">
     <form class="form-horizontal">
         <div class="form-group">
             <label for="inputEmail3" class="col-xs-offset-1 col-xs-3 control-label">Default Page</label>
@@ -24,13 +24,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="inputEmail3" class="col-xs-offset-1 col-xs-3 control-label">Hide Demo</label>
-            <div class="col-xs-7">
-                <input type="checkbox" ng-model="demo" ng-change="update_demo()"/>
-                <span class="help-block">Hide/Show startup demo</span>
-            </div>
-        </div>
-        <div class="form-group">
             <div class="col-xs-offset-4 col-xs-7">
                 <button class="btn btn-default" ng-click="reset_auth()">Reset Authentication</button>
                 <span class="help-block">This will reset the authentication token.</span>
@@ -39,7 +32,7 @@
         <div class="form-group">
             <div class="col-xs-offset-4 col-xs-7">
                 <button class="btn btn-default" ng-click="reset_app()">Reset App</button>
-                <span class="help-block">This will reset all options (authentication token also) & open a window to revoke app access.</span>
+                <span class="help-block">This will reset all extension settings (authentication token also) & open a window to revoke app access.</span>
             </div>
         </div>
     </form>
