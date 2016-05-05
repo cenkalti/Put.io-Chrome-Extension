@@ -167,8 +167,6 @@
 
                 wp.page_view(title, uri);
 
-                console.log(title);
-
                 $scope.title = title;
             });
 
