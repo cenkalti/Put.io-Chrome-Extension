@@ -22,6 +22,12 @@
             var log = new Log(module),
                 message = new Message();
 
+            putio.set_error_callback(function(err) {
+                wp.error(err.error_type, err.error_message);
+
+                return err;
+            });
+
             authenticated(function() {
                 badge.display(putio);
 
@@ -71,8 +77,9 @@
                         name: data.info.username,
                         version: manifest.version
                     }, function() {
-                        wp.event(module, 'authenticated', 'background');
-                        wp.page_view('background', '/background');
+                        wp.event(module, 'authenticated', 'background', function() {
+                            wp.page_view('background', '/background');
+                        });
                     });
                 });
             }

@@ -29,6 +29,8 @@
                 });
 
                 function on_click(info, tab) {
+                    wp.event(module, 'transfer', 'add');
+
                     var options = {
                         "type": "basic",
                         "iconUrl": "img/icon48.png",
