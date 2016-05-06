@@ -25,16 +25,22 @@
             $scope.files_size = 0;
             $scope.friend_requests = 0;
             $scope.rate = {
+                readonly: $cookies.get('rate.' + version) ? true : false,
                 value: $cookies.get('rate.' + version) || 0,
                 version: version,
             };
 
             $scope.rate.do = function() {
-                var val = $scope.rate.value;
+                if (!$scope.rate.readonly) {
+                    var val = $scope.rate.value;
 
-                $cookies.put('rate.' + version, val);
-                wp.rate(parseInt(val), version);
-                $scope.close();
+                    $cookies.put('rate.' + version, val);
+                    wp.rate(parseInt(val), version);
+
+                    $scope.rate.readonly = true;
+
+                    $scope.close();
+                }
             };
 
             $scope.toggle = function() {
