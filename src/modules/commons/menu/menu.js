@@ -33,7 +33,7 @@
                 var val = $scope.rate.value;
 
                 $cookies.put('rate.' + version, val);
-                wp.rate(val, version);
+                wp.rate(parseInt(val), version);
             };
 
             $scope.toggle = function() {
