@@ -79,7 +79,7 @@
                         name: data.info.username,
                         version: manifest.version
                     }, function() {
-                        wp.event(module, 'authenticated', 'background', function() {
+                        wp.event(module, 'background', 'authenticated', function() {
                             wp.page_view('background', '/background');
                         });
                     });

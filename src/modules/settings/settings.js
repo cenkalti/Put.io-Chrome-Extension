@@ -13,13 +13,13 @@
             };
 
             $scope.maybe_update_default_folder = function(id) {
-                wp.event(module, 'settings_update', 'maybe_default_folder');
+                wp.event(module, 'settings', 'maybe_update_default_folder');
 
                 $('.tree').modal('show');
             };
 
             $scope.update_default_folder = function(node) {
-                wp.event(module, 'settings_update', 'default_folder');
+                wp.event(module, 'settings', 'update_default_folder');
 
                 $('.tree').modal('hide');
                 putio.account_set_settings({
@@ -56,13 +56,13 @@
             };
 
             $scope.update_home_page = function() {
-                wp.event(module, 'settings_update', 'home_page', $scope.app.home_page);
+                wp.event(module, 'settings', 'update_home_page', $scope.app.home_page);
 
                 $cookies.put('home_page', $scope.app.home_page);
             };
 
             $scope.update_notification = function() {
-                wp.event(module, 'settings_update', 'notification', $scope.app.notification.toString());
+                wp.event(module, 'settings', 'update_notification', $scope.app.notification.toString());
 
                 $cookies.put('notification', $scope.app.notification)
 
