@@ -34,6 +34,7 @@
 
                 $cookies.put('rate.' + version, val);
                 wp.rate(parseInt(val), version);
+                $scope.close();
             };
 
             $scope.toggle = function() {
