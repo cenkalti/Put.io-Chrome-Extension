@@ -13,7 +13,7 @@
                 var self = this;
 
                 chrome.storage[self.type].get(key, function(data) {
-                    if (typeof callback == 'function') {
+                    if (typeof callback === 'function') {
                         callback(data[key]);
                     }
                 });
@@ -26,8 +26,18 @@
                 data[key] = value;
 
                 chrome.storage[self.type].set(data, function() {
-                    if (typeof callback == 'function') {
+                    if (typeof callback === 'function') {
                         callback(data[key]);
+                    }
+                });
+            };
+
+            storage.prototype.remove = function(key, callback) {
+                var self = this;
+
+                chrome.storage[self.type].remove(key, function() {
+                    if (typeof callback === 'function') {
+                        callback();
                     }
                 });
             };

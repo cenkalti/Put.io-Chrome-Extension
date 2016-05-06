@@ -78,12 +78,16 @@
                 });
             };
 
-            window.marker = $cookies;
-
             $scope.reset_app = function() {
                 wp.event(module, 'application', 'reset');
 
-                putio.reset_app(function() {
+                var cookies = $cookies.getAll();
+
+                for (var key in cookies) {
+                    $cookies.remove(key);
+                }
+
+                putio.auth_reset(function() {
                     chrome.windows.create({
                         url: 'https://put.io/user/api/apps',
                         type: 'normal'

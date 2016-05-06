@@ -58,6 +58,12 @@
                 });
             };
 
+            putio.auth_reset = function(callback) {
+                storage.remove('putio', function(data) {
+                    callback();
+                });
+            };
+
             putio.account_info = function(callback) {
                 request({
                     verb: 'GET',
