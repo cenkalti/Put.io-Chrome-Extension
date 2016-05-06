@@ -5,8 +5,7 @@ node_modules/
 packages/
 build/
 tmp/
-src/config.js
-src/tracker.js
+config.json
 
 # Compiled source #
 ###################

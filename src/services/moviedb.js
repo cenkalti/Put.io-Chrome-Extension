@@ -1,8 +1,8 @@
 (function() {
     var module = angular.module('moviedbService', ['logFactory', 'configModule']);
 
-    module.service('moviedb', ['log', '$http', 'MOVIED_DB_KEY',
-        function(Log, $http, MOVIED_DB_KEY) {
+    module.service('moviedb', ['log', '$http', 'MOVIE_DB_KEY',
+        function(Log, $http, MOVIE_DB_KEY) {
             var moviedb = this,
                 log = new Log(module),
                 baseUrl = 'https://api.themoviedb.org/3';
@@ -156,9 +156,9 @@
 
             function get_url(url) {
                 if (url.match(/\?/g)) {
-                    return baseUrl + url + '&api_key=' + MOVIED_DB_KEY;
+                    return baseUrl + url + '&api_key=' + MOVIE_DB_KEY;
                 } else {
-                    return baseUrl + url + '?api_key=' + MOVIED_DB_KEY;
+                    return baseUrl + url + '?api_key=' + MOVIE_DB_KEY;
                 }
             }
         }

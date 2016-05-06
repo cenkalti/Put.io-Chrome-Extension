@@ -1,0 +1,109 @@
+(function() {
+    var t, i, e, n = window,
+        o = document,
+        a = arguments,
+        s = "script",
+        r = ["config", "track", "identify", "visit", "push", "call", "trackForm", "trackClick"],
+        c = function() {
+            var t, i = this;
+            for (i._e = [], t = 0; r.length > t; t++)(function(t) {
+                i[t] = function() {
+                    return i._e.push([t].concat(Array.prototype.slice.call(arguments, 0))), i
+                }
+            })(r[t])
+        };
+    for (n._w = n._w || {}, t = 0; a.length > t; t++) n._w[a[t]] = n[a[t]] = n[a[t]] || new c;
+    i = o.createElement(s), i.async = 1, i.src = "https:////static.woopra.com/js/w.js", e = o.getElementsByTagName(s)[0], e.parentNode.insertBefore(i, e)
+})("woopra");
+
+woopra.config({
+    protocol: 'https',
+    domain: '{{tracker}}',
+    ping_interval: 5000
+});
+
+window.wp = {
+    logged: false,
+    identify: function(data, callback) {
+        var self = this;
+
+        if (!self.logged) {
+            data.last_visit = moment().valueOf();
+
+            woopra
+                .identify(data)
+                .push(function() {
+                    self.logged = true;
+
+                    if (typeof callback === 'function') {
+                        callback(false);
+                    }
+                });
+        } else {
+            if (typeof callback === 'function') {
+                callback(true);
+            }
+        }
+
+        return self;
+    },
+    event: function(module, name, action, meta, callback) {
+        var self = this;
+
+        if (typeof meta === 'function') {
+            callback = meta;
+        }
+
+        woopra.track('event', {
+            module: module.name,
+            name: name,
+            action: action,
+            metadata: meta,
+            timestamp: moment().valueOf()
+        }, function() {
+            if (typeof callback === 'function') {
+                callback();
+            }
+        });
+
+        return self;
+    },
+    rate: function(value, version, callback) {
+        var self = this;
+
+        woopra.track('rate', {
+            value: value,
+            version: version,
+            timestamp: moment().valueOf()
+        }, function() {
+            if (typeof callback === 'function') {
+                callback();
+            }
+        });
+
+        return self;
+    },
+    page_view: function(title, uri) {
+        var self = this;
+
+        woopra.track('pv', {
+            title: title,
+            url: uri,
+            uri: uri,
+            timestamp: moment().valueOf()
+        });
+
+        return self;
+    },
+    error: function(type, msg) {
+        var self = this;
+
+        woopra.track('error', {
+            message: msg,
+            type: type,
+            timestamp: moment().valueOf()
+        });
+
+        return self;
+    }
+};

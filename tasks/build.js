@@ -8,6 +8,7 @@ module.exports = function(grunt) {
         }
         grunt.task.run([
             "clean:all",
+            "config:prod",
             "copy:fonts",
             "copy:images",
             "copy:directives",

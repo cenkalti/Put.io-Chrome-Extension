@@ -19,6 +19,7 @@
         "grunt-contrib-uglify": "^0.5.1",
         "grunt-contrib-watch": "^0.6.1",
         "grunt-json-replace": "^0.1.2",
+        "grunt-mustache-render": "^1.9.0",
         "underscore": "^1.8.3"
     }
 }

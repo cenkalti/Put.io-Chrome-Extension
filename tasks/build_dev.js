@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
     grunt.registerTask("build_dev", [
         "clean:all",
+        "config:dev",
         "copy:fonts",
         "copy:images",
         "copy:directives",
