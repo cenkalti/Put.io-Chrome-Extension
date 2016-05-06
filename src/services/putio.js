@@ -58,44 +58,6 @@
                 });
             };
 
-            putio.auth_reset = function(callback) {
-                storage.get('putio', function(data) {
-                    data.access_token = null;
-                    storage.set('putio', data, callback);
-                });
-            };
-
-            putio.app_reset = function(callback) {
-                storage.remove('putio', function(data) {
-                    callback();
-                });
-            };
-
-            putio.options_get = function(callback) {
-                storage.get('putio', function(data) {
-                    if (data && data.options) {
-                        callback(null, data.options);
-                    } else {
-                        callback(null, {});
-                    }
-                });
-            };
-
-            putio.options_set = function(options, callback) {
-                storage.get('putio', function(data) {
-                    data.options = options;
-                    storage.set('putio', data, function() {
-                        callback(null, options);
-                    });
-                });
-            };
-
-            putio.reset_app = function(callback) {
-                storage.remove('putio', function(data) {
-                    callback();
-                });
-            };
-
             putio.account_info = function(callback) {
                 request({
                     verb: 'GET',

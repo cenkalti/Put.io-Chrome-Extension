@@ -17,7 +17,8 @@
                 'menuModule',
                 'ngJoyRide',
                 'configModule',
-                'infoModule'
+                'infoModule',
+                'ngCookies'
             ]
         );
 
@@ -132,8 +133,10 @@
         }
     ]);
 
-    module.controller('putioController', ['$scope', '$location', '$route', '$rootScope', 'putio',
-        function($scope, $location, $route, $rootScope, putio) {
+    module.controller('putioController', ['$scope', '$location', '$route', '$rootScope', 'putio', '$cookies',
+
+        function($scope, $location, $route, $rootScope, putio, $cookies) {
+            var homePage = $cookies.get('home_page') || 'home';
 
             $scope.title = '';
 
@@ -155,7 +158,7 @@
                         name: data.info.username,
                         version: manifest.version
                     }, function(alreadyLogged) {
-                        if(!alreadyLogged) wp.event(module, 'authenticated', 'app');
+                        if (!alreadyLogged) wp.event(module, 'authenticated', 'app');
                     });
                 });
             });
@@ -170,15 +173,13 @@
                 $scope.title = title;
             });
 
-            putio.options_get(function(err, options) {
-                var uri = $location.path(),
-                    titleArray = uri.split('/'),
-                    title = titleArray[1] || 'home';
+            var uri = $location.path(),
+                titleArray = uri.split('/'),
+                title = titleArray[1] || 'home';
 
-                if (options.home_page && options.home_page != title) {
-                    $location.path(options.home_page);
-                }
-            });
+            if (homePage !== title) {
+                $location.path(homePage);
+            }
         }
     ]);
 

@@ -1,8 +1,8 @@
 (function() {
-    var module = angular.module('settingsModule', ['messageFactory', 'logFactory']);
+    var module = angular.module('settingsModule', ['messageFactory', 'logFactory', 'ngCookies']);
 
-    module.controller('settingsController', ['$scope', 'putio', 'message', '$filter', 'log',
-        function($scope, putio, Message, $filter, Log) {
+    module.controller('settingsController', ['$scope', 'putio', 'message', '$filter', 'log', '$cookies',
+        function($scope, putio, Message, $filter, Log, $cookies) {
             var log = new Log(module),
                 message = new Message();
 
@@ -13,13 +13,13 @@
             };
 
             $scope.maybe_update_default_folder = function(id) {
-                wp.event(module, 'options_update', 'maybe_default_folder');
+                wp.event(module, 'settings_update', 'maybe_default_folder');
 
                 $('.tree').modal('show');
             };
 
             $scope.update_default_folder = function(node) {
-                wp.event(module, 'options_update', 'default_folder');
+                wp.event(module, 'settings_update', 'default_folder');
 
                 $('.tree').modal('hide');
                 putio.account_set_settings({
@@ -51,30 +51,23 @@
                     friends: 'Friends',
                     library: 'Library'
                 },
-                home_page: 'home',
-                notification: true
+                home_page: $cookies.get('home_page') || 'home',
+                notification: $cookies.get('notification') === undefined ? true : $cookies.get('notification')
             };
 
             $scope.update_home_page = function() {
-                wp.event(module, 'options_update', 'home_page', $scope.app.home_page);
+                wp.event(module, 'settings_update', 'home_page', $scope.app.home_page);
 
-                putio.options_get(function(err, options) {
-                    options.home_page = $scope.app.home_page;
-                    putio.options_set(options, function() {});
-                });
+                $cookies.put('home_page', $scope.app.home_page);
             };
 
             $scope.update_notification = function() {
-                wp.event(module, 'options_update', 'notification', $scope.app.notification.toString());
+                wp.event(module, 'settings_update', 'notification', $scope.app.notification.toString());
 
-                putio.options_get(function(err, options) {
-                    options.notification = $scope.app.notification;
+                $cookies.put('notification', $scope.app.notification)
 
-                    putio.options_set(options, function() {
-                        log.debug('sending notification message');
-                        message.send('notification', $$scope.app.notification);
-                    });
-                });
+                log.debug('sending notification message');
+                message.send('notification', $$scope.app.notification);
             };
 
             $scope.reset_auth = function() {
@@ -84,6 +77,8 @@
                     window.close();
                 });
             };
+
+            window.marker = $cookies;
 
             $scope.reset_app = function() {
                 wp.event(module, 'application', 'reset');
@@ -105,17 +100,6 @@
                     disabled: true
                 }
             };
-
-            putio.options_get(function(err, options) {
-                $scope.$apply(function() {
-                    if (options.home_page) {
-                        $scope.app.home_page = options.home_page;
-                    }
-                    if (options.notification !== undefined) {
-                        $scope.app.notification = options.notification;
-                    }
-                });
-            });
 
             putio.account_settings(function(err, data) {
                 $scope.putio.default_folder.id = data.settings.default_download_folder;

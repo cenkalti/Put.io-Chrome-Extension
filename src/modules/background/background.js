@@ -6,7 +6,8 @@
             'menuService',
             'transfersCheckService',
             'messageFactory',
-            'libraryFactory'
+            'libraryFactory',
+            'ngCookies'
         ],
         module = angular.module('BackgroundApp', deps);
 
@@ -18,9 +19,12 @@
         'menu',
         'transfersCheck',
         'library',
-        function(Log, Message, putio, badge, menu, transfersCheck, Library) {
+        '$cookies',
+
+        function(Log, Message, putio, badge, menu, transfersCheck, Library, $cookies) {
             var log = new Log(module),
-                message = new Message();
+                message = new Message(),
+                shouldNotify = $cookies.get('notification');
 
             putio.set_error_callback(function(err) {
                 wp.error(err.error_type, err.error_message);
@@ -35,24 +39,22 @@
 
                 track();
 
-                putio.options_get(function(err, options) {
-                    if (options.notification !== undefined) {
-                        maybe_transfers_check(options.notification);
-                    } else {
-                        maybe_transfers_check(true);
-                    }
-                });
+                if (shouldNotify !== undefined) {
+                    maybe_transfers_check(shouldNotify);
+                } else {
+                    maybe_transfers_check(true);
+                }
 
-                message.listen('notification', function(maybeStart, send) {
+                message.listen('notification', function(startStop, send) {
                     log.debug('received notification message');
 
-                    if (maybeStart) {
+                    if (startStop) {
                         wp.event(module, 'notification', 'enable');
                     } else {
                         wp.event(module, 'notification', 'disable');
                     }
 
-                    maybe_transfers_check(maybeStart);
+                    maybe_transfers_check(startStop);
                 });
 
             });
