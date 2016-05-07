@@ -107,7 +107,10 @@
                 var deferred = $q.defer();
 
                 putio.set_error_callback(function(err) {
-                    wp.error(err.error_type, err.error_message);
+
+                    if (err.error_type && err.error_message) {
+                        wp.error(err.error_type, err.error_message);
+                    }
 
                     if (err.error_message === 'Parent is not a folder') {
                         console.log('ignoring error: Parent is not a folder');
