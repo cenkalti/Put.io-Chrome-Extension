@@ -26,15 +26,6 @@
                 message = new Message(),
                 shouldNotify = $cookies.get('notification');
 
-            putio.set_error_callback(function(err) {
-
-                if (err.error_type && err.error_message) {
-                    wp.error(err.error_type, err.error_message);
-                }
-
-                return err;
-            });
-
             authenticated(function() {
                 badge.display(putio);
 
