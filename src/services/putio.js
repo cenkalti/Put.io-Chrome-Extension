@@ -294,6 +294,13 @@
                 }, callback);
             };
 
+            putio.stream = function(id, callback) {
+                 request({
+                    verb: 'GET',
+                    url: '/files/' + id.toString() + '?mp4_size=1&start_from=1&stream_url=1'
+                }, callback);
+            };
+
             putio.subtitle_url = function(id, key) {
                 return baseUrl + '/files/' + id + '/subtitles/' + key + '?format=webvtt';
             };

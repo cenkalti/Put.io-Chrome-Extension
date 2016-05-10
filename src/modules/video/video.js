@@ -22,9 +22,10 @@
             $scope.error = null;
 
             putio.auth(function() {
+
                 async.parallel({
                         file: function(cb) {
-                            putio.file(params.file, function(err, data) {
+                            putio.stream(params.file, function(err, data) {
                                 if (err) {
                                     cb(err);
                                 } else {
@@ -57,14 +58,14 @@
                                     width: '100%',
                                     height: '100%',
                                     controls: true,
-                                    poster: get_poster(file.screenshot)
+                                    preload: 'auto',
+                                    poster: get_poster(file.screenshot),
+                                    sources: [{
+                                        type: 'video/mp4',
+                                        src: file.stream_url
+                                    }]
                                 }, function() {
                                     var player = this;
-
-                                    player.src({
-                                        type: 'video/mp4',
-                                        src: putio.video_url(file)
-                                    });
 
                                     add_subs(subtitles);
 

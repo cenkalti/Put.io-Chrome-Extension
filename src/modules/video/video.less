@@ -24,7 +24,6 @@ body {
     .video_player-dimensions {
         height: 528.75px;
     }
-
     .info {
         zoom: 0.80;
     }
@@ -34,7 +33,6 @@ body {
     .video_player-dimensions {
         height: 409.5px;
     }
-
     .info {
         zoom: 0.65;
     }
@@ -44,7 +42,6 @@ body {
     .video_player-dimensions {
         height: 320px;
     }
-
     .info {
         zoom: 0.50;
     }
@@ -67,7 +64,6 @@ body {
 .info {
     opacity: 0;
     z-index: 2;
-    position: absolute;
     transition: opacity .5s ease-in-out;
 }
 
@@ -79,37 +75,41 @@ body {
     opacity: 0.85;
 }
 
-img.info {
+.info img {
+    position: absolute;
     top: 0;
     box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.85);
 }
 
-.info.title {
-    top: 0;
+.info .title {
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
     color: white;
     width: 20%;
     text-align: center;
-    left: 40%;
 }
 
-.info.title h1 {
+.info .title h1 {
     text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.85);
 }
 
-.info.title p {
+.info .title p {
     background: black;
     padding: 2px;
     border-radius: 5px;
 }
 
-.info.vote {
-    top: 5%;
-    right: 5%;
+.info .vote {
+    position: absolute;
+    top: 0%;
+    right: 1%;
     color: #fff;
     padding: 5px;
 }
 
-.info.vote h2 {
+.info .vote h2 {
     text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.55);
 }
 
