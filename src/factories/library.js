@@ -63,10 +63,10 @@
                 return result;
             };
 
-            library.prototype.remove = function(key) {
+            library.prototype.remove = function() {
                 var self = this;
 
-                self.storage.remove(key)
+                self.storage.remove.apply(self.storage, Array.prototype.slice.call(arguments));
 
                 return self;
             };

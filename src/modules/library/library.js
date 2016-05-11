@@ -61,17 +61,21 @@
             $scope.delete_file = function() {
                 wp.event(module, 'library', 'delete');
 
-                var video = $scope.video;
-
                 $('#delete_file').modal('hide');
 
-                putio.files_delete(video.file_id, function(err, data) {
+                var video = $scope.video,
+                    ids = video.file_id;
+
+                if(video.type === 'tv') {
+                    ids = video.episodes.map(function(episode) {
+                        return episode.file_id;
+                    });
+                }
+
+                putio.files_delete(ids, function(err, data) {
                     switch (video.type) {
                         case 'tv':
-                            var list = $scope.videos.shows[video.season].episodes;
-                            $scope.videos.shows[video.season].episodes = _.without(list, _.findWhere(list, {
-                                file_id: video.file_id
-                            }));
+                            delete $scope.videos.shows[video.title];
                             break;
                         case 'movie':
                             delete $scope.videos.movies[video.file_id];
@@ -81,13 +85,12 @@
                     }
                     $rootScope.$broadcast('info.refresh');
                     $scope.video = null;
-                    library.remove(video.file_id);
+                    library.remove(ids);
                 });
             };
 
             library.check(function() {
                 load_library();
-                console.log($scope.videos.shows);
             });
 
             function load_library() {
@@ -95,7 +98,7 @@
                     switch (video.type) {
                         case 'tv':
                             if (!$scope.videos.shows[video.title]) {
-                                $scope.videos.shows[video.title] = _.pick(video, 'poster', 'title');
+                                $scope.videos.shows[video.title] = _.pick(video, 'poster', 'title', 'type');
                                 $scope.videos.shows[video.title].episodes = [];
                             }
                             $scope.videos.shows[video.title].episodes.push(video);
