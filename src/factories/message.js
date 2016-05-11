@@ -14,6 +14,8 @@
                         if (request.key === key) {
                             callback(request.data, sendResponse, sender);
                         }
+
+                        return true;
                     }
                 );
             };

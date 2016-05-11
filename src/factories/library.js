@@ -1,220 +1,211 @@
 (function() {
-    var module = angular.module('libraryFactory', ['logFactory', 'putioService', 'moviedbService', 'storageFactory']);
+    var module = angular.module('libraryFactory', ['logFactory', 'LocalStorageModule', 'messageFactory', 'putioService', 'moviedbService']);
 
-    module.factory('library', ['log', '$http', 'putio', 'moviedb', 'storage',
+    module.config(function(localStorageServiceProvider) {
+        localStorageServiceProvider
+            .setPrefix('library');
+    });
 
-        function(Log, $http, putio, moviedb, Storage) {
-            var log = new Log(module),
-                storage = new Storage('local');
+    module.factory('library', ['log', 'localStorageService', 'message', 'putio', 'moviedb',
+        function(Log, storage, Message, putio, moviedb) {
+            var log = new Log(module);
 
             var library = function() {
                 var self = this;
 
-                self.process = {
-                    putio: 0,
-                    moviedb: 0,
-                    started: 0,
-                    ended: 0
-                };
+                self.storage = storage;
+                self.msg = new Message();
+
+                if (storage.isSupported) {
+                    log.debug("local storage is supported");
+                } else {
+                    log.warn("local storage is not supported");
+                }
 
                 return self;
             };
 
-            library.prototype.get_videos = function(parent_id, callback) {
+            library.prototype.start_listeners = function() {
                 var self = this;
 
-                self.process.started = moment();
-                self.process.putio = 0;
-                self.process.moviedb = 0;
+                self.msg.listen('library.crawl', function(id, send) {
+                    log.debug('received library.crawl message with id: ', id);
 
-                self.local.get(function(data) {
-                    if (!_.isEmpty(data)) {
-                        log.debug('got data from local');
-
-                        self.process.ended = moment();
-                        self.process.putio = 100;
-                        self.process.moviedb = 100;
-
-                        callback(data);
-                    } else {
-                        log.debug('requesting data');
-
-                        self.reset(parent_id, callback);
-                    }
+                    self.crawl(id, function() {
+                        log.debug('done crawling');
+                        send();
+                    });
                 });
 
-                return self;
-            };
+                self.msg.listen('library.check', function(_id, send) {
+                    log.debug('received library.check message');
 
-            library.prototype.add_videos = function(parent_id, callback) {
-                var self = this;
-
-                self.local.get(function(data) {
-                    if (_.isEmpty(data)) data = {};
-
-                    self.crawl_directory(parent_id, function(err, files) {
-                        self.get_info(files, function(err, videos) {
-                            var new_lib = $.extend({}, data, videos);
-
-                            self.local.set(new_lib, function() {
-                                callback(new_lib);
-                            });
-                        });
+                    self.check(function() {
+                        send();
                     });
                 });
 
                 return self;
             };
 
-            library.prototype.reset = function(parent_id, callback) {
+            library.prototype.get = function(id) {
+                var self = this,
+                    result = null;
+
+                if (id) {
+                    result = self.storage.get(id);
+                } else {
+                    result = self.storage.keys().map(function(key) {
+                        return self.storage.get(key);
+                    });
+                }
+
+                return result;
+            };
+
+            library.prototype.remove = function(key) {
                 var self = this;
 
-                self.process.started = moment();
-                self.process.putio = 0;
-                self.process.moviedb = 0;
-
-                self.crawl_directory(parent_id, function(err, files) {
-                    self.process.putio = 100;
-
-                    self.get_info(files, function(err, videos) {
-                        self.local.set(videos, function() {
-                            self.process.ended = moment();
-                            self.process.moviedb = 100;
-                            callback(videos);
-                        });
-                    });
-                });
+                self.storage.remove(key)
 
                 return self;
             };
 
-            library.prototype.local = {
-                get: function(callback) {
-                    storage.get('library', callback);
-                },
-                get_update: function(callback) {
-                    storage.get('library_update', function(data) {
-                        if (data) {
-                            callback(data);
-                        } else {
-                            callback(moment().toISOString());
+            library.prototype.clear = function() {
+                var self = this;
+
+                if (self.storage.clearAll()) {
+                    log.debug("cleared");
+                } else {
+                    log.warn("failed to clear");
+                }
+
+                return self;
+            };
+
+            library.prototype.check = function(callback) {
+                var self = this;
+
+                async.each(self.storage.keys(), function(key, cb) {
+                    putio.file(key, function(err, data) {
+                        if (err) {
+                            var video = self.storage.get(key);
+
+                            log.debug("removing video: " + video.file_name);
+                            self.remove(key);
                         }
+                        cb();
                     });
-                },
-                set: function(data, callback) {
-                    storage.set('library', data, function() {
-                        storage.set('library_update', moment().toISOString(), callback);
-                    });
-                }
+                }, callback);
+
+                return self;
             };
 
-            library.prototype.crawl_directory = function(parent_id, callback) {
+            library.prototype.add = function(file_id, callback) {
                 var self = this;
-
-                function crawled() {
-                    if (self.process.putio < 10) {
-                        self.process.putio++;
-                    }
-
-                    if(self.process.putio >= 10 && self.process.putio < 50) {
-                        self.process.putio += 1/3;
-                    }
-
-                    if(self.process.putio >= 50 && self.process.putio < 99) {
-                        self.process.putio += 1/4;
-                    }
-                }
 
                 async.waterfall([
-                        function(cb) {
-                            putio.files_list(parent_id, cb);
-                        },
-                        function(data, cb) {
-                            var videos = [],
-                                files = data.files;
-
-                            async.eachSeries(
-                                data.files,
-                                function(file, fn) {
-                                    crawled();
-                                    if (is_dir(file)) {
-                                        self.crawl_directory(file.id, function(err, data) {
-                                            if (!err) videos = videos.concat(data);
-                                            fn();
-                                        });
-                                    } else {
-                                        if (is_video(file)) {
-                                            videos.push(file);
-                                        }
-                                        fn();
-                                    }
-                                },
-                                function() {
-                                    cb(null, videos);
-                                }
-                            );
-                        }
-                    ],
-                    function(err, videos) {
-                        if (err) {
-                            if (err.error_message === 'Parent is not a folder') {
-                                putio.file(parent_id, function(err, data) {
-                                    if (err) {
-                                        callback(err);
-                                    } else {
-                                        if (is_video(data.file)) {
-                                            callback(null, [data.file]);
-                                        } else {
-                                            callback(null, []);
-                                        }
-                                    }
-
-                                });
+                    function(file_id, cb) {
+                        putio.file(file_id, function(err, data) {
+                            if (err) {
+                                cb(err);
                             } else {
-                                callback(err);
+                                cb(null, data.file);
                             }
+                        });
+                    },
+                    function(file, cb) {
+                        if (is_video(file)) {
+                            cb(null, [file]);
                         } else {
-                            callback(null, videos);
+                            if (is_dir(file)) {
+                                crawler(file.id, [], cb);
+                            } else {
+                                cb(null, []);
+                            }
                         }
-                    });
+                    },
+                    function(files, cb) {
+                        async.map(files, function(file, cb1) {
+                            detect(file, cb1)
+                        }, cb);
+                    },
+                    function(videos, cb) {
+                        videos.forEach(function(video) {
+                            self.storage.set(video.file_id, video);
+                        });
+
+                        cb(null, videos);
+                    }
+                ], callback);
+
+                return self;
             };
 
-            library.prototype.get_info = function(files, callback) {
-                var self = this,
-                    videos = {},
-                    total = files.length,
-                    executed = 0,
-                    q = async.queue(exec, 2);
+            library.prototype.crawl = function(parent_id, callback) {
+                var self = this;
 
-                function exec(file, cb) {
-                    moviedb.detect(file.name, function(err, data) {
-                        if (err) {
-                            data = {
-                                file_name: file.name,
-                                file_id: file.id,
-                                moviedb: false
-                            };
-                        } else {
-                            data.file_name = file.name;
-                            data.file_id = file.id;
-                        }
+                async.waterfall([
+                    function(cb) {
+                        crawler(parent_id, [], cb);
+                    },
+                    function(files, cb) {
+                        async.map(files, function(file, cb1) {
+                            detect(file, cb1)
+                        }, cb);
+                    },
+                    function(videos, cb) {
+                        if (parent_id === 0) self.clear();
 
-                        videos[file.id] = data;
-                        executed++;
+                        videos.forEach(function(video) {
+                            self.storage.set(video.file_id, video);
+                        });
 
-                        setTimeout(function() {
-                            self.process.moviedb = (executed * 100) / total;
-                            cb();
-                        }, 1000);
-                    });
-                }
+                        cb(null, videos);
+                    }
+                ], callback);
 
-                q.push(files);
-
-                q.drain = function() {
-                    callback(null, videos);
-                };
+                return self;
             };
+
+            function detect(file, callback) {
+                moviedb.detect(file.name, function(err, data) {
+                    if (err) {
+                        data = {
+                            file_name: file.name,
+                            file_id: file.id,
+                            moviedb: false
+                        };
+                    } else {
+                        data.file_name = file.name;
+                        data.file_id = file.id;
+                    }
+                    callback(null, data);
+                });
+            }
+
+            function crawler(id, files, callback) {
+                putio.files_list(id, function(err, data) {
+                    if (!err && data.files.length) {
+                        async.each(data.files, function(file, cb) {
+                            if (is_video(file)) {
+                                files.push(file);
+                                cb();
+                            } else {
+                                if (is_dir(file)) {
+                                    crawler(file.id, files, cb);
+                                } else {
+                                    cb();
+                                }
+                            }
+                        }, function() {
+                            callback(err, files);
+                        });
+                    } else {
+                        callback(err, files);
+                    }
+                });
+            }
 
             function is_video(file) {
                 return putio.is_video(file.content_type);

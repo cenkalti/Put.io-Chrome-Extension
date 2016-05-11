@@ -9,7 +9,7 @@
                 notif = chrome.notifications,
                 interval = null,
                 cleanInterval = 0,
-                lib = new Library(),
+                library = new Library(),
                 putio = null,
                 log = new Log(module);
 
@@ -107,7 +107,7 @@
             }
 
             function maybe_add_to_library(transfer) {
-                lib.add_videos(transfer.file_id, function(data) {});
+                library.add(transfer.file_id, function(err, data) {});
             }
 
             function get_title(info) {

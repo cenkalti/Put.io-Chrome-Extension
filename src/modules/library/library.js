@@ -1,76 +1,36 @@
 (function() {
-    var module = angular.module('libraryModule', ['logFactory', 'moviedbService', 'objectFilter', 'stringFilter', 'datesFilter', 'libraryFactory']);
+    var module = angular.module('libraryModule', ['logFactory', 'moviedbService', 'objectFilter', 'stringFilter', 'datesFilter', 'libraryFactory', 'messageFactory']);
 
-    module.controller('libraryController', ['$scope', 'putio', 'log', 'moviedb', '$filter', 'library',
-        function($scope, putio, Log, moviedb, $filter, Library) {
+    module.controller('libraryController', ['$scope', 'putio', 'log', 'moviedb', '$filter', 'library', 'message', '$rootScope',
+        function($scope, putio, Log, moviedb, $filter, Library, Message, $rootScope) {
             var log = new Log(module),
-                library = new Library(),
-                $resetModal = $('.reset-modal');
+                library = new Library()
+            message = new Message();
 
-            $scope.library = {
+            $scope.videos = {
                 shows: {},
                 movies: {},
                 unknown: {}
             };
             $scope.seleted_show = {};
             $scope.moviedb_configs = moviedb.configs;
-            $scope.loading = true;
-            $scope.process = {
-                moviedb: 0,
-                putio: 0,
-            };
-
-            crawl(function() {
-                $scope.get_library_update();
-                $scope.loading = false;
-            });
-
-            $scope.get_class = function(data) {
-                if (data < 50) return 'progress-bar-danger';
-                if (data < 80) return 'progress-bar-warning';
-                if (data < 100) return 'progress-bar-info';
-
-                return 'progress-bar-success';
-            };
+            $scope.reseting = false;
+            $scope.video = null;
 
             $scope.reset = function() {
                 wp.event(module, 'library', 'reset');
 
-                $resetModal.modal('show');
+                $scope.reseting = true;
+                $scope.videos = {
+                    shows: {},
+                    movies: {},
+                    unknown: {}
+                };
 
-                if (!$scope.loading) {
-                    $scope.loading = true;
-                    $scope.library = {
-                        shows: {},
-                        movies: {},
-                        unknown: {}
-                    };
-
-                    var inter = setInterval(function() {
-                        $scope.$apply(function() {
-                            $scope.process = library.process;
-                        });
-                    }, 500);
-
-                    library.reset(0, function(videos) {
-                        clearInterval(inter);
-
-                        $scope.process = library.process;
-
-                        add_to_lib(videos, function() {
-                            $scope.$apply(function() {
-                                $scope.loading = false;
-                            });
-                            $scope.get_library_update();
-                        });
-                    });
-                }
-            };
-
-            $scope.get_library_update = function() {
-                library.local.get_update(function(data) {
+                message.send('library.crawl', 0, function() {
                     $scope.$apply(function() {
-                        $scope.library_update = data;
+                        $scope.reseting = false;
+                        load_library();
                     });
                 });
             };
@@ -91,50 +51,61 @@
                 });
             };
 
-            function crawl(callback) {
-                var inter = setInterval(function() {
-                    $resetModal.modal('show');
-                    $scope.$apply(function() {
-                        $scope.process = library.process;
-                    });
-                }, 500);
+            $scope.maybe_delete_file = function(video) {
+                wp.event(module, 'library', 'maybe_delete');
 
-                library.get_videos(0, function(videos) {
-                    clearInterval(inter);
+                $scope.video = video;
+                $('#delete_file').modal('show');
+            };
 
-                    $scope.process = library.process;
+            $scope.delete_file = function() {
+                var video = $scope.video;
 
-                    add_to_lib(videos, function() {
+                wp.event(module, 'library', 'delete');
 
-                        $scope.loading = false;
-                        callback();
-                    });
+                $('#delete_file').modal('hide');
+
+                putio.files_delete(video.file_id, function(err, data) {
+                    switch (video.type) {
+                        case 'tv':
+                            var list = $scope.videos.shows[video.season].episodes;
+                            $scope.videos.shows[video.season].episodes = _.without(list, _.findWhere(list, {
+                                file_id: video.file_id
+                            }));
+                            break;
+                        case 'movie':
+                            delete $scope.videos.movies[video.file_id];
+                            break;
+                        default:
+                            delete $scope.videos.unknown[video.file_id];
+                    }
+                    $rootScope.$broadcast('info.refresh');
+                    $scope.video = null;
+                    library.remove(video.file_id);
                 });
+            };
 
-            }
+            library.check(function() {
+                load_library();
+            });
 
-            function add_to_lib(data, callback) {
-                async.forEachOf(
-                    data,
-                    function(item, key, cb) {
-                        switch (item.type) {
-                            case 'tv':
-                                if (!$scope.library.shows[item.title]) {
-                                    $scope.library.shows[item.title] = item;
-                                    $scope.library.shows[item.title].episodes = [];
-                                }
-                                $scope.library.shows[item.title].episodes.push(item);
-                                break;
-                            case 'movie':
-                                $scope.library.movies[item.title] = item;
-                                break;
-                            default:
-                                $scope.library.unknown[item.file_name] = item;
-                        }
-                        cb();
-                    },
-                    callback
-                );
+            function load_library() {
+                library.get().forEach(function(video) {
+                    switch (video.type) {
+                        case 'tv':
+                            if (!$scope.videos.shows[video.season]) {
+                                $scope.videos.shows[video.season] = video;
+                                $scope.videos.shows[video.season].episodes = [];
+                            }
+                            $scope.videos.shows[video.season].episodes.push(video);
+                            break;
+                        case 'movie':
+                            $scope.videos.movies[video.file_id] = video;
+                            break;
+                        default:
+                            $scope.videos.unknown[video.file_id] = video;
+                    }
+                });
             }
 
         }

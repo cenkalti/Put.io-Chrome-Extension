@@ -4,22 +4,6 @@
     right: 10px;
 }
 
-.library .reset:hover .show-on-hover {
-    display: inline-block;
-}
-
-.library .reset .show-on-hover {
-    display: none;
-}
-
-.library .reset:hover .fa-refresh {
-    display: none;
-}
-
-.library .reset .fa-refresh {
-    display: inline-block;
-}
-
 .library img {
     border-radius: 20px;
     width: 170px;
@@ -50,9 +34,12 @@
     position: relative;
 }
 
-.library .show .info select {
-    width: 90%;
-    margin-left: 5%;
+.library .movie:hover .info {
+    opacity: 0.5;
+}
+
+.library .show:hover .info {
+    opacity: 0.5;
 }
 
 .library .info {
@@ -69,6 +56,11 @@
     font-size: 300%;
 }
 
+.library .show .info select {
+    width: 90%;
+    margin-left: 5%;
+}
+
 .library .info h4 {
     color: @yellow;
     @font-weight();
@@ -82,12 +74,21 @@
     left: 50px;
 }
 
-.library .movie:hover .info {
-    opacity: 0.5;
+.library .info .footer {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: transparent;
+    text-align: center;
+    width: 80%;
 }
 
-.library .show:hover .info {
-    opacity: 0.5;
+.library .info .footer i {
+    @pointer();
+    color: @yellow;
 }
 
 #play_show .modal-body {

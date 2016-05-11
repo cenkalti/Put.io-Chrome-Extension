@@ -20,13 +20,18 @@
         'transfersCheck',
         'library',
         '$cookies',
-
         function(Log, Message, putio, badge, menu, transfersCheck, Library, $cookies) {
             var log = new Log(module),
                 message = new Message(),
                 shouldNotify = $cookies.get('notification');
 
             authenticated(function() {
+                var library = new Library();
+
+                library.crawl(0, function() {
+                    library.start_listeners();
+                });
+
                 badge.display(putio);
 
                 menu.display(putio);

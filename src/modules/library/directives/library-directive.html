@@ -1,85 +1,87 @@
 <div class="library">
     <button class="btn btn-default reset" ng-click="reset()">
-        <span ng-if="!loading" class="show-on-hover">Updated {{library_update | between}}</span>
-        <span ng-if="loading" class="show-on-hover">Refreshing</span>
-        <i class="fa fa-refresh"></i>
+        <i class="fa fa-refresh" ng-class="reseting ? 'fa-spin' : ''">
+        </i>
     </button>
     <div role="tabpanel">
         <ul class="nav nav-pills">
             <li class="active">
                 <a data-target="#movies" data-toggle="tab">
-                Movies <span class="badge">{{library.movies | obj_count}}</span>
+                    Movies
+                    <span class="badge">
+                        {{ videos.movies | obj_count }}
+                    </span>
                 </a>
             </li>
             <li>
                 <a data-target="#shows" data-toggle="tab">
-                Shows <span class="badge">{{library.shows | obj_count}}</span>
+                    Shows
+                    <span class="badge">
+                        {{ videos.shows | obj_count }}
+                    </span>
                 </a>
             </li>
             <li>
                 <a data-target="#unkown" data-toggle="tab">
-                Unknown <span class="badge">{{library.unknown | obj_count}}</span>
+                    Unknown
+                    <span class="badge">
+                        {{ videos.unknown | obj_count }}
+                    </span>
                 </a>
             </li>
         </ul>
-        <div class="tab-content" ng-if="!loading">
+        <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="movies">
-                <div ng-repeat="info in library.movies" class="movie">
-                    <img ng-show="info.poster" ng-src="{{moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + info.poster}}"/>
+                <div ng-repeat="info in videos.movies" class="movie">
+                    <img ng-show="info.poster" ng-src="{{ moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + info.poster }}"/>
                     <div ng-hide="info.poster" class="poster-fail">
-                        <h4 class="text-center">{{info.title}}</h4>
-                        <i class="fa fa-file-image-o"></i>
+                        <h4 class="text-center">
+                            {{ info.title }}
+                        </h4>
+                        <i class="fa fa-file-image-o">
+                        </i>
                     </div>
                     <div class="info">
-                        <h4 class="text-center">{{info.title}}</h4>
-                        <i class="fa fa-play-circle-o fa-2x" ng-click="play(info.file_id)"></i>
+                        <h4 class="text-center">
+                            {{ info.title }}
+                        </h4>
+                        <i class="fa fa-play-circle-o fa-2x" ng-click="play(info.file_id)">
+                        </i>
+                        <div class="footer">
+                            <i class="fa fa-trash" ng-click="maybe_delete_file(info)">
+                            </i>
+                        </div>
                     </div>
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="shows">
-                <div ng-repeat="(name, show) in library.shows" class="show">
-                    <img ng-show="show.poster" ng-src="{{moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + show.poster}}"/>
+                <div ng-repeat="(name, show) in videos.shows" class="show">
+                    <img ng-show="show.poster" ng-src="{{ moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + show.poster }}"/>
                     <div ng-hide="show.poster" class="poster-fail">
-                        <h4 class="text-center">{{show.title}}</h4>
-                        <i class="fa fa-file-image-o"></i>
+                        <h4 class="text-center">
+                            {{ show.title }}
+                        </h4>
+                        <i class="fa fa-file-image-o">
+                        </i>
                     </div>
                     <div class="info">
-                        <h4 class="text-center">{{show.title}}</h4>
-                        <i class="fa fa-play-circle-o fa-2x" ng-click="play_show(show.episodes)"></i>
+                        <h4 class="text-center">
+                            {{ show.title }}
+                        </h4>
+                        <i class="fa fa-play-circle-o fa-2x" ng-click="play_show(show.episodes)">
+                        </i>
                     </div>
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="unkown"> <div class="panel-body">
-                <ul>
-                    <li ng-repeat="info in library.unknown">
-                        <a ng-click="play(info.file_id)">
-                        {{info.file_name}}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade reset-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">{{process.putio == 100 ? 'Searching for metadata' : 'Searching for files'}}</h4>
-            </div>
-            <div class="modal-body">
-                <div class="progresses">
-                    <div class="progress" ng-show="process.moviedb == 0">
-                        <div class="progress-bar" ng-class="get_class(process.putio)" role="progressbar" aria-valuenow="{{process.putio | number:2}}" aria-valuemin="0" aria-valuemax="100" style="width: {{process.putio | number:2}}%">
-                            {{process.putio | number:2}}%
-                        </div>
-                    </div>
-                    <div class="progress" ng-show="process.putio == 100">
-                        <div class="progress-bar"  ng-class="get_class(process.moviedb)" role="progressbar" aria-valuenow="{{process.moviedb | number:2}}" aria-valuemin="0" aria-valuemax="100" style="width: {{process.moviedb | number:2}}%">
-                            {{process.moviedb | number:2}}%
-                        </div>
-                    </div>
+            <div role="tabpanel" class="tab-pane" id="unkown">
+                <div class="panel-body">
+                    <ul>
+                        <li ng-repeat="info in videos.unknown">
+                            <a ng-click="play(info.file_id)">
+                                {{ info.file_name }}
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -89,17 +91,56 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">{{seleted_show[0].title}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+                <h4 class="modal-title">
+                    {{ seleted_show[0].title }}
+                </h4>
             </div>
             <div class="modal-body">
                 <ul>
                     <li ng-repeat="episode in seleted_show">
                         <a ng-click="play(episode.file_id)">
-                        Season {{episode.season| pad}} Episode {{episode.episode_number | pad}} : {{episode.episode_title}}
+                            Season {{ episode.season| pad }} Episode {{ episode.episode_number | pad }} : {{ episode.episode_title }}
                         </a>
                     </li>
                 </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="delete_file">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+                <h4 class="modal-title">
+                    Delete File
+                </h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Are you sure you want to delete
+                    <span class="label label-danger">
+                        {{ video.title }}
+                    </span>
+                    ?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-danger" ng-click="delete_file(file.id, file.parent_id)">
+                    Delete
+                </button>
             </div>
         </div>
     </div>
