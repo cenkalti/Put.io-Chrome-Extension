@@ -4,12 +4,6 @@
     right: 10px;
 }
 
-.library img {
-    border-radius: 20px;
-    width: 170px;
-    height: 240px;
-}
-
 .library .poster-fail {
     width: 170px;
     height: 240px;
@@ -26,6 +20,30 @@
     float: left;
     margin: 10px;
     position: relative;
+    border-radius: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.1) inset;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.library .movie:hover {
+    transform: scale(1.2, 1.2);
+    z-index: 1;
+}
+
+.library .movie:hover:before, .library .movie:hover:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    top: 2px;
+    left: 15px;
+    right: 15px;
+    z-index: -1;
+    border-radius: 100px/30px;
+    box-shadow: 0 0 20px 2px @black;
+}
+
+.library .movie:hover .info {
+    opacity: 0.75;
 }
 
 .library .show {
@@ -34,12 +52,31 @@
     position: relative;
 }
 
-.library .movie:hover .info {
-    opacity: 0.5;
+.library .show:hover {
+    transform: scale(1.2, 1.2);
+    z-index: 1;
+}
+
+.library .show:hover:before, .library .show:hover:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    top: 2px;
+    left: 15px;
+    right: 15px;
+    z-index: -1;
+    border-radius: 100px/30px;
+    box-shadow: 0 0 20px 2px @black;
 }
 
 .library .show:hover .info {
-    opacity: 0.5;
+    opacity: 0.75;
+}
+
+.library .movie img, .library .show img {
+    border-radius: 20px;
+    width: 170px;
+    height: 240px;
 }
 
 .library .info {
@@ -54,11 +91,6 @@
     transition: opacity .5s ease-in-out;
     border-radius: 20px;
     font-size: 300%;
-}
-
-.library .show .info select {
-    width: 90%;
-    margin-left: 5%;
 }
 
 .library .info h4 {
