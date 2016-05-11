@@ -59,9 +59,9 @@
             };
 
             $scope.delete_file = function() {
-                var video = $scope.video;
-
                 wp.event(module, 'library', 'delete');
+
+                var video = $scope.video;
 
                 $('#delete_file').modal('hide');
 
@@ -87,17 +87,18 @@
 
             library.check(function() {
                 load_library();
+                console.log($scope.videos.shows);
             });
 
             function load_library() {
                 library.get().forEach(function(video) {
                     switch (video.type) {
                         case 'tv':
-                            if (!$scope.videos.shows[video.season]) {
-                                $scope.videos.shows[video.season] = video;
-                                $scope.videos.shows[video.season].episodes = [];
+                            if (!$scope.videos.shows[video.title]) {
+                                $scope.videos.shows[video.title] = _.pick(video, 'poster', 'title');
+                                $scope.videos.shows[video.title].episodes = [];
                             }
-                            $scope.videos.shows[video.season].episodes.push(video);
+                            $scope.videos.shows[video.title].episodes.push(video);
                             break;
                         case 'movie':
                             $scope.videos.movies[video.file_id] = video;
