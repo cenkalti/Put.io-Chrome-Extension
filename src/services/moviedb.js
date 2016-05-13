@@ -147,9 +147,9 @@
                 }
 
                 $http(config)
-                    .success(function(data, status, headers, config) {
+                    .success(function(data) {
                         callback(null, data);
-                    }).error(function(data, status, headers, config) {
+                    }).error(function(data) {
                         callback(data, null);
                     });
             }

@@ -20,12 +20,13 @@
         'transfersCheck',
         'library',
         '$cookies',
-        function(Log, Message, putio, badge, menu, transfersCheck, Library, $cookies) {
+        '$timeout',
+        function(Log, Message, putio, badge, menu, transfersCheck, Library, $cookies, $timeout) {
             var log = new Log(module),
                 message = new Message(),
                 shouldNotify = $cookies.get('notification');
 
-            authenticated(function() {
+            authenticate(function() {
                 var library = new Library();
 
                 library.crawl(0, function() {
@@ -44,7 +45,7 @@
                     maybe_transfers_check(true);
                 }
 
-                message.listen('notification', function(startStop, send) {
+                message.listen('notification', function(startStop) {
                     log.debug('received notification message');
 
                     if (startStop) {
@@ -70,8 +71,7 @@
 
             function track() {
                 putio.account_info(function(err, data) {
-                    var disk = data.info,
-                        manifest = chrome.runtime.getManifest();
+                    var manifest = chrome.runtime.getManifest();
 
                     wp.identify({
                         email: data.info.mail,
@@ -81,7 +81,7 @@
                 });
             }
 
-            function authenticated(callback) {
+            function authenticate(callback) {
                 putio.auth(function(err) {
                     if (err) {
                         log.warn(err);

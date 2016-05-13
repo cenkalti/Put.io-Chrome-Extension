@@ -20,6 +20,9 @@ module.exports = function(grunt) {
                 $: true,
                 moment: true,
                 chrome: true,
+                document: true,
+                ptn: true,
+                videojs: true
             },
             reporter: require('jshint-stylish').toString()
         },

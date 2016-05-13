@@ -159,8 +159,7 @@
 
             $scope.$on('putio.authenticated', function() {
                 putio.account_info(function(err, data) {
-                    var disk = data.info,
-                        manifest = chrome.runtime.getManifest();
+                    var manifest = chrome.runtime.getManifest();
 
                     wp.identify({
                         email: data.info.mail,
@@ -172,7 +171,7 @@
                 });
             });
 
-            $rootScope.$on('$locationChangeSuccess', function(event, next, previous) {
+            $rootScope.$on('$locationChangeSuccess', function() {
                 var uri = $location.path(),
                     titleArray = uri.split('/'),
                     title = titleArray[1] || 'home';

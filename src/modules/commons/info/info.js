@@ -17,7 +17,7 @@
 
             $scope.disk = {};
 
-            $scope.$on('info.refresh', function(event, next, previous) {
+            $scope.$on('info.refresh', function() {
                 info_refresh();
             });
 
@@ -28,8 +28,7 @@
             function info_refresh() {
                 putio.account_info(function(err, data) {
                     var info = data.info,
-                        disk = info.disk,
-                        used = Math.round((disk.used * 100) / disk.size);
+                        disk = info.disk;
 
                     $scope.disk.used = disk.used;
                     $scope.disk.size = disk.size;

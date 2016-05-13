@@ -87,7 +87,7 @@
                 var self = this;
 
                 async.each(self.storage.keys(), function(key, cb) {
-                    putio.file(key, function(err, data) {
+                    putio.file(key, function(err) {
                         if (err) {
                             var video = self.storage.get(key);
 
@@ -105,7 +105,7 @@
                 var self = this;
 
                 async.waterfall([
-                    function(file_id, cb) {
+                    function(cb) {
                         putio.file(file_id, function(err, data) {
                             if (err) {
                                 cb(err);

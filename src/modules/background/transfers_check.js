@@ -55,7 +55,7 @@
                                     maybe_send_notification(tr, cb);
                                 });
                             });
-                        }, function(err) {
+                        }, function() {
                             callback(data.transfers);
                             console.groupEnd();
                         });
@@ -107,7 +107,7 @@
             }
 
             function maybe_add_to_library(transfer) {
-                library.add(transfer.file_id, function(err, data) {});
+                library.add(transfer.file_id, function() {});
             }
 
             function get_title(info) {
@@ -143,7 +143,7 @@
                                 });
 
                             }
-                        }, function(err) {
+                        }, function() {
                             cleanInterval = 0;
                             console.groupEnd();
                         });

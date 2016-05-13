@@ -12,7 +12,7 @@
                 }
             };
 
-            $scope.maybe_update_default_folder = function(id) {
+            $scope.maybe_update_default_folder = function() {
                 wp.event(module, 'settings', 'maybe_update_default_folder');
 
                 $('.tree').modal('show');
@@ -24,7 +24,7 @@
                 $('.tree').modal('hide');
                 putio.account_set_settings({
                     default_download_folder: node.id
-                }, function(err, data) {
+                }, function() {
                     $scope.putio.default_folder = {
                         name: node.name,
                         id: node.id
@@ -67,7 +67,7 @@
                 $cookies.put('notification', $scope.app.notification);
 
                 log.debug('sending notification message');
-                message.send('notification', $$scope.app.notification);
+                message.send('notification', $scope.app.notification);
             };
 
             $scope.reset_auth = function() {

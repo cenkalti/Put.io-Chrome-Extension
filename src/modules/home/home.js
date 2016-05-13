@@ -29,14 +29,14 @@
                         }
                     });
                 },
-                select: function(file, model, label, event) {
+                select: function(file) {
                     if (putio.is_video(file.content_type)) {
                         wp.event(module, 'search', 'play');
 
                         chrome.windows.create({
                             url: 'video.html#?file=' + file.id,
                             type: 'panel'
-                        }, function(new_window) {});
+                        }, function() {});
                     } else {
                         wp.event(module, 'search', 'select');
 
@@ -49,7 +49,7 @@
             $scope.clear = function() {
                 wp.event(module, 'events', 'clear');
 
-                putio.events_delete(function(err, data) {
+                putio.events_delete(function() {
                     $route.reload();
                 });
             };

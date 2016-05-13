@@ -59,7 +59,7 @@
             };
 
             putio.auth_reset = function(callback) {
-                storage.remove('putio', function(data) {
+                storage.remove('putio', function() {
                     callback();
                 });
             };
@@ -359,9 +359,9 @@
                 }
 
                 $http(config)
-                    .success(function(data, status, headers, config) {
+                    .success(function(data) {
                         callback(null, data);
-                    }).error(function(data, status, headers, config) {
+                    }).error(function(data) {
                         if (typeof errorCallback == 'function') errorCallback(data);
                         callback(data, null);
                     });

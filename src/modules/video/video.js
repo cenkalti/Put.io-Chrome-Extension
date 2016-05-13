@@ -51,10 +51,10 @@
                             var file = results.file,
                                 subtitles = results.subtitles;
 
-                            moviedb.detect(file.name, function(err, data) {
+                            moviedb.detect(file.name, function(err1, data) {
                                 $scope.info = data;
 
-                                var player = new videojs('video_player', {
+                                new videojs('video_player', {
                                     width: '100%',
                                     height: '100%',
                                     controls: true,
@@ -65,12 +65,10 @@
                                         src: file.stream_url
                                     }]
                                 }, function() {
-                                    var player = this;
-
                                     add_subs(subtitles);
 
-                                    if (err) {
-                                        log.warn(err);
+                                    if (err1) {
+                                        log.warn(err1);
                                         document.title = file.name;
                                     } else {
                                         document.title = get_title(data);

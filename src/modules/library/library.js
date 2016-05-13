@@ -1,10 +1,9 @@
 (function() {
     var module = angular.module('libraryModule', ['logFactory', 'moviedbService', 'objectFilter', 'stringFilter', 'datesFilter', 'libraryFactory', 'messageFactory']);
 
-    module.controller('libraryController', ['$scope', 'putio', 'log', 'moviedb', '$filter', 'library', 'message', '$rootScope',
-        function($scope, putio, Log, moviedb, $filter, Library, Message, $rootScope) {
-            var log = new Log(module),
-                library = new Library(),
+    module.controller('libraryController', ['$scope', 'putio', 'moviedb', '$filter', 'library', 'message', '$rootScope',
+        function($scope, putio, moviedb, $filter, Library, Message, $rootScope) {
+            var library = new Library(),
                 message = new Message();
 
             $scope.videos = {
@@ -46,7 +45,7 @@
                 chrome.windows.create({
                     url: 'video.html#?file=' + file_id,
                     type: 'panel'
-                }, function(new_window) {
+                }, function() {
                     $('#play_show').modal('hide');
                 });
             };
@@ -72,7 +71,7 @@
                     });
                 }
 
-                putio.files_delete(ids, function(err, data) {
+                putio.files_delete(ids, function() {
                     switch (video.type) {
                         case 'tv':
                             delete $scope.videos.shows[video.title];

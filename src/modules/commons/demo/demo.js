@@ -18,7 +18,7 @@
             $scope.start = false;
             $scope.config = demoData[get_title()];
 
-            $rootScope.$on('$locationChangeSuccess', function(event, next, previous) {
+            $rootScope.$on('$locationChangeSuccess', function() {
                 $scope.config = demoData[get_title()] || [];
             });
 

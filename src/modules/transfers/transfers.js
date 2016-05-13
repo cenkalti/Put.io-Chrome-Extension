@@ -29,7 +29,7 @@
             $scope.transfers_clean = function() {
                 wp.event(module, 'transfers', 'clean');
 
-                putio.transfers_clean(function(err, data) {
+                putio.transfers_clean(function() {
                     $route.reload();
                 });
             };
@@ -45,7 +45,7 @@
                 wp.event(module, 'transfers', 'cancel');
 
                 $('#transfer_cancel').modal('hide');
-                putio.transfers_cancel(id, function(err, data) {
+                putio.transfers_cancel(id, function() {
                     $rootScope.$broadcast('transfers_count.refresh');
                     $route.reload();
                 });

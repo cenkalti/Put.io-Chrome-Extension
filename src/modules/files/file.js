@@ -35,9 +35,9 @@
 
                 $scope.file = file;
 
-                putio.files_list(file.parent_id, function(err, data) {
-                    var files = data.files,
-                        parent = data.parent;
+                putio.files_list(file.parent_id, function(err1, data1) {
+                    var files = data1.files,
+                        parent = data1.parent;
 
                     $scope.files = files;
                     $scope.parent = parent;
@@ -58,7 +58,7 @@
                 wp.event(module, 'file', 'rename');
 
                 $('#rename_file').modal('hide');
-                putio.file_rename($scope.file.id, $scope.file.name, function(err, data) {});
+                putio.file_rename($scope.file.id, $scope.file.name, function() {});
             };
 
             $scope.maybe_delete_file = function() {
@@ -71,7 +71,7 @@
                 wp.event(module, 'file', 'delete');
 
                 $('#delete_file').modal('hide');
-                putio.files_delete(id, function(err, data) {
+                putio.files_delete(id, function() {
                     $rootScope.$broadcast('info.refresh');
                     $location.path('/files/' + parent_id);
                 });
@@ -85,7 +85,7 @@
                 chrome.downloads.download({
                     url: url,
                     saveAs: true,
-                }, function(downloadId) {});
+                }, function() {});
             };
 
             $scope.is_video = function(content_type) {
@@ -98,7 +98,7 @@
                 chrome.windows.create({
                     url: 'video.html#?file=' + file.id,
                     type: 'panel'
-                }, function(new_window) {});
+                }, function() {});
             };
 
             $scope.selected = function(node) {
@@ -122,7 +122,7 @@
                 wp.event(module, 'file', 'move');
 
                 $('.tree').modal('hide');
-                putio.files_move($scope.moveFileId, node.id, function(err, data) {
+                putio.files_move($scope.moveFileId, node.id, function() {
                     $location.path('/files/' + node.id);
                 });
             };

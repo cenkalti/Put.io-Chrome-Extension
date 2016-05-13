@@ -55,7 +55,7 @@
                     chrome.windows.create({
                         url: 'video.html#?file=' + file.id,
                         type: 'panel'
-                    }, function(new_window) {});
+                    }, function() {});
                 } else {
                     $location.path('/file/' + file.id);
                 }
@@ -125,17 +125,17 @@
                 wp.event(module, 'files', 'rename');
 
                 $('#rename_folder').modal('hide');
-                putio.file_rename($scope.folder.id, $scope.folder.name, function(err, data) {
+                putio.file_rename($scope.folder.id, $scope.folder.name, function() {
                     $route.reload();
                 });
             };
 
-            $scope.maybe_create_folder = function(parent_id) {
+            $scope.maybe_create_folder = function(id) {
                 wp.event(module, 'files', 'maybe_create');
 
                 $('#create_folder').modal('show');
                 $scope.folder = {};
-                $scope.folder.parent_id = parent_id;
+                $scope.folder.parent_id = id;
             };
 
             $scope.create_folder = function() {
@@ -144,7 +144,7 @@
                 var folder = $scope.folder;
 
                 $('#create_folder').modal('hide');
-                putio.folder_create(folder.name, folder.parent_id, function(err, data) {
+                putio.folder_create(folder.name, folder.parent_id, function() {
                     $route.reload();
                 });
             };
@@ -162,7 +162,7 @@
                 wp.event(module, 'files', 'delete');
 
                 $('#delete_folders').modal('hide');
-                putio.files_delete(id, function(err, data) {
+                putio.files_delete(id, function() {
                     $rootScope.$broadcast('info.refresh');
                     $route.reload();
                 });
@@ -184,11 +184,11 @@
                                 callback(err1);
                             });
                         },
-                        function(err, n) {
+                        function() {
                             chrome.downloads.download({
                                 url: url,
                                 saveAs: true,
-                            }, function(downloadId) {});
+                            }, function() {});
                         }
                     );
                 });
@@ -219,7 +219,7 @@
                 wp.event(module, 'files', 'move');
 
                 $('.tree').modal('hide');
-                putio.files_move($scope.moveFileId, node.id, function(err, data) {
+                putio.files_move($scope.moveFileId, node.id, function() {
                     $location.path('/files/' + node.id);
                 });
             };

@@ -1,8 +1,8 @@
 (function() {
     var module = angular.module('menuService', ['logFactory', 'moviedbService', 'stringFilter']);
 
-    module.service('menu', ['$timeout', 'log', 'moviedb',
-        function($timeout, Log, moviedb) {
+    module.service('menu', ['$timeout', 'log', 'moviedb', '$filter',
+        function($timeout, Log, moviedb, $filter) {
             var menu = this,
                 log = new Log(module),
                 notif = chrome.notifications;
@@ -16,7 +16,7 @@
                 putio.account_settings(function(err, data) {
                     default_folder.id = data.settings.default_download_folder;
 
-                    putio.file(default_folder.id, function(err, data1) {
+                    putio.file(default_folder.id, function(err1, data1) {
                         default_folder.name = data1.file.name;
 
                         chrome.contextMenus.create({
@@ -28,7 +28,7 @@
 
                 });
 
-                function on_click(info, tab) {
+                function on_click(info) {
                     wp.event(module, 'transfer', 'add');
 
                     var options = {
@@ -47,11 +47,11 @@
                             options.message = data.transfer.name;
                             options.contextMessage = data.transfer.name;
 
-                            moviedb.detect(data.transfer.name, function(err, data) {
-                                if (!err && data.title) {
+                            moviedb.detect(data.transfer.name, function(err1, data1) {
+                                if (!err1 && data1.title) {
                                     options.type = "image";
-                                    options.message = get_title(data);
-                                    options.imageUrl = "http://image.tmdb.org/t/p/w154" + data.poster;
+                                    options.message = get_title(data1);
+                                    options.imageUrl = "http://image.tmdb.org/t/p/w154" + data1.poster;
                                 }
                                 notify(options);
                             });

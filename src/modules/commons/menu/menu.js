@@ -68,23 +68,23 @@
                 return route === $location.path();
             };
 
-            $rootScope.$on('$locationChangeStart', function(event, args) {
+            $rootScope.$on('$locationChangeStart', function() {
                 $scope.close();
             });
 
-            $scope.$on('menu.toggle', function(event, args) {
+            $scope.$on('menu.toggle', function() {
                 $scope.toggle();
             });
 
-            $scope.$on('info.refresh', function(event, args) {
+            $scope.$on('info.refresh', function() {
                 info_refresh();
             });
 
-            $scope.$on('transfers_count.refresh', function(event, args) {
+            $scope.$on('transfers_count.refresh', function() {
                 transfers_count_refresh();
             });
 
-            $scope.$on('friends_req.refresh', function(event, args) {
+            $scope.$on('friends_req.refresh', function() {
                 friends_req_refresh();
             });
 

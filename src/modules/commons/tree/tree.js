@@ -33,13 +33,13 @@
                 }
             };
 
-            $('.tree').on('show.bs.modal', function(e) {
+            $('.tree').on('show.bs.modal', function() {
                 $scope.treeData = [];
                 $scope.expandedNodes = [];
                 $scope.selectedNode = undefined;
                 $scope.loading = true;
 
-                putio.auth(function(err) {
+                putio.auth(function() {
                     putio.files_list(0, function(err, data) {
                         var parent = formatFile(data.parent),
                             files = data.files;
