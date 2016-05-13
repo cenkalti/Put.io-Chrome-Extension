@@ -4,8 +4,8 @@
     module.controller('libraryController', ['$scope', 'putio', 'log', 'moviedb', '$filter', 'library', 'message', '$rootScope',
         function($scope, putio, Log, moviedb, $filter, Library, Message, $rootScope) {
             var log = new Log(module),
-                library = new Library()
-            message = new Message();
+                library = new Library(),
+                message = new Message();
 
             $scope.videos = {
                 shows: {},
@@ -66,7 +66,7 @@
                 var video = $scope.video,
                     ids = video.file_id;
 
-                if(video.type === 'tv') {
+                if (video.type === 'tv') {
                     ids = video.episodes.map(function(episode) {
                         return episode.file_id;
                     });

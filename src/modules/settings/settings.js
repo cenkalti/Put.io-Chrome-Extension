@@ -64,7 +64,7 @@
             $scope.update_notification = function() {
                 wp.event(module, 'settings', 'update_notification', $scope.app.notification.toString());
 
-                $cookies.put('notification', $scope.app.notification)
+                $cookies.put('notification', $scope.app.notification);
 
                 log.debug('sending notification message');
                 message.send('notification', $$scope.app.notification);

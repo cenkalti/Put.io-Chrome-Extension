@@ -46,7 +46,7 @@
 
             $scope.is_video = function(file) {
                 return putio.is_video(file.content_type);
-            }
+            };
 
             $scope.go_to = function(file) {
                 if (putio.is_video(file.content_type)) {
@@ -59,7 +59,7 @@
                 } else {
                     $location.path('/file/' + file.id);
                 }
-            }
+            };
 
             $scope.set_order = function(order, reverse) {
                 wp.event(module, 'files', 'order', order);

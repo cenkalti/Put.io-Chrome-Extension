@@ -77,7 +77,7 @@
                         email: data.info.mail,
                         name: data.info.username,
                         version: manifest.version
-                    }, function() {);
+                    }, function() {});
                 });
             }
 

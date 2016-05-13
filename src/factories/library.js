@@ -127,7 +127,7 @@
                     },
                     function(files, cb) {
                         async.map(files, function(file, cb1) {
-                            detect(file, cb1)
+                            detect(file, cb1);
                         }, cb);
                     },
                     function(videos, cb) {
@@ -151,7 +151,7 @@
                     },
                     function(files, cb) {
                         async.map(files, function(file, cb1) {
-                            detect(file, cb1)
+                            detect(file, cb1);
                         }, cb);
                     },
                     function(videos, cb) {

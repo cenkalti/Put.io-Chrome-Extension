@@ -55,9 +55,9 @@
             };
 
             $scope.any_events = function() {
-                return $scope.today_events.length == 0 &&
-                    $scope.week_events.length == 0 &&
-                    $scope.month_events.length == 0;
+                return $scope.today_events.length === 0 &&
+                    $scope.week_events.length === 0 &&
+                    $scope.month_events.length === 0;
             };
 
             putio.events_list(function(err, data) {
