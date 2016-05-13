@@ -1,12 +1,12 @@
 module.exports = function(grunt) {
     grunt.registerTask("build_dev", [
         "clean:all",
+        "jshint:before_concat",
         "config:dev",
         "copy:fonts",
         "copy:images",
         "copy:directives",
         "copy:main",
-        "jshint:before_concat",
         "concat",
         "bower_concat",
         "less",
