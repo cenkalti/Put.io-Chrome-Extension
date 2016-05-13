@@ -15,7 +15,7 @@
             };
 
             putio.auth = function(callback) {
-                var url = '/oauth2/authenticate?client_id=649&response_type=code&redirect_uri=http://putio.herokuapp.com/putio';
+                var url = '/oauth2/authenticate?client_id=2426&response_type=code&redirect_uri=http://putio-oauth.herokuapp.com/api/oauth';
 
                 storage.get('putio', function(putioStorage) {
                     if (putioStorage && putioStorage.access_token) {

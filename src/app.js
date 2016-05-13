@@ -108,6 +108,12 @@
 
                 putio.set_error_callback(function(err) {
 
+                    if (err.error_type === 'invalid_client') {
+                        putio.auth_reset(function() {
+                            window.close();
+                        });
+                    }
+
                     if (err.error_type && err.error_message) {
                         wp.error(err.error_type, err.error_message);
                     }
@@ -117,7 +123,7 @@
                     } else {
                         var $error_modal = $('#error_modal');
 
-                        $('.modal-body p', $error_modal).html(err.error_message);
+                        $('.modal-body p', $error_modal).html(err.error_message || err.error_type);
                         $error_modal.modal();
                     }
 
