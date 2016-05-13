@@ -77,11 +77,7 @@
                         email: data.info.mail,
                         name: data.info.username,
                         version: manifest.version
-                    }, function() {
-                        wp.event(module, 'background', 'authenticated', function() {
-                            wp.page_view('background', '/background');
-                        });
-                    });
+                    }, function() {);
                 });
             }
 
