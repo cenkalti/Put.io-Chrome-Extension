@@ -33,7 +33,7 @@
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="movies">
                 <div ng-repeat="info in videos.movies" class="movie">
-                    <img ng-show="info.poster" ng-src="{{ moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + info.poster }}"/>
+                    <img ng-show="info.poster" ng-src="{{ moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[3] + info.poster }}"/>
                     <div ng-hide="info.poster" class="poster-fail">
                         <h4 class="text-center">
                             {{ info.title }}

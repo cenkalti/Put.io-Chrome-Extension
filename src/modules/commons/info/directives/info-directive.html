@@ -1,8 +1,11 @@
-<div class="info">
-    <uib-progressbar ng-show="disk.percent" animate="false" value="disk.percent" type="{{disk.type}}" ></uib-progressbar>
-    <demo config="demo.config" on-finish="demo.finish()" on-skip="demo.skip()">
-    </demo>
-    <div class="progress-bar-value" ng-show="disk.percent">
-        {{ disk.percent }}% {{ disk.used | bytes : 2 }} / {{ disk.size | bytes : 0 }}
-    </div>
-</div>
+<ul class="nav navbar-nav navbar-right info">
+    <li ng-show="disk.percent">
+        <uib-progressbar  animate="false" value="disk.percent" type="{{ disk.type }}" uib-tooltip=" {{ disk.percent }}% {{ disk.used | bytes : 2 }} / {{ disk.size | bytes : 0 }}" tooltip-placement="bottom">
+            {{ disk.percent }}%
+        </uib-progressbar>
+    </li>
+    <li>
+        <demo config="demo.config" on-finish="demo.finish()" on-skip="demo.skip()">
+        </demo>
+    </li>
+</ul>

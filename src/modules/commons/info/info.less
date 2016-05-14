@@ -1,23 +1,62 @@
 @import "all";
+@media (min-width: 1200px) {
+    .info {
+        margin-right: 0 !important;
+    }
+}
 
-.info demo {
+@media (min-width: 992px) and (max-width: 1199px) {
+    .info {
+        margin-right: 0 !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .info {
+        margin-right: 0 !important;
+    }
+}
+
+@media (max-width:768px) {
+    .info {
+        margin: 0;
+        float: right;
+    }
+    .info li:nth-child(1) {
+        width: 80% !important;
+    }
+}
+
+.info {
+    width: 50%;
+}
+
+.info li {
     float: right;
-    margin: 10px 5px;
+}
+
+.info li:nth-child(1) {
+    width: 50%;
+}
+
+.info .demo {
+    margin-top: 10px;
+        text-shadow: 1px 1px 1px lighten(@black, 10%);
 }
 
 .info .progress {
-    float: right;
-    width: 40%;
+    width: 100%;
     height: 30px;
     margin: 10px 5px;
     background-color: darken(@white, 5%);
+    box-shadow: inset 0px 0px 5px lighten(@black, 50%);
 }
 
-.info .progress-bar-value {
-    position: absolute;
-    right: 35px;
-    top: 12px;
+.info .progress-bar span {
+    line-height: 28px;
     color: @black;
     font-size: 18px;
     @font-weight();
+    margin-left: 10px;
+    text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
 }

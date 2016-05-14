@@ -1,4 +1,24 @@
 @import "all";
+@media (min-width: 1200px) {
+    .library .movie, .library .show {
+        zoom: 2;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .library .movie, .library .show {
+        zoom: 1.66;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .library .movie, .library .show {
+        zoom: 1.33;
+    }
+}
+
+@media (max-width:768px) {}
+
 .library .reset {
     position: absolute;
     right: 10px;
@@ -40,6 +60,7 @@
     z-index: -1;
     border-radius: 100px/30px;
     box-shadow: 0 0 20px 2px @black;
+    border-radius: 25px;
 }
 
 .library .movie:hover .info {
@@ -70,6 +91,7 @@
     z-index: -1;
     border-radius: 100px/30px;
     box-shadow: 0 0 20px 2px @black;
+    border-radius: 25px;
 }
 
 .library .show:hover .info {

@@ -1,17 +1,43 @@
 @import "all";
-.nav, .pagination, .carousel, .panel-title a {
-    cursor: pointer;
-}
-
-// BODY
 body {
-    width: 600px;
-    max-width: 600px;
-    height: 300px;
+    min-width: 600px;
     min-height: 500px;
 }
 
-// NAVBAR
+@media (min-width: 1200px) {}
+
+@media (min-width: 992px) and (max-width: 1199px) {}
+
+@media (min-width: 768px) and (max-width: 991px) {}
+
+@media (max-width:768px) {
+    .navbar-header {
+        float: left;
+    }
+
+    .navigation .navbar-btn:nth-child(1) {
+        margin-right: 0 !important;
+        margin-left: 15px;
+    }
+}
+
+.navigation .navbar-btn:nth-child(1) {
+    margin-right: 15px;
+    float: left;
+}
+
+.navigation .navbar {
+    margin-bottom: 0;
+}
+
+.content {
+    padding: 10px;
+}
+
+.content > .row {
+    padding: 0 10px;
+}
+
 .navbar-default .navbar-brand {
     @pointer();
     color: @black;
@@ -22,41 +48,22 @@ body {
     color: @yellow;
 }
 
-.navigation .navbar-btn {
-    float: left;
-    margin-top: 7px;
-}
-
-.navigation .navbar-btn:nth-child(1) {
-    margin-left: 7px;
-}
-
 .navigation .btn-menu:focus, .navigation .btn-menu:hover {
     color: @yellow;
     background-color: @white;
     border-color: @yellow;
 }
 
-.navigation .navbar {
-    margin-bottom: 0;
-}
-
-// CONTENT
-.content {
-    padding: 10px;
-}
-
-.content > .row {
-    padding: 0 10px;
-}
-
-// FOR ALL
 small {
     color: @smoke;
 }
 
 a {
     @pointer();
+}
+
+a:focus, a:hover {
+    text-decoration: none;
 }
 
 .nav-pills>li>a {
