@@ -1,12 +1,44 @@
 @import "all";
-.settings .nav li a {
-    color: @black;
-    @font-weight();
+@media (min-width: 1200px) {
+    .settings .nav-pills {
+        text-align: center;
+    }
+    .settings .nav-pills > li {
+        float: none;
+        display: inline-block;
+    }
+    .settings .nav-pills {
+        text-align: center;
+    }
 }
 
-.settings .nav li.active a {
-    color: @yellow;
+@media (min-width: 992px) and (max-width: 1199px) {
+    .settings .nav-pills {
+        text-align: center;
+    }
+    .settings .nav-pills > li {
+        float: none;
+        display: inline-block;
+    }
+    .settings .nav-pills {
+        text-align: center;
+    }
 }
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .settings .nav-pills {
+        text-align: center;
+    }
+    .settings .nav-pills > li {
+        float: none;
+        display: inline-block;
+    }
+    .settings .nav-pills {
+        text-align: center;
+    }
+}
+
+@media (max-width:768px) {}
 
 .settings .form-horizontal {
     margin-top: 20px;
