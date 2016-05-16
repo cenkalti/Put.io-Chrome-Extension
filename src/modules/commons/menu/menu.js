@@ -44,6 +44,7 @@
             };
 
             $scope.toggle = function() {
+                console.log("toggle");
                 $menu.animate({
                     width: 'toggle',
                     easing: 'easeOutQuad'
@@ -58,6 +59,7 @@
             };
 
             $scope.close = function() {
+                console.log("close");
                 $menu.animate({
                     width: 'hide',
                     easing: 'easeOutQuad'
@@ -95,7 +97,9 @@
             });
 
             $(document).mouseup(function(e) {
-                if (!$menu.is(e.target) && $menu.has(e.target).length === 0) {
+                if (!$('i.fa.fa-bars').is(e.target) &&
+                    !$menu.is(e.target) &&
+                    $menu.has(e.target).length === 0) {
                     $scope.close();
                 }
             });
