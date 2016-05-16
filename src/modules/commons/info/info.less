@@ -41,7 +41,7 @@
 
 .info .demo {
     margin-top: 10px;
-        text-shadow: 1px 1px 1px lighten(@black, 10%);
+    text-shadow: 1px 1px 1px lighten(@black, 10%);
 }
 
 .info .progress {
@@ -52,11 +52,14 @@
     box-shadow: inset 0px 0px 5px lighten(@black, 50%);
 }
 
+.info .progress-bar {
+    box-shadow: inset 0 0 5px lighten(@black, 50%);
+}
+
 .info .progress-bar span {
     line-height: 28px;
     color: @black;
     font-size: 18px;
     @font-weight();
     margin-left: 10px;
-    text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
 }
