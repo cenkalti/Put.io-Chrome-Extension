@@ -95,9 +95,11 @@
             });
 
             $(document).mouseup(function(e) {
-                if (!$('i.fa.fa-bars').is(e.target) &&
-                    !$menu.is(e.target) &&
-                    $menu.has(e.target).length === 0) {
+                var $target = $(e.target);
+
+                if (!$target.is('button.btn.btn-default.navbar-btn') &&
+                    !$target.is('i.fa.fa-bars') &&
+                    !$menu.is(e.target)) {
                     $scope.close();
                 }
             });
