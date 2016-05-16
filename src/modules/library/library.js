@@ -15,7 +15,6 @@
             $scope.moviedb_configs = moviedb.configs;
             $scope.reseting = false;
             $scope.video = null;
-            $scope.loading = true;
 
             $scope.reset = function() {
                 wp.event(module, 'library', 'reset');
@@ -32,6 +31,20 @@
                         $scope.reseting = false;
                         load_library();
                     });
+                });
+            };
+
+            $scope.check = function() {
+                wp.event(module, 'library', 'check');
+
+                $scope.videos = {
+                    shows: {},
+                    movies: {},
+                    unknown: {}
+                };
+
+                library.check(function() {
+                    load_library();
                 });
             };
 
@@ -89,10 +102,7 @@
                 });
             };
 
-            library.check(function() {
-                load_library();
-                $scope.loading = false;
-            });
+            load_library();
 
             function load_library() {
                 library.get().forEach(function(video) {

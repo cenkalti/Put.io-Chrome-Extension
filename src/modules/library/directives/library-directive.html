@@ -1,8 +1,10 @@
 <div class="library">
-    <button class="btn btn-default reset" ng-click="reset()">
-        <i class="fa fa-refresh" ng-class="reseting ? 'fa-spin' : ''">
-        </i>
-    </button>
+    <div class="btn-group actions">
+        <button class="btn btn-default reset" ng-click="reset()">
+            <i class="fa fa-refresh" ng-class="reseting ? 'fa-spin' : ''">
+            </i>
+        </button>
+    </div>
     <uib-tabset active="active" type="pills">
         <uib-tab index="0">
             <uib-tab-heading>
@@ -11,23 +13,24 @@
                     {{ videos.movies | obj_count }}
                 </span>
             </uib-tab-heading>
-            <div ng-repeat="info in videos.movies" class="movie">
-                <img ng-show="info.poster" ng-src="{{ moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[3] + info.poster }}"/>
-                <div ng-hide="info.poster" class="poster-fail">
-                    <h4 class="text-center">
-                        {{ info.title }}
-                    </h4>
-                    <i class="fa fa-file-image-o">
-                    </i>
-                </div>
-                <div class="info">
-                    <h4 class="text-center">
-                        {{ info.title }}
-                    </h4>
-                    <i class="fa fa-play-circle-o fa-2x" ng-click="play(info.file_id)">
-                    </i>
+            <div class="row">
+                <div class="col-xs-4 col-sm-3 col-lg-2 video" ng-repeat="info in videos.movies">
+                    <img class="img-responsive" ng-show="info.poster" ng-src="{{ moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[3] + info.poster }}"/>
+                    <div class="poster-fail" ng-hide="info.poster">
+                        <h4 class="text-center">
+                            {{ info.title }}
+                        </h4>
+                        <i class="fa fa-file-image-o">
+                        </i>
+                    </div>
+                    <div class="middle">
+                        <i class="fa fa-play-circle-o fa-5x" ng-click="play(info.file_id)">
+                        </i>
+                    </div>
                     <div class="footer">
-                        <i class="fa fa-trash" ng-click="maybe_delete_file(info)">
+                        <i class="fa fa-trash fa-2x" ng-click="maybe_delete_file(show)">
+                        </i>
+                        <i class="fa  fa-info-circle fa-2x" ng-click="console.log('clicked')">
                         </i>
                     </div>
                 </div>
@@ -40,23 +43,24 @@
                     {{ videos.shows | obj_count }}
                 </span>
             </uib-tab-heading>
-            <div ng-repeat="(name, show) in videos.shows" class="show">
-                <img ng-show="show.poster" ng-src="{{ moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + show.poster }}"/>
-                <div ng-hide="show.poster" class="poster-fail">
-                    <h4 class="text-center">
-                        {{ show.title }}
-                    </h4>
-                    <i class="fa fa-file-image-o">
-                    </i>
-                </div>
-                <div class="info">
-                    <h4 class="text-center">
-                        {{ show.title }}
-                    </h4>
-                    <i class="fa fa-play-circle-o fa-2x" ng-click="play_show(show.episodes)">
-                    </i>
+            <div class="row">
+                <div class="col-xs-4 col-sm-3 col-lg-2 video"  ng-repeat="(name, show) in videos.shows">
+                    <img class="img-responsive" ng-show="show.poster" ng-src="{{ moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + show.poster }}"/>
+                    <div class="poster-fail" ng-hide="show.poster">
+                        <h4 class="text-center">
+                            {{ show.title }}
+                        </h4>
+                        <i class="fa fa-file-image-o">
+                        </i>
+                    </div>
+                    <div class="middle">
+                        <i class="fa fa-play-circle-o fa-5x" ng-click="play_show(show.episodes)">
+                        </i>
+                    </div>
                     <div class="footer">
-                        <i class="fa fa-trash" ng-click="maybe_delete_file(show)">
+                        <i class="fa fa-trash fa-2x" ng-click="maybe_delete_file(show)">
+                        </i>
+                        <i class="fa  fa-info-circle fa-2x" ng-click="console.log('clicked')">
                         </i>
                     </div>
                 </div>
@@ -69,14 +73,16 @@
                     {{ videos.unknown | obj_count }}
                 </span>
             </uib-tab-heading>
-            <div class="panel-body">
-                <ul>
-                    <li ng-repeat="info in videos.unknown">
-                        <a ng-href="#file/{{ info.file_id }}">
-                            {{ info.file_name }}
-                        </a>
-                    </li>
-                </ul>
+            <div class="row">
+                <div class="panel-body">
+                    <ul>
+                        <li ng-repeat="info in videos.unknown">
+                            <a ng-href="#file/{{ info.file_id }}">
+                                {{ info.file_name }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </uib-tab>
     </uib-tabset>
