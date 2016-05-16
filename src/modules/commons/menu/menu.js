@@ -44,7 +44,6 @@
             };
 
             $scope.toggle = function() {
-                console.log("toggle");
                 $menu.animate({
                     width: 'toggle',
                     easing: 'easeOutQuad'
@@ -59,7 +58,6 @@
             };
 
             $scope.close = function() {
-                console.log("close");
                 $menu.animate({
                     width: 'hide',
                     easing: 'easeOutQuad'
