@@ -15,6 +15,7 @@
             $scope.moviedb_configs = moviedb.configs;
             $scope.reseting = false;
             $scope.video = null;
+            $scope.loading = true;
 
             $scope.reset = function() {
                 wp.event(module, 'library', 'reset');
@@ -90,6 +91,7 @@
 
             library.check(function() {
                 load_library();
+                $scope.loading = false;
             });
 
             function load_library() {

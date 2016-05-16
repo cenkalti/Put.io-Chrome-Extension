@@ -3,93 +3,83 @@
         <i class="fa fa-refresh" ng-class="reseting ? 'fa-spin' : ''">
         </i>
     </button>
-    <div role="tabpanel">
-        <ul class="nav nav-pills">
-            <li class="active">
-                <a data-target="#movies" data-toggle="tab">
-                    Movies
-                    <span class="badge">
-                        {{ videos.movies | obj_count }}
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a data-target="#shows" data-toggle="tab">
-                    Shows
-                    <span class="badge">
-                        {{ videos.shows | obj_count }}
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a data-target="#unkown" data-toggle="tab">
-                    Unknown
-                    <span class="badge">
-                        {{ videos.unknown | obj_count }}
-                    </span>
-                </a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="movies">
-                <div ng-repeat="info in videos.movies" class="movie">
-                    <img ng-show="info.poster" ng-src="{{ moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[3] + info.poster }}"/>
-                    <div ng-hide="info.poster" class="poster-fail">
-                        <h4 class="text-center">
-                            {{ info.title }}
-                        </h4>
-                        <i class="fa fa-file-image-o">
+    <uib-tabset active="active" type="pills">
+        <uib-tab index="0">
+            <uib-tab-heading>
+                Movies
+                <span class="badge">
+                    {{ videos.movies | obj_count }}
+                </span>
+            </uib-tab-heading>
+            <div ng-repeat="info in videos.movies" class="movie">
+                <img ng-show="info.poster" ng-src="{{ moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[3] + info.poster }}"/>
+                <div ng-hide="info.poster" class="poster-fail">
+                    <h4 class="text-center">
+                        {{ info.title }}
+                    </h4>
+                    <i class="fa fa-file-image-o">
+                    </i>
+                </div>
+                <div class="info">
+                    <h4 class="text-center">
+                        {{ info.title }}
+                    </h4>
+                    <i class="fa fa-play-circle-o fa-2x" ng-click="play(info.file_id)">
+                    </i>
+                    <div class="footer">
+                        <i class="fa fa-trash" ng-click="maybe_delete_file(info)">
                         </i>
-                    </div>
-                    <div class="info">
-                        <h4 class="text-center">
-                            {{ info.title }}
-                        </h4>
-                        <i class="fa fa-play-circle-o fa-2x" ng-click="play(info.file_id)">
-                        </i>
-                        <div class="footer">
-                            <i class="fa fa-trash" ng-click="maybe_delete_file(info)">
-                            </i>
-                        </div>
                     </div>
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="shows">
-                <div ng-repeat="(name, show) in videos.shows" class="show">
-                    <img ng-show="show.poster" ng-src="{{ moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + show.poster }}"/>
-                    <div ng-hide="show.poster" class="poster-fail">
-                        <h4 class="text-center">
-                            {{ show.title }}
-                        </h4>
-                        <i class="fa fa-file-image-o">
+        </uib-tab>
+        <uib-tab index="1">
+            <uib-tab-heading>
+                Shows
+                <span class="badge">
+                    {{ videos.shows | obj_count }}
+                </span>
+            </uib-tab-heading>
+            <div ng-repeat="(name, show) in videos.shows" class="show">
+                <img ng-show="show.poster" ng-src="{{ moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + show.poster }}"/>
+                <div ng-hide="show.poster" class="poster-fail">
+                    <h4 class="text-center">
+                        {{ show.title }}
+                    </h4>
+                    <i class="fa fa-file-image-o">
+                    </i>
+                </div>
+                <div class="info">
+                    <h4 class="text-center">
+                        {{ show.title }}
+                    </h4>
+                    <i class="fa fa-play-circle-o fa-2x" ng-click="play_show(show.episodes)">
+                    </i>
+                    <div class="footer">
+                        <i class="fa fa-trash" ng-click="maybe_delete_file(show)">
                         </i>
-                    </div>
-                    <div class="info">
-                        <h4 class="text-center">
-                            {{ show.title }}
-                        </h4>
-                        <i class="fa fa-play-circle-o fa-2x" ng-click="play_show(show.episodes)">
-                        </i>
-                        <div class="footer">
-                            <i class="fa fa-trash" ng-click="maybe_delete_file(show)">
-                            </i>
-                        </div>
                     </div>
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="unkown">
-                <div class="panel-body">
-                    <ul>
-                        <li ng-repeat="info in videos.unknown">
-                            <a ng-href="#file/{{ info.file_id }}">
-                                {{ info.file_name }}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+        </uib-tab>
+        <uib-tab index="2">
+            <uib-tab-heading>
+                Unknown
+                <span class="badge">
+                    {{ videos.unknown | obj_count }}
+                </span>
+            </uib-tab-heading>
+            <div class="panel-body">
+                <ul>
+                    <li ng-repeat="info in videos.unknown">
+                        <a ng-href="#file/{{ info.file_id }}">
+                            {{ info.file_name }}
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </div>
-    </div>
+        </uib-tab>
+    </uib-tabset>
 </div>
 <div class="modal fade" id="play_show">
     <div class="modal-dialog">
