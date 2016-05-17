@@ -1,10 +1,11 @@
 (function() {
-    var module = angular.module('settingsModule', ['messageFactory', 'logFactory', 'ngCookies']);
+    var module = angular.module('settingsModule', ['messageFactory', 'logFactory', 'storageFactory']);
 
-    module.controller('settingsController', ['$scope', 'putio', 'message', '$filter', 'log', '$cookies',
-        function($scope, putio, Message, $filter, Log, $cookies) {
+    module.controller('settingsController', ['$scope', 'putio', 'message', '$filter', 'log', 'storage',
+        function($scope, putio, Message, $filter, Log, Storage) {
             var log = new Log(module),
-                message = new Message();
+                message = new Message(),
+                storage = new Storage('settings');
 
             $scope.putio = {
                 default_folder: {
@@ -51,20 +52,20 @@
                     friends: 'Friends',
                     library: 'Library'
                 },
-                home_page: $cookies.get('home_page') || 'home',
-                notification: $cookies.get('notification') === undefined ? true : $cookies.get('notification')
+                home_page: storage.get('home_page') || 'home',
+                notification: storage.get('notification') === null ? true : storage.get('notification')
             };
 
             $scope.update_home_page = function() {
                 wp.event(module, 'settings', 'update_home_page', $scope.app.home_page);
 
-                $cookies.put('home_page', $scope.app.home_page);
+                storage.set('home_page', $scope.app.home_page);
             };
 
             $scope.update_notification = function() {
                 wp.event(module, 'settings', 'update_notification', $scope.app.notification.toString());
 
-                $cookies.put('notification', $scope.app.notification);
+                storage.set('notification', $scope.app.notification);
 
                 log.debug('sending notification message');
                 message.send('notification', $scope.app.notification);
@@ -81,11 +82,7 @@
             $scope.reset_app = function() {
                 wp.event(module, 'application', 'reset');
 
-                var cookies = $cookies.getAll();
-
-                for (var key in cookies) {
-                    $cookies.remove(key);
-                }
+                storage.destroy();
 
                 putio.auth_reset(function() {
                     chrome.windows.create({

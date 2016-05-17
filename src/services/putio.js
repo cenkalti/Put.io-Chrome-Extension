@@ -1,14 +1,15 @@
 (function() {
     var module = angular.module('putioService', ['storageFactory']);
 
-    module.service('putio', ['storage', '$http', '$rootScope',
-        function(Storage, $http, $rootScope) {
+
+    module.service('putio', ['$http', '$rootScope', 'storage',
+        function($http, $rootScope, Storage) {
 
             var putio = this,
-                storage = new Storage('sync'),
                 baseUrl = 'https://api.put.io/v2',
                 errorCallback = null,
-                accessToken = null;
+                accessToken = null,
+                storage = new Storage('putio');
 
             putio.set_error_callback = function(callback) {
                 errorCallback = callback;
@@ -17,45 +18,40 @@
             putio.auth = function(callback) {
                 var url = '/oauth2/authenticate?client_id=2426&response_type=code&redirect_uri=http://putio-oauth.herokuapp.com/api/oauth';
 
-                storage.get('putio', function(putioStorage) {
-                    if (putioStorage && putioStorage.access_token) {
-                        accessToken = putioStorage.access_token;
-                        $rootScope.$broadcast('putio.authenticated');
-                        callback(null, accessToken);
-                    } else {
-                        wp.event(module, 'authenticate', 'try');
+                accessToken = storage.get('access_token');
 
-                        if (!putioStorage) {
-                            putioStorage = {};
-                        }
+                if (accessToken) {
+                    $rootScope.$broadcast('putio.authenticated');
+                    callback(null, accessToken);
+                } else {
+                    wp.event(module, 'authenticate', 'try');
 
-                        request({
-                            verb: 'GET',
-                            url: url
-                        }, function(err, data) {
-                            if (err) {
-                                callback(err, null);
+                    request({
+                        verb: 'GET',
+                        url: url
+                    }, function(err, data) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (data.access_token) {
+                                accessToken = data.access_token;
+
+                                $rootScope.$broadcast('putio.authenticated');
+
+                                storage.set('access_token', accessToken);
+
+                                callback(null, accessToken);
                             } else {
-                                if (data.access_token) {
-                                    accessToken = data.access_token;
-                                    putioStorage.access_token = data.access_token;
-
-                                    $rootScope.$broadcast('putio.authenticated');
-
-                                    storage.set('putio', putioStorage, function() {
-                                        callback(null, data.access_token);
-                                    });
-                                } else {
-                                    chrome.windows.create({
-                                        url: baseUrl + url,
-                                        type: 'panel'
-                                    }, function() {});
-                                    callback(true, null);
-                                }
+                                chrome.windows.create({
+                                    url: baseUrl + url,
+                                    type: 'panel'
+                                }, function() {});
+                                callback(true, null);
                             }
-                        });
-                    }
-                });
+                        }
+                    });
+                }
+
             };
 
             putio.auth_reset = function(callback) {
@@ -295,7 +291,7 @@
             };
 
             putio.stream = function(id, callback) {
-                 request({
+                request({
                     verb: 'GET',
                     url: '/files/' + id.toString() + '?mp4_size=1&start_from=1&stream_url=1'
                 }, callback);

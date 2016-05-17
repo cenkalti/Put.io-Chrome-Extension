@@ -1,26 +1,16 @@
 (function() {
-    var module = angular.module('libraryFactory', ['logFactory', 'LocalStorageModule', 'messageFactory', 'putioService', 'moviedbService']);
+    var module = angular.module('libraryFactory', ['logFactory', 'storageFactory', 'messageFactory', 'putioService', 'moviedbService']);
 
-    module.config(function(localStorageServiceProvider) {
-        localStorageServiceProvider
-            .setPrefix('library');
-    });
 
-    module.factory('library', ['log', 'localStorageService', 'message', 'putio', 'moviedb',
-        function(Log, storage, Message, putio, moviedb) {
+    module.factory('library', ['log', 'storage', 'message', 'putio', 'moviedb',
+        function(Log, Storage, Message, putio, moviedb) {
             var log = new Log(module);
 
             var library = function() {
                 var self = this;
 
-                self.storage = storage;
+                self.storage = new Storage('library');
                 self.msg = new Message();
-
-                if (storage.isSupported) {
-                    log.debug("local storage is supported");
-                } else {
-                    log.warn("local storage is not supported");
-                }
 
                 return self;
             };

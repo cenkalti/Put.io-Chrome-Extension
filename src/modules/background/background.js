@@ -7,7 +7,7 @@
             'transfersCheckService',
             'messageFactory',
             'libraryFactory',
-            'ngCookies'
+            'storageFactory'
         ],
         module = angular.module('BackgroundApp', deps);
 
@@ -19,12 +19,13 @@
         'menu',
         'transfersCheck',
         'library',
-        '$cookies',
+        'storage',
         '$timeout',
-        function(Log, Message, putio, badge, menu, transfersCheck, Library, $cookies, $timeout) {
+        function(Log, Message, putio, badge, menu, transfersCheck, Library, Storage, $timeout) {
             var log = new Log(module),
                 message = new Message(),
-                shouldNotify = $cookies.get('notification');
+                storage = new Storage('settings'),
+                shouldNotify = storage.get('notification');
 
             authenticate(function() {
                 var library = new Library();
@@ -39,7 +40,7 @@
 
                 track();
 
-                if (shouldNotify !== undefined) {
+                if (shouldNotify !== null) {
                     maybe_transfers_check(shouldNotify);
                 } else {
                     maybe_transfers_check(true);

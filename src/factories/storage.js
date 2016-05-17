@@ -1,45 +1,80 @@
 (function() {
-    var module = angular.module('storageFactory', []);
+    var module = angular.module('storageFactory', ['logFactory', 'LocalStorageModule']);
 
-    module.factory('storage', [
-        function() {
-            var storage = function(type) {
+    module.config(function(localStorageServiceProvider) {
+        localStorageServiceProvider
+            .setPrefix('putio');
+    });
+
+    module.factory('storage', ['log', 'localStorageService',
+        function(Log, localStorage) {
+
+            var storage = function(prefix) {
                 var self = this;
 
-                self.type = type || 'local';
+                self.log = new Log(module);
+                self.prefix = prefix || 'ls';
+
+                if (localStorage.isSupported) {
+                    self.log.debug("local storage is supported");
+                } else {
+                    self.log.warn("local storage is not supported");
+                }
+
+                return self;
             };
 
-            storage.prototype.get = function(key, callback) {
-                var self = this;
-
-                chrome.storage[self.type].get(key, function(data) {
-                    if (typeof callback === 'function') {
-                        callback(data[key]);
-                    }
-                });
-            };
-
-            storage.prototype.set = function(key, value, callback) {
+            storage.prototype.keys = function() {
                 var self = this,
-                    data = {};
+                    re = new RegExp(self.key(''), '');
 
-                data[key] = value;
-
-                chrome.storage[self.type].set(data, function() {
-                    if (typeof callback === 'function') {
-                        callback(data[key]);
-                    }
-                });
+                return localStorage.keys()
+                    .filter(function(key) {
+                        return re.test(key);
+                    })
+                    .map(function(key) {
+                        return key.replace(re, '');
+                    });
             };
 
-            storage.prototype.remove = function(key, callback) {
+            storage.prototype.clearAll = function() {
+                var self = this,
+                    keys = self.keys();
+
+                keys.forEach(function(key) {
+                    localStorage.remove(self.key(key));
+                });
+
+                return true;
+            };
+
+            storage.prototype.destroy = function() {
+                return localStorage.clearAll();
+            };
+
+
+            storage.prototype.get = function(key) {
                 var self = this;
 
-                chrome.storage[self.type].remove(key, function() {
-                    if (typeof callback === 'function') {
-                        callback();
-                    }
-                });
+                return localStorage.get(self.key(key));
+            };
+
+            storage.prototype.set = function(key, value) {
+                var self = this;
+
+                return localStorage.set(self.key(key), value);
+            };
+
+            storage.prototype.remove = function(key) {
+                var self = this;
+
+                return localStorage.remove(self.key(key));
+            };
+
+            storage.prototype.key = function(key) {
+                var self = this;
+
+                return self.prefix + '.' + key;
             };
 
             return storage;

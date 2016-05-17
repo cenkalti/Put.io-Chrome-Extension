@@ -18,7 +18,7 @@
                 'ngJoyRide',
                 'configModule',
                 'infoModule',
-                'ngCookies'
+                'storageFactory'
             ]
         );
 
@@ -144,10 +144,11 @@
         }
     ]);
 
-    module.controller('putioController', ['$scope', '$location', '$route', '$rootScope', 'putio', '$cookies',
+    module.controller('putioController', ['$scope', '$location', '$route', '$rootScope', 'putio', 'storage',
 
-        function($scope, $location, $route, $rootScope, putio, $cookies) {
-            var homePage = $cookies.get('home_page') || 'home';
+        function($scope, $location, $route, $rootScope, putio, Storage) {
+            var storage = new Storage('settings'),
+                homePage = storage.get('home_page') || 'home';
 
             $scope.title = '';
 
