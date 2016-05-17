@@ -1,7 +1,11 @@
 <div class="library">
     <div class="btn-group actions">
-        <button class="btn btn-default reset" ng-click="reset()">
-            <i class="fa fa-refresh" ng-class="reseting ? 'fa-spin' : ''">
+        <button class="btn btn-default" ng-click="check()">
+            <i class="fa fa-check">
+            </i>
+        </button>
+        <button class="btn btn-default" ng-click="reset()">
+            <i class="fa fa-refresh" ng-class="loaging ? 'fa-spin' : ''">
             </i>
         </button>
     </div>
@@ -28,7 +32,7 @@
                         </i>
                     </div>
                     <div class="footer">
-                        <i class="fa fa-trash fa-2x" ng-click="maybe_delete_file(show)">
+                        <i class="fa fa-trash fa-2x" ng-click="maybe_delete_file(info)">
                         </i>
                         <i class="fa  fa-info-circle fa-2x" ng-click="console.log('clicked')">
                         </i>

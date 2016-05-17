@@ -114,13 +114,15 @@
                         });
                     }
 
-                    if (err.error_type && err.error_message) {
-                        wp.error(err.error_type, err.error_message);
-                    }
-
                     if (err.error_message === 'Parent is not a folder') {
                         console.log('ignoring error: Parent is not a folder');
+                    } else if (err.error_type === 'NotFound') {
+                        console.log('ignoring error: File not found');
                     } else {
+                        if (err.error_type && err.error_message) {
+                            wp.error(err.error_type, err.error_message);
+                        }
+
                         var $error_modal = $('#error_modal');
 
                         $('.modal-body p', $error_modal).html(err.error_message || err.error_type);

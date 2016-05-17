@@ -13,13 +13,13 @@
             };
             $scope.seleted_show = {};
             $scope.moviedb_configs = moviedb.configs;
-            $scope.reseting = false;
+            $scope.loading = false;
             $scope.video = null;
 
             $scope.reset = function() {
                 wp.event(module, 'library', 'reset');
 
-                $scope.reseting = true;
+                $scope.loading = true;
                 $scope.videos = {
                     shows: {},
                     movies: {},
@@ -28,7 +28,7 @@
 
                 message.send('library.crawl', 0, function() {
                     $scope.$apply(function() {
-                        $scope.reseting = false;
+                        $scope.loading = false;
                         load_library();
                     });
                 });
@@ -36,6 +36,8 @@
 
             $scope.check = function() {
                 wp.event(module, 'library', 'check');
+
+                $scope.loading = true;
 
                 $scope.videos = {
                     shows: {},
@@ -45,6 +47,7 @@
 
                 library.check(function() {
                     load_library();
+                    $scope.loading = false;
                 });
             };
 

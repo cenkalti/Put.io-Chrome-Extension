@@ -91,8 +91,10 @@
                         if (err) {
                             var video = self.storage.get(key);
 
-                            log.debug("removing video: " + video.file_name);
-                            self.remove(key);
+                            if (video) {
+                                log.debug("removing video: " + video.file_name);
+                                self.remove(key);
+                            }
                         }
                         cb();
                     });
