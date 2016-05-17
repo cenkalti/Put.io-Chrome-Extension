@@ -49,7 +49,7 @@
             </uib-tab-heading>
             <div class="row">
                 <div class="col-xs-4 col-sm-3 col-lg-2 video"  ng-repeat="(name, show) in videos.shows">
-                    <img class="img-responsive" ng-show="show.poster" ng-src="{{ moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[1] + show.poster }}"/>
+                    <img class="img-responsive" ng-show="show.poster" ng-src="{{ moviedb_configs.images.base_url + moviedb_configs.images.poster_sizes[3] + show.poster }}"/>
                     <div class="poster-fail" ng-hide="show.poster">
                         <h4 class="text-center">
                             {{ show.title }}
