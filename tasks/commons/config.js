@@ -1,34 +1,30 @@
 module.exports = function(grunt) {
+    grunt.loadNpmTasks('grunt-mustache-render');
 
-    const fs = require('fs');
+    grunt.registerTask('config', '', function(build) {
+        var dir = __dirname + '/../..',
+            data = require(dir + '/config.json')[build];
 
-    grunt.loadNpmTasks("grunt-mustache-render");
-
-    grunt.registerTask("config", "", function(build) {
-        var dir = __dirname + "/../..",
-            data = require(dir + "/config.json")[build];
-
-        grunt.log.writeln("using " + build + " data");
+        grunt.log.writeln('using ' + build + ' data');
         grunt.log.writeln(JSON.stringify(data));
 
-
-        grunt.config.set("mustache_render", {
-            "tracker": {
+        grunt.config.set('mustache_render', {
+            tracker: {
                 files: [{
                     data: data,
-                    template: dir + "/src/tracker.js.tmpl",
-                    dest: dir + "/tmp/tracker.js"
+                    template: dir + '/src/tracker.js.tmpl',
+                    dest: dir + '/tmp/tracker.js'
                 }]
             },
-            "config": {
+            config: {
                 files: [{
                     data: data,
-                    template: dir + "/src/config.js.tmpl",
-                    dest: dir + "/tmp/config.js"
+                    template: dir + '/src/config.js.tmpl',
+                    dest: dir + '/tmp/config.js'
                 }]
             }
         });
 
-        grunt.task.run("mustache_render");
+        grunt.task.run('mustache_render');
     });
 };

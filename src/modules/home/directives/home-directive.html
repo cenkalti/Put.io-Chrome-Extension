@@ -11,14 +11,14 @@
         Nothing here
     </div>
     <i class="fa fa-trash-o fa-2x fa-fw"  ng-click="clear()" ng-hide="any_events()"></i>
-    <div ng-if="today_events.length> 0">
+    <div ng-if="todayEvents.length> 0">
         <div class="page-header">
             <h1>
                 Today
             </h1>
         </div>
         <ul class="list-group">
-            <a class="list-group-item" ng-href="#files/{{ event.file_id }}" ng-repeat="event in today_events">
+            <a class="list-group-item" ng-href="#files/{{ event.file_id }}" ng-repeat="event in todayEvents">
                 <span>
                     {{ event.transfer_name || event.file_name | limitTo : 40 }}
                 </span>
@@ -38,14 +38,14 @@
             </a>
         </ul>
     </div>
-    <div ng-if="week_events.length> 0">
+    <div ng-if="weekEvents.length> 0">
         <div class="page-header">
             <h1>
                 This Week
             </h1>
         </div>
         <ul class="list-group">
-            <a class="list-group-item" ng-href="#files/{{ event.file_id }}" ng-repeat="event in week_events">
+            <a class="list-group-item" ng-href="#files/{{ event.file_id }}" ng-repeat="event in weekEvents">
                 <span>
                     {{ event.transfer_name || event.file_name | limitTo : 40 }}
                 </span>
@@ -65,14 +65,14 @@
             </a>
         </ul>
     </div>
-    <div ng-if="month_events.length> 0">
+    <div ng-if="monthEvents.length> 0">
         <div class="page-header">
             <h1>
                 Last Month
             </h1>
         </div>
         <ul class="list-group">
-            <a class="list-group-item" ng-href="#files/{{ event.file_id }}" ng-repeat="event in month_events">
+            <a class="list-group-item" ng-href="#files/{{ event.file_id }}" ng-repeat="event in monthEvents">
                 <span>
                     {{ event.transfer_name || event.file_name | limitTo : 40 }}
                 </span>

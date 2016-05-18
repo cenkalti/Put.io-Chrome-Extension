@@ -21,9 +21,9 @@
             var $menu = $('.menu'),
                 version = chrome.runtime.getManifest().version;
 
-            $scope.transfers_count = 0;
-            $scope.files_size = 0;
-            $scope.friend_requests = 0;
+            $scope.transfersCount = 0;
+            $scope.filesSize = 0;
+            $scope.friendRequests = 0;
             $scope.rate = {
                 readonly: $cookies.get('rate.' + version) ? true : false,
                 value: $cookies.get('rate.' + version) || 0,
@@ -107,20 +107,20 @@
             function info_refresh() {
                 putio.account_info(function(err, data) {
                     var info = data.info;
-                    $scope.files_size = info.disk.used;
+                    $scope.filesSize = info.disk.used;
                 });
 
             }
 
             function transfers_count_refresh() {
                 putio.transfers_count(function(err, data) {
-                    $scope.transfers_count = data.count;
+                    $scope.transfersCount = data.count;
                 });
             }
 
             function friends_req_refresh() {
                 putio.friends_req(function(err, data) {
-                    $scope.friend_requests = data.friends.length;
+                    $scope.friendRequests = data.friends.length;
                 });
             }
         }

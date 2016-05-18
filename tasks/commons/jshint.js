@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
-    grunt.loadNpmTasks("grunt-contrib-jshint");
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
-    grunt.config.set("jshint", {
+    grunt.config.set('jshint', {
         options: {
             maxerr: 10,
             maxdepth: 2,
@@ -26,14 +26,14 @@ module.exports = function(grunt) {
             },
             reporter: require('jshint-stylish').toString()
         },
-        "before_concat": [
-            "src/**/*.js.tmpl",
-            "src/**/*.js"
+        before_concat: [
+            'src/**/*.js.tmpl',
+            'src/**/*.js'
         ],
-        "after_concat": [
-            "build/js/background.js",
-            "build/js/main.js",
-            "build/js/video.js",
+        after_concat: [
+            'build/js/background.js',
+            'build/js/main.js',
+            'build/js/video.js',
         ]
     });
 };

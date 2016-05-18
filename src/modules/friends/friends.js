@@ -5,14 +5,14 @@
         function($scope, $route, $rootScope, putio) {
 
             $scope.friends = [];
-            $scope.friend_requests = [];
+            $scope.friendRequests = [];
 
             putio.friends_list(function(err, data) {
                 $scope.friends = data.friends;
             });
 
             putio.friends_req(function(err, data) {
-                $scope.friend_requests = data.friends;
+                $scope.friendRequests = data.friends;
             });
 
             $scope.friend_approve = function(friend) {

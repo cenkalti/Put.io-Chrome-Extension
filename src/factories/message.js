@@ -2,11 +2,8 @@
     var module = angular.module('messageFactory', []);
 
     module.factory('message', [
-
         function() {
-            var message = function() {
-
-            };
+            var message = function() {};
 
             message.prototype.listen = function(key, callback) {
                 chrome.runtime.onMessage.addListener(

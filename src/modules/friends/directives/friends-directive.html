@@ -1,11 +1,11 @@
 <div class="friends">
-    <div class="panel panel-warning friend_requests" ng-if="friend_requests.length">
+    <div class="panel panel-warning friendRequests" ng-if="friendRequests.length">
         <div class="panel-heading">
             Friend Requests
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-xs-4" ng-repeat="request in friend_requests">
+                <div class="col-xs-4" ng-repeat="request in friendRequests">
                     <div class="thumbnail">
                         <img ng-src="{{ request.avatar_url }}" alt="{{ request.name }}" class="img-circle"/>
                         <div class="caption">

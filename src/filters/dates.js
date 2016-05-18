@@ -35,7 +35,7 @@
                     start = moment(moment.utc(startDate).toDate());
                 }
 
-                if(h !== undefined) {
+                if (h !== undefined) {
                     humanize = h;
                 }
 

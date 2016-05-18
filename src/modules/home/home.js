@@ -5,10 +5,9 @@
         function($scope, $location, putio, $http, $route) {
 
             $scope.loading = true;
-            $scope.today_events = [];
-            $scope.today_events = [];
-            $scope.week_events = [];
-            $scope.month_events = [];
+            $scope.todayEvents = [];
+            $scope.weekEvents = [];
+            $scope.monthEvents = [];
             $scope.fileSelected = null;
 
             $scope.search = {
@@ -55,9 +54,9 @@
             };
 
             $scope.any_events = function() {
-                return $scope.today_events.length === 0 &&
-                    $scope.week_events.length === 0 &&
-                    $scope.month_events.length === 0;
+                return $scope.todayEvents.length === 0 &&
+                    $scope.weekEvents.length === 0 &&
+                    $scope.monthEvents.length === 0;
             };
 
             putio.events_list(function(err, data) {
@@ -74,13 +73,13 @@
                         d = moment(event.created_at);
 
                     if (d.isAfter(day)) {
-                        $scope.today_events.push(event);
+                        $scope.todayEvents.push(event);
                     }
                     if (d.isAfter(week) && d.isBefore(day)) {
-                        $scope.week_events.push(event);
+                        $scope.weekEvents.push(event);
                     }
                     if (d.isAfter(month) && d.isBefore(week)) {
-                        $scope.month_events.push(event);
+                        $scope.monthEvents.push(event);
                     }
                 }
 

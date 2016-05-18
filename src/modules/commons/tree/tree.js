@@ -26,10 +26,10 @@
                 dirSelectable: true,
                 injectClasses: {
                     iLeaf: 'fa fa-file fa-lg fa-fw',
-                    iExpanded : 'fa fa-folder-open fa-lg fa-fw',
+                    iExpanded: 'fa fa-folder-open fa-lg fa-fw',
                     iCollapsed: 'fa fa-folder fa-lg fa-fw',
                     label: 'tree-label',
-                    labelSelected :  'tree-label-selected'
+                    labelSelected: 'tree-label-selected'
                 }
             };
 

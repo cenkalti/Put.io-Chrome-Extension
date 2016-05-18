@@ -1,10 +1,8 @@
 (function() {
     var module = angular.module('putioService', ['storageFactory']);
 
-
     module.service('putio', ['$http', '$rootScope', 'storage',
         function($http, $rootScope, Storage) {
-
             var putio = this,
                 baseUrl = 'https://api.put.io/v2',
                 errorCallback = null,

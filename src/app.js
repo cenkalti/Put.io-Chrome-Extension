@@ -123,10 +123,10 @@
                             wp.error(err.error_type, err.error_message);
                         }
 
-                        var $error_modal = $('#error_modal');
+                        var $errorModal = $('#error_modal');
 
-                        $('.modal-body p', $error_modal).html(err.error_message || err.error_type);
-                        $error_modal.modal();
+                        $('.modal-body p', $errorModal).html(err.error_message || err.error_type);
+                        $errorModal.modal();
                     }
 
                     return err;

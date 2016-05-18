@@ -1,15 +1,15 @@
 module.exports = function(grunt) {
-    grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.config.set("watch", {
-        "all": {
-            "options": {
-                "interrupt": true,
+    grunt.config.set('watch', {
+        all: {
+            options: {
+                interrupt: true,
             },
-            "files": [
-                "src/**",
+            files: [
+                'src/**',
             ],
-            "tasks": ["build_dev"]
+            tasks: ['build_dev']
         }
     });
 };

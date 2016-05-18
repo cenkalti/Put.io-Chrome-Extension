@@ -16,9 +16,9 @@
                 self.prefix = prefix || 'ls';
 
                 if (localStorage.isSupported) {
-                    self.log.debug("local storage is supported");
+                    self.log.debug('local storage is supported');
                 } else {
-                    self.log.warn("local storage is not supported");
+                    self.log.warn('local storage is not supported');
                 }
 
                 return self;
@@ -51,7 +51,6 @@
             storage.prototype.destroy = function() {
                 return localStorage.clearAll();
             };
-
 
             storage.prototype.get = function(key) {
                 var self = this;

@@ -1,7 +1,6 @@
 (function() {
     var module = angular.module('libraryFactory', ['logFactory', 'storageFactory', 'messageFactory', 'putioService', 'moviedbService']);
 
-
     module.factory('library', ['log', 'storage', 'message', 'putio', 'moviedb',
         function(Log, Storage, Message, putio, moviedb) {
             var log = new Log(module);

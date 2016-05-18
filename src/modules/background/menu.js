@@ -9,8 +9,8 @@
 
             menu.display = function(putio) {
                 var default_folder = {
-                    "id": 0,
-                    "name": "Your Files"
+                    id: 0,
+                    name: 'Your Files'
                 };
 
                 putio.account_settings(function(err, data) {
@@ -20,9 +20,9 @@
                         default_folder.name = data1.file.name;
 
                         chrome.contextMenus.create({
-                            "title": "Upload to put.io (" + default_folder.name + ")",
-                            "contexts": ["link", "selection"],
-                            "onclick": on_click
+                            title: 'Upload to put.io (' + default_folder.name + ')',
+                            contexts: ['link', 'selection'],
+                            onclick: on_click
                         });
                     });
 
@@ -32,9 +32,9 @@
                     wp.event(module, 'transfer', 'add');
 
                     var options = {
-                        "type": "basic",
-                        "iconUrl": "img/icon48.png",
-                        "title": "Transfer added"
+                        type: 'basic',
+                        iconUrl: 'img/icon48.png',
+                        title: 'Transfer added'
                     };
 
                     putio.transfer_add(info.linkUrl, default_folder.id, function(err, data) {
@@ -49,9 +49,9 @@
 
                             moviedb.detect(data.transfer.name, function(err1, data1) {
                                 if (!err1 && data1.title) {
-                                    options.type = "image";
+                                    options.type = 'image';
                                     options.message = get_title(data1);
-                                    options.imageUrl = "http://image.tmdb.org/t/p/w154" + data1.poster;
+                                    options.imageUrl = 'http://image.tmdb.org/t/p/w154' + data1.poster;
                                 }
                                 notify(options);
                             });
@@ -60,15 +60,15 @@
                 }
 
                 function get_title(info) {
-                    if (info.type === "tv") {
-                        return "S" + $filter('pad')(info.season) + "E" + $filter('pad')(info.episode_number) + " : " + info.episode_title;
+                    if (info.type === 'tv') {
+                        return 'S' + $filter('pad')(info.season) + 'E' + $filter('pad')(info.episode_number) + ' : ' + info.episode_title;
                     } else {
                         return info.title;
                     }
                 }
 
                 function notify(options) {
-                    notif.create("", options, function(notifId) {
+                    notif.create('', options, function(notifId) {
                         $timeout(function() {
                             notif.clear(notifId, function() {});
                         }, 20000);
