@@ -1,7 +1,7 @@
 (function() {
     var module = angular.module('messageFactory', []);
 
-    module.factory('message', [
+    module.factory('Message', [
         function() {
             var message = function() {};
 

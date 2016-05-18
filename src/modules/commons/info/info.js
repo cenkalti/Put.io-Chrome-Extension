@@ -12,7 +12,7 @@
         }
     );
 
-    module.controller('infoController', ['$scope', 'putio', 'library',
+    module.controller('infoController', ['$scope', 'putio', 'Library',
         function($scope, putio, Library) {
             var library = new Library();
 

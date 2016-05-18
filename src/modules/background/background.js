@@ -12,14 +12,14 @@
         module = angular.module('BackgroundApp', deps);
 
     module.controller('BackgroundController', [
-        'log',
-        'message',
+        'Log',
+        'Message',
         'putio',
         'badge',
         'menu',
         'transfersCheck',
-        'library',
-        'storage',
+        'Library',
+        'Storage',
         '$timeout',
         function(Log, Message, putio, badge, menu, transfersCheck, Library, Storage, $timeout) {
             var log = new Log(module),

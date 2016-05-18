@@ -1,7 +1,7 @@
 (function() {
     var module = angular.module('settingsModule', ['messageFactory', 'logFactory', 'storageFactory']);
 
-    module.controller('settingsController', ['$scope', 'putio', 'message', '$filter', 'log', 'storage',
+    module.controller('settingsController', ['$scope', 'putio', 'Message', '$filter', 'Log', 'Storage',
         function($scope, putio, Message, $filter, Log, Storage) {
             var log = new Log(module),
                 message = new Message(),

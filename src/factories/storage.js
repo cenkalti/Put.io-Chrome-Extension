@@ -6,7 +6,7 @@
             .setPrefix('putio');
     });
 
-    module.factory('storage', ['log', 'localStorageService',
+    module.factory('Storage', ['Log', 'localStorageService',
         function(Log, localStorage) {
 
             var storage = function(prefix) {

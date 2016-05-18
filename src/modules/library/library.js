@@ -1,7 +1,7 @@
 (function() {
-    var module = angular.module('libraryModule', ['logFactory', 'moviedbService', 'objectFilter', 'stringFilter', 'datesFilter', 'libraryFactory', 'messageFactory']);
+    var module = angular.module('libraryModule', ['moviedbService', 'objectFilter', 'stringFilter', 'datesFilter', 'libraryFactory', 'messageFactory']);
 
-    module.controller('libraryController', ['$scope', 'putio', 'moviedb', '$filter', 'library', 'message', '$rootScope',
+    module.controller('libraryController', ['$scope', 'putio', 'moviedb', '$filter', 'Library', 'Message', '$rootScope',
         function($scope, putio, moviedb, $filter, Library, Message, $rootScope) {
             var library = new Library(),
                 message = new Message();

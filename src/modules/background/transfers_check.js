@@ -1,7 +1,7 @@
 (function() {
     var module = angular.module('transfersCheckService', ['logFactory', 'datesFilter', 'moviedbService', 'stringFilter', 'storageFactory', 'libraryFactory']);
 
-    module.service('transfersCheck', ['$interval', '$timeout', '$filter', 'moviedb', 'storage', 'library', 'log',
+    module.service('transfersCheck', ['$interval', '$timeout', '$filter', 'moviedb', 'Storage', 'Library', 'Log',
         function($interval, $timeout, $filter, moviedb, Storage, Library, Log) {
 
             var storage = new Storage('local'),

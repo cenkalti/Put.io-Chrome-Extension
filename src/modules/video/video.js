@@ -10,7 +10,7 @@
         }
     ]);
 
-    module.controller('videoController', ['$scope', '$location', 'putio', 'moviedb', 'log', '$filter',
+    module.controller('videoController', ['$scope', '$location', 'putio', 'moviedb', 'Log', '$filter',
         function($scope, $location, putio, moviedb, Log, $filter) {
             var params = $location.search(),
                 log = new Log(module);

@@ -1,7 +1,7 @@
 (function() {
     var module = angular.module('logFactory', []);
 
-    module.factory('log', ['$log', '$filter',
+    module.factory('Log', ['$log', '$filter',
         function($log, $filter) {
             var log = function(mod) {
                 var self = this;

@@ -144,8 +144,7 @@
         }
     ]);
 
-    module.controller('putioController', ['$scope', '$location', '$route', '$rootScope', 'putio', 'storage',
-
+    module.controller('putioController', ['$scope', '$location', '$route', '$rootScope', 'putio', 'Storage',
         function($scope, $location, $route, $rootScope, putio, Storage) {
             var storage = new Storage('settings'),
                 homePage = storage.get('home_page') || 'home';

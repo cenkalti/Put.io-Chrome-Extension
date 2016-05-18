@@ -1,7 +1,7 @@
 (function() {
     var module = angular.module('badgeService', ['putioService', 'logFactory']);
 
-    module.service('badge', ['$timeout', '$interval', 'putio', 'log',
+    module.service('badge', ['$timeout', '$interval', 'putio', 'Log',
         function($timeout, $interval, putio, Log) {
             var log = new Log(module),
                 badge = this,

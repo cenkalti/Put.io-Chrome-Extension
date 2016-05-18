@@ -1,7 +1,7 @@
 (function() {
     var module = angular.module('menuService', ['logFactory', 'moviedbService', 'stringFilter']);
 
-    module.service('menu', ['$timeout', 'log', 'moviedb', '$filter',
+    module.service('menu', ['$timeout', 'Log', 'moviedb', '$filter',
         function($timeout, Log, moviedb, $filter) {
             var menu = this,
                 log = new Log(module),
