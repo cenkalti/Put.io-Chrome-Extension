@@ -70,7 +70,7 @@
                     },
                     function(info, cb) {
                         var data = {
-                            moviedb: true,
+                            moviedb: info.video.id,
                             title: info.video.title,
                             quality: info.parsed.quality,
                             resolution: info.parsed.resolution,
