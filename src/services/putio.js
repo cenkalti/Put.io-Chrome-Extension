@@ -1,8 +1,8 @@
 (function() {
-    var module = angular.module('putioService', ['storageFactory']);
+    var module = angular.module('putioService', ['storageFactory', 'interfaceService']);
 
-    module.service('putio', ['$http', '$rootScope', 'Storage',
-        function($http, $rootScope, Storage) {
+    module.service('putio', ['$http', '$rootScope', 'Storage', 'interface',
+        function($http, $rootScope, Storage, interface) {
             var putio = this,
                 baseUrl = 'https://api.put.io/v2',
                 errorCallback = null,
@@ -42,7 +42,7 @@
 
                                 callback(null, accessToken);
                             } else {
-                                chrome.windows.create({
+                                interface.create_window({
                                     url: baseUrl + url,
                                     type: 'panel'
                                 }, function() {});

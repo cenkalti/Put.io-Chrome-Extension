@@ -1,8 +1,8 @@
 (function() {
-    var module = angular.module('libraryModule', ['moviedbService', 'objectFilter', 'stringFilter', 'datesFilter', 'libraryFactory', 'messageFactory']);
+    var module = angular.module('libraryModule', ['moviedbService', 'objectFilter', 'stringFilter', 'datesFilter', 'libraryFactory', 'messageFactory', 'interfaceService']);
 
-    module.controller('libraryController', ['$scope', 'putio', 'moviedb', '$filter', 'Library', 'Message', '$rootScope',
-        function($scope, putio, moviedb, $filter, Library, Message, $rootScope) {
+    module.controller('libraryController', ['$scope', 'putio', 'moviedb', '$filter', 'Library', 'Message', '$rootScope', 'interface',
+        function($scope, putio, moviedb, $filter, Library, Message, $rootScope, interface) {
             var library = new Library(),
                 message = new Message();
 
@@ -59,7 +59,7 @@
             $scope.play = function(file_id) {
                 wp.event(module, 'library', 'play');
 
-                chrome.windows.create({
+                interface.create_window({
                     url: 'video.html#?file=' + file_id,
                     type: 'panel'
                 }, function() {

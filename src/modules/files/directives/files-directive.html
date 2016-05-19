@@ -96,7 +96,7 @@
                 <i class="fa fa-folder-open fa-lg fa-fw">
                 </i>
             </a>
-            <a class="yellow" ng-if="file.content_type != 'application/x-directory'" ng-href="{{ download_url(file.id) }}" ng-click="go_to(file)">
+            <a class="yellow" ng-if="file.content_type != 'application/x-directory'" ng-href="{{ download_url(file.id) }}" ng-click="go_to(file, $event)">
                 <i class="fa fa-lg fa-fw" ng-class="is_video(file) ? 'fa-play' : 'fa-file'">
                 </i>
             </a>

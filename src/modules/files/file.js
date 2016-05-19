@@ -1,5 +1,5 @@
 (function() {
-    var module = angular.module('fileModule', ['bytesFilter', 'datesFilter', 'xeditable', 'treeModule']);
+    var module = angular.module('fileModule', ['bytesFilter', 'datesFilter', 'xeditable', 'treeModule', 'interfaceService']);
 
     module.config([
         '$compileProvider',
@@ -15,8 +15,8 @@
         editableOptions.theme = 'bs3';
     });
 
-    module.controller('fileController', ['$scope', '$routeParams', '$location', '$route', '$filter', 'putio', '$rootScope',
-        function($scope, $routeParams, $location, $route, $filter, putio, $rootScope) {
+    module.controller('fileController', ['$scope', '$routeParams', '$location', '$route', '$filter', 'putio', '$rootScope', 'interface',
+        function($scope, $routeParams, $location, $route, $filter, putio, $rootScope, interface) {
             var file_id = $routeParams.file_id;
 
             $scope.file = {};
@@ -95,7 +95,7 @@
             $scope.play = function(file) {
                 wp.event(module, 'file', 'play');
 
-                chrome.windows.create({
+                interface.create_window({
                     url: 'video.html#?file=' + file.id,
                     type: 'panel'
                 }, function() {});

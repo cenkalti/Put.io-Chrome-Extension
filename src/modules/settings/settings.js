@@ -1,8 +1,8 @@
 (function() {
-    var module = angular.module('settingsModule', ['messageFactory', 'logFactory', 'storageFactory']);
+    var module = angular.module('settingsModule', ['messageFactory', 'logFactory', 'storageFactory', 'interfaceService']);
 
-    module.controller('settingsController', ['$scope', 'putio', 'Message', '$filter', 'Log', 'Storage',
-        function($scope, putio, Message, $filter, Log, Storage) {
+    module.controller('settingsController', ['$scope', 'putio', 'Message', '$filter', 'Log', 'Storage', 'interface',
+        function($scope, putio, Message, $filter, Log, Storage, interface) {
             var log = new Log(module),
                 message = new Message(),
                 storage = new Storage('settings');
@@ -85,7 +85,7 @@
                 storage.destroy();
 
                 putio.auth_reset(function() {
-                    chrome.windows.create({
+                    interface.create_window({
                         url: 'https://put.io/user/api/apps',
                         type: 'normal'
                     }, function() {

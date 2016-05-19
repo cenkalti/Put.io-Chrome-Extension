@@ -1,8 +1,8 @@
 (function() {
-    var module = angular.module('homeModule', ['datesFilter', 'ui.bootstrap', 'ngSanitize']);
+    var module = angular.module('homeModule', ['datesFilter', 'ui.bootstrap', 'ngSanitize', 'interfaceService']);
 
-    module.controller('homeController', ['$scope', '$location', 'putio', '$http', '$route',
-        function($scope, $location, putio, $http, $route) {
+    module.controller('homeController', ['$scope', '$location', 'putio', '$http', '$route', 'interface',
+        function($scope, $location, putio, $http, $route, interface) {
 
             $scope.loading = true;
             $scope.todayEvents = [];
@@ -32,7 +32,7 @@
                     if (putio.is_video(file.content_type)) {
                         wp.event(module, 'search', 'play');
 
-                        chrome.windows.create({
+                        interface.create_window({
                             url: 'video.html#?file=' + file.id,
                             type: 'panel'
                         }, function() {});

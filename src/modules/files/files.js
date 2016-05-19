@@ -1,5 +1,5 @@
 (function() {
-    var module = angular.module('filesModule', ['bytesFilter', 'datesFilter', 'stringFilter', 'treeModule']);
+    var module = angular.module('filesModule', ['bytesFilter', 'datesFilter', 'stringFilter', 'treeModule', 'interfaceService']);
 
     module.config([
         '$compileProvider',
@@ -8,8 +8,8 @@
         }
     ]);
 
-    module.controller('filesController', ['$scope', '$routeParams', '$location', '$route', '$filter', '$timeout', 'putio', '$rootScope',
-        function($scope, $routeParams, $location, $route, $filter, $timeout, putio, $rootScope) {
+    module.controller('filesController', ['$scope', '$routeParams', '$location', '$route', '$filter', '$timeout', 'putio', '$rootScope', 'interface',
+        function($scope, $routeParams, $location, $route, $filter, $timeout, putio, $rootScope, interface) {
             var parent_id = $routeParams.parent_id || 0,
                 $files = $('.files');
 
@@ -48,11 +48,13 @@
                 return putio.is_video(file.content_type);
             };
 
-            $scope.go_to = function(file) {
+            $scope.go_to = function(file, $event) {
+                $event.preventDefault();
+
                 if (putio.is_video(file.content_type)) {
                     wp.event(module, 'files', 'play');
 
-                    chrome.windows.create({
+                    interface.create_window({
                         url: 'video.html#?file=' + file.id,
                         type: 'panel'
                     }, function() {});
