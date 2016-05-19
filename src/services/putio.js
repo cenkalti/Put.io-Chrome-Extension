@@ -29,6 +29,8 @@
                         url: url
                     }, function(err, data) {
                         if (err) {
+                            wp.event(module, 'authenticate', 'failed', JSON.stringify(err));
+
                             callback(err, null);
                         } else {
                             if (data.access_token) {
