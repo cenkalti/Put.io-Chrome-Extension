@@ -1,5 +1,5 @@
 (function() {
-    var module = angular.module('menuModule', ['putioService', 'ui.bootstrap', 'ngCookies']);
+    var module = angular.module('menuModule', ['putioService', 'ui.bootstrap', 'ngCookies', 'interfaceService']);
 
     module.directive('menu',
         function() {
@@ -16,10 +16,10 @@
         }
     );
 
-    module.controller('menuController', ['$scope', '$location', '$route', '$rootScope', 'putio', '$cookies',
-        function($scope, $location, $route, $rootScope, putio, $cookies) {
+    module.controller('menuController', ['$scope', '$location', '$route', '$rootScope', 'putio', '$cookies', 'interface',
+        function($scope, $location, $route, $rootScope, putio, $cookies, interface) {
             var $menu = $('.menu'),
-                version = chrome.runtime.getManifest().version;
+                version = interface.version();
 
             $scope.transfersCount = 0;
             $scope.filesSize = 0;

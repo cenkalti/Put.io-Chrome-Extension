@@ -7,7 +7,8 @@
             'transfersCheckService',
             'messageFactory',
             'libraryFactory',
-            'storageFactory'
+            'storageFactory',
+            'interfaceService'
         ],
         module = angular.module('BackgroundApp', deps);
 
@@ -21,7 +22,8 @@
         'Library',
         'Storage',
         '$timeout',
-        function(Log, Message, putio, badge, menu, transfersCheck, Library, Storage, $timeout) {
+        'interface',
+        function(Log, Message, putio, badge, menu, transfersCheck, Library, Storage, $timeout, interface) {
             var log = new Log(module),
                 message = new Message(),
                 storage = new Storage('settings'),
@@ -72,12 +74,10 @@
 
             function track() {
                 putio.account_info(function(err, data) {
-                    var manifest = chrome.runtime.getManifest();
-
                     wp.identify({
                         email: data.info.mail,
                         name: data.info.username,
-                        version: manifest.version
+                        version: interface.version()
                     }, function() {});
                 });
             }

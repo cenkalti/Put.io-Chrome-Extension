@@ -18,7 +18,8 @@
                 'ngJoyRide',
                 'configModule',
                 'infoModule',
-                'storageFactory'
+                'storageFactory',
+                'interfaceService'
             ]
         );
 
@@ -144,8 +145,8 @@
         }
     ]);
 
-    module.controller('putioController', ['$scope', '$location', '$route', '$rootScope', 'putio', 'Storage',
-        function($scope, $location, $route, $rootScope, putio, Storage) {
+    module.controller('putioController', ['$scope', '$location', '$route', '$rootScope', 'putio', 'Storage', 'interface',
+        function($scope, $location, $route, $rootScope, putio, Storage, interface) {
             var storage = new Storage('settings'),
                 homePage = storage.get('home_page') || 'home';
 
@@ -161,12 +162,11 @@
 
             $scope.$on('putio.authenticated', function() {
                 putio.account_info(function(err, data) {
-                    var manifest = chrome.runtime.getManifest();
 
                     wp.identify({
                         email: data.info.mail,
                         name: data.info.username,
-                        version: manifest.version
+                        version: interface.version()
                     }, function(alreadyLogged) {
                         if (!alreadyLogged) wp.event(module, 'app', 'authenticated');
                     });
