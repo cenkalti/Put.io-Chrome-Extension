@@ -181,6 +181,8 @@
                 wp.page_view(title, uri);
 
                 $scope.title = title;
+
+                document.title = title;
             });
 
             var uri = $location.path(),
