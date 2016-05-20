@@ -16,6 +16,7 @@
         function($scope, putio, Library) {
             var library = new Library();
 
+
             $scope.disk = {};
 
             $scope.$on('info.refresh', function() {
@@ -23,9 +24,7 @@
                 library.check(function() {});
             });
 
-            $scope.$on('putio.authenticated', function() {
-                info_refresh();
-            });
+            info_refresh();
 
             function info_refresh() {
                 putio.account_info(function(err, data) {
