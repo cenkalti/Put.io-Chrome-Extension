@@ -7,8 +7,6 @@
     "permissions": [
         "http://*/",
         "https://*/",
-        "storage",
-        "unlimitedStorage",
         "contextMenus",
         "notifications",
         "tabs",
