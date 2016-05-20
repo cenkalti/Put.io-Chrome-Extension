@@ -1,5 +1,11 @@
 <ul class="nav navbar-nav navbar-right info">
-    <li ng-show="disk.percent">
+    <li>
+        <button type="button" class="btn btn-default navbar-btn" ng-click="expand()">
+            <i class="fa fa-expand">
+            </i>
+        </button>
+    </li>
+    <li class="bar" ng-show="disk.percent">
         <uib-progressbar  animate="false" value="disk.percent" type="{{ disk.type }}" uib-tooltip=" {{ disk.percent }}% {{ disk.used | bytes : 2 }} / {{ disk.size | bytes : 0 }}" tooltip-placement="bottom">
             {{ disk.percent }}%
         </uib-progressbar>

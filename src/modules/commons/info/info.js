@@ -1,5 +1,5 @@
 (function() {
-    var module = angular.module('infoModule', ['putioService', 'demoModule', 'ui.bootstrap', 'libraryFactory']);
+    var module = angular.module('infoModule', ['putioService', 'demoModule', 'ui.bootstrap', 'libraryFactory', 'interfaceService']);
 
     module.directive('info',
         function() {
@@ -12,12 +12,18 @@
         }
     );
 
-    module.controller('infoController', ['$scope', 'putio', 'Library',
-        function($scope, putio, Library) {
+    module.controller('infoController', ['$scope', 'putio', 'Library', 'interface',
+        function($scope, putio, Library, interface) {
             var library = new Library();
 
-
             $scope.disk = {};
+
+            $scope.expand = function() {
+                interface.create_window({
+                    type: 'panel',
+                    url: 'index.html'
+                }, function() {});
+            };
 
             $scope.$on('info.refresh', function() {
                 info_refresh();
