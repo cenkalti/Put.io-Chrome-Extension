@@ -7,7 +7,7 @@ module.exports = function(grunt) {
                 banner: '/* <%= pkg.short_name %> - <%= pkg.version %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
             },
             files: {
-                'build/css/main.min.css': 'build/css/main.css'
+                'build/css/index.min.css': 'build/css/index.css'
             }
         },
         video: {

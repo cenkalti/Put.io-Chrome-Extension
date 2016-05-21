@@ -32,7 +32,7 @@ module.exports = function(grunt) {
         ],
         after_concat: [
             'build/js/background.js',
-            'build/js/main.js',
+            'build/js/index.js',
             'build/js/video.js',
         ]
     });

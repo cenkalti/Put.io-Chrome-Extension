@@ -7,9 +7,8 @@ module.exports = function(grunt) {
                 paths: 'src/less'
             },
             files: {
-                'build/css/main.css': [
-                    'src/app.less',
-                    'src/modules/commons/*/*.less',
+                'build/css/index.css': [
+                    'src/apps/index/index.less',
                     'src/modules/*/*.less',
                     '!src/modules/video/**'
                 ],
@@ -20,7 +19,7 @@ module.exports = function(grunt) {
                 paths: 'src/less'
             },
             files: {
-                'build/css/video.css': 'src/modules/video/**.less'
+                'build/css/video.css': 'src/apps/video/**.less'
             }
         }
     });

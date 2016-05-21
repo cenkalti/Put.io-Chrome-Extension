@@ -3,7 +3,7 @@ module.exports = function(grunt) {
 
     grunt.config.set('bower_concat', {
         main: {
-            dest: 'build/js/bower.js',
+            dest: 'build/js/index-bower.js',
             exclude: [
                 'video.js'
             ],
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
             }
         },
         background: {
-            dest: 'build/js/bower-background.js',
+            dest: 'build/js/background-bower.js',
             exclude: [
                 'bootstrap',
                 'angular-loading-bar',
@@ -45,7 +45,7 @@ module.exports = function(grunt) {
             }
         },
         video: {
-            dest: 'build/js/bower-video.js',
+            dest: 'build/js/video-bower.js',
             exclude: [
                 'bootstrap',
                 'angular-loading-bar',

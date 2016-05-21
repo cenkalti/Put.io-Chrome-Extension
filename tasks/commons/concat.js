@@ -8,15 +8,14 @@ module.exports = function(grunt) {
         },
         main: {
             files: {
-                'build/js/main.js': [
+                'build/js/index.js': [
                     'tmp/*.js',
                     'src/filters/*.js',
                     'src/factories/*.js',
                     'src/services/*.js',
-                    'src/modules/commons/*/*.js',
                     'src/modules/*/*.js',
                     '!src/modules/video/**',
-                    'src/app.js'
+                    'src/apps/index/index.js'
                 ]
             }
         },
@@ -27,7 +26,7 @@ module.exports = function(grunt) {
                     'src/filters/*.js',
                     'src/factories/*.js',
                     'src/services/*.js',
-                    'src/modules/background/*.js'
+                    'src/apps/background/*.js'
                 ]
             }
         },
@@ -38,7 +37,7 @@ module.exports = function(grunt) {
                     'src/filters/*.js',
                     'src/factories/*.js',
                     'src/services/*.js',
-                    'src/modules/video/*.js'
+                    'src/apps/video/*.js'
                 ]
             }
         }

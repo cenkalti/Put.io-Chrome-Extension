@@ -8,20 +8,20 @@ module.exports = function(grunt) {
         },
         main: {
             files: {
-                'build/js/main.min.js': ['build/js/main.js'],
-                'build/js/bower.min.js': ['build/js/bower.js']
+                'build/js/index.min.js': ['build/js/index.js'],
+                'build/js/index-bower.min.js': ['build/js/index-bower.js']
             }
         },
         video: {
             files: {
                 'build/js/video.min.js': ['build/js/video.js'],
-                'build/js/bower-video.min.js': ['build/js/bower-video.js']
+                'build/js/video-bower.min.js': ['build/js/video-bower.js']
             }
         },
         background: {
             files: {
                 'build/js/background.min.js': ['build/js/background.js'],
-                'build/js/bower-background.min.js': ['build/js/bower-background.js']
+                'build/js/background-bower.min.js': ['build/js/background-bower.js']
             }
         }
     });

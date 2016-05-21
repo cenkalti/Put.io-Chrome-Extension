@@ -40,9 +40,9 @@ module.exports = function(grunt) {
                 expand: true,
                 flatten: true,
                 src: [
-                    'src/index.html',
-                    'src/modules/background/background.html',
-                    'src/modules/video/video.html',
+                    'src/apps/index/index.html',
+                    'src/apps/background/background.html',
+                    'src/apps/video/video.html',
                     'src/manifest.json'
                 ],
                 dest: 'build/'
@@ -50,23 +50,23 @@ module.exports = function(grunt) {
         },
         dev: {
             files: [{
-                src: 'build/js/main.js',
-                dest: 'build/js/main.min.js'
+                src: 'build/js/index.js',
+                dest: 'build/js/index.min.js'
             }, {
-                src: 'build/js/bower.js',
-                dest: 'build/js/bower.min.js'
+                src: 'build/js/index-bower.js',
+                dest: 'build/js/index-bower.min.js'
             }, {
                 src: 'build/js/video.js',
                 dest: 'build/js/video.min.js'
             }, {
-                src: 'build/js/bower-video.js',
-                dest: 'build/js/bower-video.min.js'
+                src: 'build/js/video-bower.js',
+                dest: 'build/js/video-bower.min.js'
             }, {
                 src: 'build/js/background.js',
                 dest: 'build/js/background.min.js'
             }, {
-                src: 'build/js/bower-background.js',
-                dest: 'build/js/bower-background.min.js'
+                src: 'build/js/background-bower.js',
+                dest: 'build/js/background-bower.min.js'
             }]
         }
     });
