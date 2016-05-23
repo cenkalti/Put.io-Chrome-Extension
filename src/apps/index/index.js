@@ -162,7 +162,6 @@
 
             $scope.$on('putio.authenticated', function() {
                 putio.account_info(function(err, data) {
-
                     wp.identify({
                         email: data.info.mail,
                         name: data.info.username,

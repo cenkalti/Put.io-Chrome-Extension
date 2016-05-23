@@ -88,21 +88,20 @@
                 friends_req_refresh();
             });
 
-            $scope.$on('putio.authenticated', function() {
-                info_refresh();
-                transfers_count_refresh();
-                friends_req_refresh();
-            });
+            info_refresh();
+            transfers_count_refresh();
+            friends_req_refresh();
 
-            $(document).mouseup(function(e) {
-                var $target = $(e.target);
+            $(document)
+                .mouseup(function(e) {
+                    var $target = $(e.target);
 
-                if (!$target.is('button.btn.btn-default.navbar-btn') &&
-                    !$target.is('i.fa.fa-bars') &&
-                    !$menu.is(e.target)) {
-                    $scope.close();
-                }
-            });
+                    if (!$target.is('button.btn.btn-default.navbar-btn') &&
+                        !$target.is('i.fa.fa-bars') &&
+                        !$menu.is(e.target)) {
+                        $scope.close();
+                    }
+                });
 
             function info_refresh() {
                 putio.account_info(function(err, data) {
