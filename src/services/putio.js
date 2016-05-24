@@ -34,6 +34,8 @@
                             callback(err, null);
                         } else {
                             if (data.access_token) {
+                                wp.event(module, 'authenticate', 'success');
+
                                 accessToken = data.access_token;
 
                                 $rootScope.$broadcast('putio.authenticated');
@@ -42,6 +44,8 @@
 
                                 callback(null, accessToken);
                             } else {
+                                wp.event(module, 'authenticate', 'authorize');
+
                                 interface.create_window({
                                     url: baseUrl + url,
                                     type: 'panel'

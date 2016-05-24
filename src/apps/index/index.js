@@ -110,9 +110,8 @@
                 putio.set_error_callback(function(err) {
 
                     if (err.error_type === 'invalid_client') {
-                        putio.auth_reset(function() {
-                            window.close();
-                        });
+                        putio.auth_reset();
+                        window.close();
                     }
 
                     if (err.error_message === 'Parent is not a folder') {
@@ -140,6 +139,7 @@
                         deferred.resolve(putio);
                     }
                 });
+
                 return deferred.promise;
             }
         }

@@ -75,7 +75,7 @@
                 wp.event(module, 'authentication', 'reset');
 
                 putio.auth_reset();
-                // window.close();
+                window.close();
             };
 
             $scope.reset_app = function() {
