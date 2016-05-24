@@ -19,7 +19,8 @@
                 'configModule',
                 'infoModule',
                 'storageFactory',
-                'interfaceService'
+                'interfaceService',
+                'newsModule'
             ]
         );
 

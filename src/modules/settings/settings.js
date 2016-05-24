@@ -1,8 +1,8 @@
 (function() {
-    var module = angular.module('settingsModule', ['messageFactory', 'logFactory', 'storageFactory', 'interfaceService']);
+    var module = angular.module('settingsModule', ['messageFactory', 'logFactory', 'storageFactory', 'interfaceService', 'ngCookies']);
 
-    module.controller('settingsController', ['$scope', 'putio', 'Message', '$filter', 'Log', 'Storage', 'interface',
-        function($scope, putio, Message, $filter, Log, Storage, interface) {
+    module.controller('settingsController', ['$scope', 'putio', 'Message', '$filter', 'Log', 'Storage', 'interface', '$cookies',
+        function($scope, putio, Message, $filter, Log, Storage, interface, $cookies) {
             var log = new Log(module),
                 message = new Message(),
                 storage = new Storage('settings');
@@ -16,13 +16,15 @@
             $scope.maybe_update_default_folder = function() {
                 wp.event(module, 'settings', 'maybe_update_default_folder');
 
-                $('.tree').modal('show');
+                $('.tree')
+                    .modal('show');
             };
 
             $scope.update_default_folder = function(node) {
                 wp.event(module, 'settings', 'update_default_folder');
 
-                $('.tree').modal('hide');
+                $('.tree')
+                    .modal('hide');
                 putio.account_set_settings({
                     default_download_folder: node.id
                 }, function() {
@@ -83,13 +85,15 @@
 
                 storage.destroy();
 
-                putio.auth_reset(function() {
-                    interface.create_window({
-                        url: 'https://put.io/user/api/apps',
-                        type: 'normal'
-                    }, function() {
-                        window.close();
-                    });
+                for(var key in $cookies.getAll()) {
+                    $cookies.remove(key);
+                }
+
+                interface.create_window({
+                    url: 'https://put.io/user/api/apps',
+                    type: 'normal'
+                }, function() {
+                    window.close();
                 });
             };
 
