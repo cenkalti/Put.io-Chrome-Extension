@@ -88,9 +88,11 @@
                 friends_req_refresh();
             });
 
-            info_refresh();
-            transfers_count_refresh();
-            friends_req_refresh();
+            putio.wait_for_auth(function() {
+                info_refresh();
+                transfers_count_refresh();
+                friends_req_refresh();
+            });
 
             $(document)
                 .mouseup(function(e) {

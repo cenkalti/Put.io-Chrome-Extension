@@ -1,8 +1,8 @@
 (function() {
     var module = angular.module('putioService', ['storageFactory', 'interfaceService']);
 
-    module.service('putio', ['$http', '$rootScope', 'Storage', 'interface',
-        function($http, $rootScope, Storage, interface) {
+    module.service('putio', ['$http', '$rootScope', 'Storage', 'interface', '$timeout',
+        function($http, $rootScope, Storage, interface, $timeout) {
             var putio = this,
                 baseUrl = 'https://api.put.io/v2',
                 errorCallback = null,
@@ -52,6 +52,16 @@
                     });
                 }
 
+            };
+
+            putio.wait_for_auth = function(callback) {
+                if (accessToken) {
+                    callback();
+                } else {
+                    $timeout(function() {
+                        putio.wait_for_auth(callback);
+                    }, 1000);
+                }
             };
 
             putio.auth_reset = function() {

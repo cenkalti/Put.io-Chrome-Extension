@@ -30,7 +30,9 @@
                 library.check(function() {});
             });
 
-            info_refresh();
+            putio.wait_for_auth(function() {
+                info_refresh();
+            });
 
             function info_refresh() {
                 putio.account_info(function(err, data) {
