@@ -14,7 +14,7 @@
             };
 
             putio.auth = function(callback) {
-                var url = '/oauth2/authenticate?client_id=2426&response_type=code&redirect_uri=http://putio-oauth.herokuapp.com/api/oauth';
+                var url = '/oauth2/authenticate?client_id=2440&response_type=code&redirect_uri=http://45.55.220.5:8080/api/oauth';
 
                 accessToken = storage.get('access_token');
 
@@ -54,10 +54,8 @@
 
             };
 
-            putio.auth_reset = function(callback) {
-                storage.remove('putio', function() {
-                    callback();
-                });
+            putio.auth_reset = function() {
+                storage.clearAll();
             };
 
             putio.account_info = function(callback) {
