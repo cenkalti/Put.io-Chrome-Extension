@@ -14,6 +14,8 @@
 
     module.controller('newsController', ['$scope', '$cookies',
         function($scope, $cookies) {
+
+            $scope.url = 'http://localhost:8080/news';
             $scope.alreadySeen = true;
 
             $scope.loaded = function() {
@@ -26,9 +28,12 @@
 
             $scope.seen = function() {
                 $cookies.put('news', get_id());
+                $scope.alreadySeen = true;
             };
 
-            window.$cookies = $cookies;
+            $scope.$on('news.show', function() {
+                $scope.alreadySeen = false;
+            });
 
             function get_id() {
                 return $('.news .alert')

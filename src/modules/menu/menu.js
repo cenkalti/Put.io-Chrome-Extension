@@ -68,6 +68,10 @@
                 return route === $location.path();
             };
 
+            $scope.news = function() {
+                $rootScope.$broadcast('news.show');
+            };
+
             $rootScope.$on('$locationChangeStart', function() {
                 $scope.close();
             });
