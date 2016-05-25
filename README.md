@@ -7,6 +7,10 @@ Play videos from the app (with subtitles)
 
 [Chrome Web Store Link](https://chrome.google.com/webstore/detail/putio-extension/lmonmjokfiamaoddkeofepnapdldbejb)
 
+## [Coming Soon](todo.md)
+
+## Code Fixes
+
 ### Bower Library Changes
 
 #### video.js
