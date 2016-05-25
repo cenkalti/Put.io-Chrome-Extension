@@ -1,5 +1,5 @@
 (function() {
-    var module = angular.module('newsModule', ['ngCookies']);
+    var module = angular.module('newsModule', ['ngCookies', 'configModule']);
 
     module.directive('news',
         function() {
@@ -12,10 +12,11 @@
         }
     );
 
-    module.controller('newsController', ['$scope', '$cookies',
-        function($scope, $cookies) {
+    module.controller('newsController', ['$scope', '$cookies', 'PUTIO_SERVER',
+        function($scope, $cookies, PUTIO_SERVER) {
 
-            $scope.url = 'http://45.55.220.5:8080/news';
+
+            $scope.url =  'http://' + PUTIO_SERVER + '/news';
             $scope.alreadySeen = true;
 
             $scope.loaded = function() {
@@ -27,7 +28,13 @@
             };
 
             $scope.seen = function() {
-                $cookies.put('news', get_id());
+                var id = get_id();
+
+                wp.event(module, 'news', 'view', id);
+
+                $cookies.put('news', id, {
+                    expires: moment().add(7, 'days').toDate()
+                });
                 $scope.alreadySeen = true;
             };
 

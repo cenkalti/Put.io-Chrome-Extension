@@ -92,7 +92,7 @@
                     } else {
                         callback(true);
                     }
-                });
+                }, true);
             }
         }
     ]);

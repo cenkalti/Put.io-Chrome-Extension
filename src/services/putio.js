@@ -1,8 +1,8 @@
 (function() {
-    var module = angular.module('putioService', ['storageFactory', 'interfaceService']);
+    var module = angular.module('putioService', ['storageFactory', 'interfaceService', 'configModule']);
 
-    module.service('putio', ['$http', '$rootScope', 'Storage', 'interface', '$timeout',
-        function($http, $rootScope, Storage, interface, $timeout) {
+    module.service('putio', ['$http', '$rootScope', 'Storage', 'interface', '$timeout', 'PUTIO_SERVER',
+        function($http, $rootScope, Storage, interface, $timeout, PUTIO_SERVER) {
             var putio = this,
                 baseUrl = 'https://api.put.io/v2',
                 errorCallback = null,
@@ -13,8 +13,8 @@
                 errorCallback = callback;
             };
 
-            putio.auth = function(callback) {
-                var url = '/oauth2/authenticate?client_id=2426&response_type=code&redirect_uri=http://45.55.220.5:8080/api/oauth';
+            putio.auth = function(callback, dontTrack) {
+                var url = '/oauth2/authenticate?client_id=2426&response_type=code&redirect_uri=http://' + PUTIO_SERVER + '/api/oauth';
 
                 accessToken = storage.get('access_token');
 
@@ -22,19 +22,19 @@
                     $rootScope.$broadcast('putio.authenticated');
                     callback(null, accessToken);
                 } else {
-                    wp.event(module, 'authenticate', 'try');
+                    if (!dontTrack) wp.event(module, 'authenticate', 'try');
 
                     request({
                         verb: 'GET',
                         url: url
                     }, function(err, data) {
                         if (err) {
-                            wp.event(module, 'authenticate', 'failed', JSON.stringify(err));
+                            if (!dontTrack) wp.event(module, 'authenticate', 'failed', JSON.stringify(err));
 
                             callback(err, null);
                         } else {
                             if (data.access_token) {
-                                wp.event(module, 'authenticate', 'success');
+                                if (!dontTrack) wp.event(module, 'authenticate', 'success');
 
                                 accessToken = data.access_token;
 
@@ -44,7 +44,7 @@
 
                                 callback(null, accessToken);
                             } else {
-                                wp.event(module, 'authenticate', 'authorize');
+                                if (!dontTrack) wp.event(module, 'authenticate', 'authorize');
 
                                 interface.create_window({
                                     url: baseUrl + url,
@@ -369,7 +369,8 @@
                 $http(config)
                     .success(function(data) {
                         callback(null, data);
-                    }).error(function(data) {
+                    })
+                    .error(function(data) {
                         if (typeof errorCallback == 'function') errorCallback(data);
                         callback(data, null);
                     });
