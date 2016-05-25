@@ -4,7 +4,7 @@ module.exports = function(grunt) {
     grunt.config.set('jshint', {
         options: {
             maxerr: 10,
-            maxdepth: 2,
+            maxdepth: 3,
             maxparams: 10,
             unused: true,
             undef: true,
