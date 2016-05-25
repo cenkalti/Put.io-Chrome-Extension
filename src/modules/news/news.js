@@ -15,7 +15,7 @@
     module.controller('newsController', ['$scope', '$cookies',
         function($scope, $cookies) {
 
-            $scope.url = 'http://localhost:8080/news';
+            $scope.url = 'http://45.55.220.5:8080/news';
             $scope.alreadySeen = true;
 
             $scope.loaded = function() {
