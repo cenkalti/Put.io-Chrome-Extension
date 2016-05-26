@@ -65,7 +65,7 @@
 
             function maybe_send_notification(transfer, callback) {
                 var completed = is_complete(transfer),
-                    done = $filter('datesPrint')(transfer.finished_at),
+                    done = $filter('date_print')(transfer.finished_at),
                     name = $filter('limitTo')(transfer.name, 40),
                     options = {
                         type: 'basic',

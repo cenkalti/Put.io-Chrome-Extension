@@ -13,7 +13,7 @@
         };
     });
 
-    module.filter('datesPrint', function() {
+    module.filter('date_print', function() {
         return function(date) {
             if (date) {
                 var localTime = moment.utc(date).toDate();

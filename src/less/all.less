@@ -1,12 +1,90 @@
 @import "colors";
 @import "utils";
 
+small {
+    color: @smoke;
+}
+
+a {
+    @pointer();
+}
+
+a:focus, a:hover {
+    text-decoration: none;
+}
+
+.text-red {
+    color: @red;
+}
+
+.text-green {
+    color: @green;
+}
+
+.text-orange {
+    color: @orange;
+}
+
+.nav-pills>li>a {
+    color: @black;
+    @font-weight();
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    background-color: @yellow;
+    color: @black;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: @yellow;
+}
+
+.nav-pills>.active>a>.badge, a.list-group-item.active>.badge {
+    color: @black;
+}
+
+.nav>li>a:focus .badge, .nav>li>a:hover .badge, .nav-pills>li.active .badge {
+    background-color: @white;
+}
+
+ul.nav > li, {
+    @pointer();
+}
+
+.badge {
+    color: @black;
+    background-color: @yellow;
+}
+
+#loading-bar .bar {
+    background-color: @yellow;
+}
+
+.btn {
+    @font-weight();
+}
+
+.btn-default.active, .btn-default:active, .btn-default:focus, .btn-default:hover, .open>.dropdown-toggle.btn-default {
+    color: @yellow;
+    border-color: @yellow;
+    background-color: @white;
+}
+
+.dropdown-menu>li>a {
+    @font-weight();
+}
+
+.dropdown-menu>li>a .badge {
+    float: right;
+}
+
 .spinner {
     margin: 50px auto;
     height: 100px;
     text-align: center;
     font-size: 10px;
 }
+
 .spinner > div {
     background-color: @black;
     height: 100%;
@@ -14,31 +92,37 @@
     display: inline-block;
     animation: stretchdelay 1.2s infinite ease-in-out;
 }
+
 .spinner .rect2 {
     animation-delay: -1.1s;
 }
+
 .spinner .rect3 {
     animation-delay: -1.0s;
 }
+
 .spinner .rect4 {
     animation-delay: -0.9s;
 }
+
 .spinner .rect5 {
     animation-delay: -0.8s;
 }
+
 @-webkit-keyframes stretchdelay {
     0%, 40%, 100% {
         transform: scaleY(0.4)
-   }
-   20% {
-       transform: scaleY(1.0)
-  }
+    }
+    20% {
+        transform: scaleY(1.0)
+    }
 }
+
 @keyframes stretchdelay {
     0%, 40%, 100% {
         transform: scaleY(0.4);
-   }
-   20% {
-       transform: scaleY(1.0);
-  }
+    }
+    20% {
+        transform: scaleY(1.0);
+    }
 }
