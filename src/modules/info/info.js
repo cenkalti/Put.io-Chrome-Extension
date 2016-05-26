@@ -1,5 +1,5 @@
 (function() {
-    var module = angular.module('infoModule', ['putioService', 'demoModule', 'ui.bootstrap', 'libraryFactory', 'interfaceService', 'updownService']);
+    var module = angular.module('infoModule', ['putioService', 'ui.bootstrap', 'libraryFactory', 'interfaceService', 'updownService']);
 
     module.directive('info',
         function() {
