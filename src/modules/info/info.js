@@ -1,5 +1,5 @@
 (function() {
-    var module = angular.module('infoModule', ['putioService', 'demoModule', 'ui.bootstrap', 'libraryFactory', 'interfaceService']);
+    var module = angular.module('infoModule', ['putioService', 'demoModule', 'ui.bootstrap', 'libraryFactory', 'interfaceService', 'updownService']);
 
     module.directive('info',
         function() {
@@ -12,11 +12,12 @@
         }
     );
 
-    module.controller('infoController', ['$scope', 'putio', 'Library', 'interface',
-        function($scope, putio, Library, interface) {
+    module.controller('infoController', ['$scope', 'putio', 'Library', 'interface', 'updown',
+        function($scope, putio, Library, interface, updown) {
             var library = new Library();
 
             $scope.disk = {};
+            $scope.updown = {};
 
             $scope.expand = function() {
                 interface.create_window({
@@ -32,6 +33,10 @@
 
             putio.wait_for_auth(function() {
                 info_refresh();
+            });
+
+            updown.check('sh26', function(err, data) {
+                if(!err) $scope.updown = data;
             });
 
             function info_refresh() {
