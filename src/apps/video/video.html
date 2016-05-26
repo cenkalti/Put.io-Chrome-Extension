@@ -10,7 +10,7 @@
             <div class="videogular-container" ng-hide="loading" ng-if="!error">
                 <video id="video_player" class="video-js vjs-default-skin vjs-macpie-skin">
                 </video>
-                <div class="info">
+                <div class="info" ng-cloak>
                     <img ng-src="{{config.images.base_url + config.images.poster_sizes[2] + info.poster}}" ng-if="info.poster" />
                     <div class="title" ng-if="info.type == 'tv'">
                         <h1>{{info.title}}</h1>
