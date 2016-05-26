@@ -44,22 +44,27 @@
             };
 
             $scope.toggle = function() {
-                $menu.animate({
-                    width: 'toggle',
-                    easing: 'easeOutQuad'
-                }, 300);
+                console.log($menu.css('left'));
+
+                if($menu.css('left') == '0px') {
+                    $scope.close();
+                } else {
+                    $scope.open();
+                }
             };
 
             $scope.open = function() {
                 $menu.animate({
-                    width: 'show',
+                    left: 0,
+                    opacity: 0.95,
                     easing: 'easeOutQuad'
                 }, 300);
             };
 
             $scope.close = function() {
                 $menu.animate({
-                    width: 'hide',
+                    left: -210,
+                    opacity: 0.25,
                     easing: 'easeOutQuad'
                 }, 300);
             };
