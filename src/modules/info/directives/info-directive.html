@@ -6,7 +6,7 @@
         </button>
     </li>
     <li class="bar" ng-show="disk.percent">
-        <uib-progressbar  animate="false" value="disk.percent" type="{{ disk.type }}" uib-tooltip=" {{ disk.percent }}% {{ disk.used | bytes : 2 }} / {{ disk.size | bytes : 0 }}" tooltip-placement="bottom">
+        <uib-progressbar  animate="false" value="disk.percent" uib-tooltip=" {{ disk.percent }}% {{ disk.used | bytes : 2 }} / {{ disk.size | bytes : 0 }}" tooltip-placement="bottom">
             {{ disk.percent }}%
         </uib-progressbar>
     </li>
