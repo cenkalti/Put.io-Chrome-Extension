@@ -13,7 +13,7 @@
                 errorCallback = callback;
             };
 
-            putio.auth = function(callback, dontTrack) {
+            putio.auth = function(callback) {
                 var url = '/oauth2/authenticate?client_id=2426&response_type=code&redirect_uri=http://' + PUTIO_SERVER + '/api/oauth';
 
                 accessToken = storage.get('access_token');
@@ -22,19 +22,19 @@
                     $rootScope.$broadcast('putio.authenticated');
                     callback(null, accessToken);
                 } else {
-                    if (!dontTrack) wp.event(module, 'authenticate', 'try');
+                    wp.event(module, 'authenticate', 'try');
 
                     request({
                         verb: 'GET',
                         url: url
                     }, function(err, data) {
                         if (err) {
-                            if (!dontTrack) wp.event(module, 'authenticate', 'failed', JSON.stringify(err));
+                            wp.event(module, 'authenticate', 'failed', JSON.stringify(err));
 
                             callback(err, null);
                         } else {
                             if (data.access_token) {
-                                if (!dontTrack) wp.event(module, 'authenticate', 'success');
+                                wp.event(module, 'authenticate', 'success');
 
                                 accessToken = data.access_token;
 
@@ -44,12 +44,41 @@
 
                                 callback(null, accessToken);
                             } else {
-                                if (!dontTrack) wp.event(module, 'authenticate', 'authorize');
+                                wp.event(module, 'authenticate', 'authorize');
 
                                 interface.create_window({
                                     url: baseUrl + url,
                                     type: 'panel'
                                 }, function() {});
+                                callback(true, null);
+                            }
+                        }
+                    });
+                }
+            };
+
+            putio.simple_auth = function(callback) {
+                var url = '/oauth2/authenticate?client_id=2426&response_type=code&redirect_uri=http://' + PUTIO_SERVER + '/api/oauth';
+
+                accessToken = storage.get('access_token');
+
+                if (accessToken) {
+                    callback(null, accessToken);
+                } else {
+                    request({
+                        verb: 'GET',
+                        url: url
+                    }, function(err, data) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (data.access_token) {
+                                accessToken = data.access_token;
+
+                                storage.set('access_token', accessToken);
+
+                                callback(null, accessToken);
+                            } else {
                                 callback(true, null);
                             }
                         }

@@ -16,15 +16,14 @@
             $scope.maybe_update_default_folder = function() {
                 wp.event(module, 'settings', 'maybe_update_default_folder');
 
-                $('.tree')
-                    .modal('show');
+                $('.tree').modal('show');
             };
 
             $scope.update_default_folder = function(node) {
                 wp.event(module, 'settings', 'update_default_folder');
 
-                $('.tree')
-                    .modal('hide');
+                $('.tree').modal('hide');
+
                 putio.account_set_settings({
                     default_download_folder: node.id
                 }, function() {
@@ -74,10 +73,11 @@
             };
 
             $scope.reset_auth = function() {
-                wp.event(module, 'authentication', 'reset');
-
-                putio.auth_reset();
-                window.close();
+                wp.event(module, 'authentication', 'reset', function() {
+                    putio.auth_reset();
+                    message.send('reset');
+                    window.close();
+                });
             };
 
             $scope.reset_app = function() {
@@ -85,9 +85,11 @@
 
                 storage.destroy();
 
-                for(var key in $cookies.getAll()) {
+                for (var key in $cookies.getAll()) {
                     $cookies.remove(key);
                 }
+
+                message.send('reset');
 
                 interface.create_window({
                     url: 'https://put.io/user/api/apps',

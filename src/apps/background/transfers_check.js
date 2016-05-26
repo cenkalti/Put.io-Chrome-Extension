@@ -23,7 +23,7 @@
             transfersCheck.stop = function() {
                 if (interval) {
                     $interval.cancel(interval);
-                    console.debug('stopped transfers checks');
+                    log.debug('stopped transfers checks');
                 }
             };
 
@@ -34,11 +34,11 @@
             }
 
             function checks_transfers(callback) {
-                console.group('checking transfers %s', $filter('datesPrint')(new Date()));
+                log.info('checking transfers');
 
                 putio.transfers_list(function(err, data) {
                     if (err || !data.transfers) {
-                        console.error(err, data.transfers);
+                        log.error(err, data.transfers);
                         callback();
                     } else {
 
@@ -57,7 +57,6 @@
                             });
                         }, function() {
                             callback(data.transfers);
-                            console.groupEnd();
                         });
 
                     }
@@ -77,7 +76,7 @@
                     };
 
                 if (completed && !transfer.notified) {
-                    console.debug('%s completed', name);
+                    log.debug(name + 'completed');
 
                     moviedb.detect(transfer.name, function(err, data) {
                         if (!err && data.title) {
@@ -100,7 +99,7 @@
                         });
                     });
                 } else {
-                    console.debug('%s completion: %i %, notified: %s', name, transfer.percent_done, transfer.notified);
+                    log.debug(name + 'completion: ' + transfer.percent_done+ '%, notified: ' + transfer.notified);
                     callback();
                 }
 
@@ -124,7 +123,7 @@
                 }
 
                 if (cleanInterval === 10) {
-                    console.group('cleaning transfers');
+                    log.info('cleaning transfers');
 
                     get_transfers(function(transfers) {
                         async.forEachOfSeries(transfers, function(transfer, id, cb) {
@@ -134,18 +133,17 @@
                                 });
 
                             if (found) {
-                                console.debug('%s is still there', name);
+                                log.debug(name + 'is still there');
                                 cb();
                             } else {
                                 delete_transfer(id, function() {
-                                    console.debug('%s is not there anymore, removing', name);
+                                    log.debug(name + 'is not there anymore, removing');
                                     cb();
                                 });
 
                             }
                         }, function() {
                             cleanInterval = 0;
-                            console.groupEnd();
                         });
                     });
                 } else {

@@ -29,6 +29,11 @@
                 storage = new Storage('settings'),
                 shouldNotify = storage.get('notification');
 
+            message.listen('reset', function() {
+                log.debug('received reset message');
+                location.reload();
+            });
+
             authenticate(function() {
                 var library = new Library();
 
@@ -83,7 +88,7 @@
             }
 
             function authenticate(callback) {
-                putio.auth(function(err) {
+                putio.simple_auth(function(err) {
                     if (err) {
                         log.warn(err);
                         $timeout(function() {
