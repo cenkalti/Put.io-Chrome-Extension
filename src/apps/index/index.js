@@ -15,7 +15,6 @@
                 'friendsModule',
                 'libraryModule',
                 'menuModule',
-                'ngJoyRide',
                 'configModule',
                 'infoModule',
                 'storageFactory',
