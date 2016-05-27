@@ -75,13 +75,11 @@
             </uib-tab-heading>
             <div class="row">
                 <div class="panel-body">
-                    <ul>
-                        <li ng-repeat="info in videos.unknown">
-                            <a ng-href="#file/{{ info.file_id }}">
-                                {{ info.file_name }}
-                            </a>
-                        </li>
-                    </ul>
+                    <div class="list-group">
+                        <a class="list-group-item" ng-repeat="info in videos.unknown" ng-href="#file/{{ info.file_id }}">
+                            {{ info.file_name }}
+                        </a>
+                    </div>
                 </div>
             </div>
         </uib-tab>
