@@ -44,8 +44,6 @@
             };
 
             $scope.toggle = function() {
-                console.log($menu.css('left'));
-
                 if($menu.css('left') == '0px') {
                     $scope.close();
                 } else {
