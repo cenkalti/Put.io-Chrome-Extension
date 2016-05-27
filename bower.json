@@ -1,7 +1,7 @@
 {
     "name": "putio_extension",
     "short_name": "putio",
-    "version": "2.6.4",
+    "version": "2.6.5",
     "description": "Extension for put.io. Add torrent directly by right clicking, view your account informations",
     "authors": [
         "Peter Defebvre"
