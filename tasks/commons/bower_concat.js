@@ -3,24 +3,76 @@ module.exports = function(grunt) {
 
     grunt.config.set('bower_concat', {
         main: {
-            dest: 'build/js/index-bower.js',
+            dest: {
+                js: 'build/js/index-bower.js',
+                css: 'build/css/index-bower.css'
+            },
             exclude: [
                 'video.js'
             ],
             dependencies: {
                 'angular': 'jquery',
-                'angular-route': 'angular',
-                'ng-underscore': 'angular',
-                'angular-loading-bar': 'angular',
                 'bootstrap': 'jquery',
+                'angular-route': 'angular',
+                'angular-loading-bar': 'angular',
                 'angular-xeditable': 'angular',
                 'angular-tree-control': 'angular',
                 'angular-sanitize': 'angular',
                 'angular-cookies': 'angular',
                 'angular-local-storage': 'angular'
             },
-            bowerOptions: {
-                relative: false
+            mainFiles: {
+                'angular': ['angular.js', 'angular-csp.css'],
+                'angular-bootstrap': ['ui-bootstrap-tpls.js', 'ui-bootstrap-csp.css']
+            },
+            process: function(src) {
+                var newSrc = '';
+
+                if (src.search(/treecontrol {/) !== -1) {
+                    newSrc = src.replace(/ \.\.\/images\/ /, '../img/');
+                } else if (src.search(/window\.ptn/) !== -1) {
+                    newSrc =
+                        src
+                        .replace('/(S?([0-9]{1,2}))[Ex]/', '/([Ss]?([0-9]{1,2}))[Eex]/')
+                        .replace('/([Ex]([0-9]{2})[^0-9])/', '/([Eex]([0-9]{2})[^0-9])/');
+                } else {
+                    newSrc = src;
+                }
+
+                return newSrc;
+            }
+        },
+        video: {
+            dest: {
+                js: 'build/js/video-bower.js',
+                css: 'build/css/video-bower.css'
+            },
+            exclude: [
+                'angular-bootstrap',
+                'angular-cookies',
+                'angular-loading-bar',
+                'angular-tree-control',
+                'angular-xeditable'
+            ],
+            dependencies: {
+                'angular': 'jquery',
+                'bootstrap': 'jquery',
+                'angular-sanitize': 'angular',
+                'angular-local-storage': 'angular'
+            },
+            mainFiles: {
+                'angular': ['angular.js', 'angular-csp.css']
+            },
+            process: function(src) {
+                var newSrc = '';
+
+                if (src.search(/font\/VideoJS\.eot\?#iefix/) !== -1) {
+                    newSrc = src.replace(/font\/VideoJS\.eot\?#iefix/, 'fonts/VideoJS.eot?#iefix')
+                } else {
+                    newSrc = src;
+                }
+
+                return newSrc;
             }
         },
         background: {
@@ -34,30 +86,8 @@ module.exports = function(grunt) {
             ],
             dependencies: {
                 'angular': 'jquery',
-                'ng-underscore': 'angular',
                 'angular-cookies': 'angular',
                 'angular-local-storage': 'angular'
-            },
-            bowerOptions: {
-                relative: false
-            }
-        },
-        video: {
-            dest: 'build/js/video-bower.js',
-            exclude: [
-                'bootstrap',
-                'angular-loading-bar',
-                'angular-xeditable',
-                'angular-tree-control'
-            ],
-            dependencies: {
-                'angular': 'jquery',
-                'angular-cookies': 'angular',
-                'angular-local-storage': 'angular',
-                'angular-route': 'angular'
-            },
-            bowerOptions: {
-                relative: false
             }
         }
     });
