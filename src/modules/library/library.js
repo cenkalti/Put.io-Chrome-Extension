@@ -1,8 +1,17 @@
 (function() {
-    var module = angular.module('libraryModule', ['moviedbService', 'objectFilter', 'stringFilter', 'datesFilter', 'libraryFactory', 'messageFactory', 'interfaceService']);
+    var module = angular.module('libraryModule', ['moviedbService', 'objectFilter', 'stringFilter', 'datesFilter', 'libraryFactory', 'messageFactory', 'interfaceService', 'ui-notification']);
 
-    module.controller('libraryController', ['$scope', 'putio', 'moviedb', '$filter', 'Library', 'Message', '$rootScope', 'interface',
-        function($scope, putio, moviedb, $filter, Library, Message, $rootScope, interface) {
+    module.config([
+        'NotificationProvider',
+        function(NotificationProvider) {
+            NotificationProvider.setOptions({
+                startTop: 61
+            });
+        }
+    ]);
+
+    module.controller('libraryController', ['$scope', 'putio', 'moviedb', '$filter', 'Library', 'Message', '$rootScope', 'interface', 'Notification',
+        function($scope, putio, moviedb, $filter, Library, Message, $rootScope, interface, notify) {
             var library = new Library(),
                 message = new Message();
 
@@ -26,7 +35,16 @@
                     unknown: {}
                 };
 
+                notify.info({
+                    message: 'Updating library'
+                });
+
                 message.send('library.crawl', 0, function() {
+                    notify.success({
+                        message: 'Library updated',
+                        replaceMessage: true
+                    });
+
                     $scope.$apply(function() {
                         $scope.loading = false;
                         load_library();
