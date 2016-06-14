@@ -11,6 +11,7 @@
     module.controller('filesController', ['$scope', '$routeParams', '$location', '$route', '$filter', '$timeout', 'putio', '$rootScope', 'interface',
         function($scope, $routeParams, $location, $route, $filter, $timeout, putio, $rootScope, interface) {
             var parent_id = $routeParams.parent_id || 0,
+                $input = $('#copy_url'),
                 $files = $('.files');
 
             $scope.files = [];
@@ -196,8 +197,40 @@
                 });
             };
 
-            $scope.download_url = function(id) {
-                return putio.download_url(id);
+            $scope.download_url = function(file) {
+                if (file.content_type !== 'application/x-directory') {
+                    var uri = putio.download_url(file.id) + '&.mp4';
+
+                    $input
+                        .val(uri)
+                        .select();
+
+                    document.execCommand('copy');
+                } else {
+                    putio.zips_create([file.id], function(err, data) {
+                        var url = false;
+
+                        async.until(
+                            function() {
+                                return url !== false;
+                            },
+                            function(callback) {
+                                putio.zips_get(data.zip_id, function(err1, data1) {
+                                    url = data1.url;
+                                    callback(err1);
+                                });
+                            },
+                            function() {
+                                url += '&.zip';
+                                $input
+                                    .val(url)
+                                    .select();
+
+                                document.execCommand('copy');
+                            }
+                        );
+                    });
+                }
             };
 
             $scope.move_selected = function(node) {

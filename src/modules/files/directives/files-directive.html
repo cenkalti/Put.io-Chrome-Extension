@@ -1,4 +1,5 @@
 <div class="files">
+    <input type="text" id="copy_url" />
     <div class="page-header" ng-if="!loading">
         <h1>
             {{ parent.name | limitTo : 35 }}
@@ -96,7 +97,7 @@
                 <i class="fa fa-folder-open fa-lg fa-fw">
                 </i>
             </a>
-            <a class="yellow" ng-if="file.content_type != 'application/x-directory'" ng-href="{{ download_url(file.id) }}" ng-click="go_to(file, $event)">
+            <a class="yellow" ng-if="file.content_type != 'application/x-directory'" ng-click="go_to(file, $event)">
                 <i class="fa fa-lg fa-fw" ng-class="is_video(file) ? 'fa-play' : 'fa-file'">
                 </i>
             </a>
@@ -105,6 +106,9 @@
             </a>
             <span class="badge">
                 {{ file.size | bytes : 2 }}
+            </span>
+            <span class="badge clipboard" ng-click="download_url(file)" uib-tooltip="Copy Download Url" tooltip-placement="left">
+                <i class="fa fa-clipboard"></i>
             </span>
         </li>
     </ul>

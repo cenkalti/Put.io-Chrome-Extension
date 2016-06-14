@@ -5,24 +5,30 @@
     margin-bottom: 5px;
     border-bottom: 2px solid @yellow;
 }
+
 .files .page-header h1 {
     font-size: 25px;
     margin-top: 0;
 }
+
 .files .page-header small {
     font-size: 40%;
     @pointer();
 }
+
 .files .breadcrumb {
     margin-bottom: 5px;
 }
+
 .files .breadcrumb a {
     color: @yellow;
 }
+
 .files .breadcrumb a:hover {
     color: @yellow;
     text-decoration: none;
 }
+
 .files .list-group-item {
     border-left: none;
     border-right: none;
@@ -30,30 +36,51 @@
     @font-weight();
     @pointer();
 }
+
 .files .list-group-item:hover {
     color: @black;
 }
+
+.files .list-group-item:hover .badge.clipboard {
+    display: block;
+}
+
 .files .list-group-item:first-child, .files .list-group-item:last-child {
     border-radius: 0;
 }
+
 .files .list-group-item:first-child .dropdown {
     top: -7px;
     float: right;
     margin-left: 5px;
 }
+
 .files .list-group-item a.yellow {
     color: @yellow;
     margin-right: 5px;
 }
+
 .files .list-group-item a.yellow:hover, .files .list-group-item a.yellow:focus {
     color: @yellow;
     text-decoration: none;
 }
+
 .files .list-group-item .check {
     margin-right: 5px;
 }
+
 .files .caret.up {
     content: "";
     border-top: 0;
     border-bottom: 4px solid;
+}
+
+.files .badge.clipboard {
+    display: none;
+}
+
+.files #copy_url {
+    position: absolute;
+    width: 10px;
+    right: -10px;
 }

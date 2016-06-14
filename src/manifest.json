@@ -10,7 +10,8 @@
         "contextMenus",
         "notifications",
         "tabs",
-        "downloads"
+        "downloads",
+        "clipboardWrite"
     ],
     "web_accessible_resources": [
         "index.html",
