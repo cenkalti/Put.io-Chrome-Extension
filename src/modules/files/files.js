@@ -213,7 +213,7 @@
                     document.execCommand('copy');
 
                     notify.success({
-                        title: 'Copied',
+                        title: 'Copied to clipboard',
                         message: file.name
                     });
                 } else {
@@ -239,7 +239,7 @@
                                 document.execCommand('copy');
 
                                 notify.success({
-                                    title: 'Copied',
+                                    title: 'Copied to clipboard',
                                     message: file.name
                                 });
                             }
