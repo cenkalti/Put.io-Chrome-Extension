@@ -2,11 +2,20 @@
     var module =
         angular.module(
             'putioApp', [
+                // Libs
                 'ngRoute',
                 'angular-loading-bar',
-                'putioService',
+                'ngCookies',
+                'ui-notification',
+                // Filters
                 'stringFilter',
                 'bytesFilter',
+                // Services
+                'putioService',
+                'storageFactory',
+                'interfaceService',
+                //Modules
+                'configModule',
                 'homeModule',
                 'transfersModule',
                 'filesModule',
@@ -15,17 +24,19 @@
                 'friendsModule',
                 'libraryModule',
                 'menuModule',
-                'configModule',
-                'infoModule',
-                'storageFactory',
-                'interfaceService',
-                'newsModule'
+                'infoModule'
             ]
         );
 
-    module.config(['$routeProvider', 'cfpLoadingBarProvider',
+    module.config([
+        '$routeProvider',
+        'cfpLoadingBarProvider',
+        'NotificationProvider',
+        function($routeProvider, cfpLoadingBarProvider, NotificationProvider) {
 
-        function($routeProvider, cfpLoadingBarProvider) {
+            NotificationProvider.setOptions({
+                startTop: 61
+            });
 
             cfpLoadingBarProvider.includeSpinner = false;
 
@@ -145,8 +156,8 @@
         }
     ]);
 
-    module.controller('putioController', ['$scope', '$location', '$route', '$rootScope', 'putio', 'Storage', 'interface',
-        function($scope, $location, $route, $rootScope, putio, Storage, interface) {
+    module.controller('putioController', ['$scope', '$location', '$route', '$rootScope', 'putio', 'Storage', 'interface', 'Notification', '$cookies', 'PUTIO_SERVER',
+        function($scope, $location, $route, $rootScope, putio, Storage, interface, notify, $cookies, PUTIO_SERVER) {
             var storage = new Storage('settings'),
                 homePage = storage.get('home_page') || 'home';
 
@@ -184,6 +195,10 @@
                 document.title = title;
             });
 
+            $rootScope.$on('news.show', function() {
+                news();
+            });
+
             var uri = $location.path(),
                 titleArray = uri.split('/'),
                 title = titleArray[1] || 'home';
@@ -191,6 +206,23 @@
             if (homePage !== title) {
                 $location.path(homePage);
             }
+
+            if (!$cookies.get('news')) {
+                news();
+            }
+
+            function news() {
+                notify.info({
+                    positionX: 'center',
+                    delay: 10000,
+                    templateUrl: 'http://' + PUTIO_SERVER + '/news'
+                });
+
+                $cookies.put('news', moment().format('x'), {
+                    expires: moment().add(7, 'd').toDate()
+                });
+            }
+
         }
     ]);
 
