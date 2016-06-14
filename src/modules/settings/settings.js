@@ -1,8 +1,17 @@
 (function() {
-    var module = angular.module('settingsModule', ['messageFactory', 'logFactory', 'storageFactory', 'interfaceService', 'ngCookies']);
+    var module = angular.module('settingsModule', ['messageFactory', 'logFactory', 'storageFactory', 'interfaceService', 'ngCookies', 'ui-notification']);
 
-    module.controller('settingsController', ['$scope', 'putio', 'Message', '$filter', 'Log', 'Storage', 'interface', '$cookies',
-        function($scope, putio, Message, $filter, Log, Storage, interface, $cookies) {
+    module.config([
+        'NotificationProvider',
+        function(NotificationProvider) {
+            NotificationProvider.setOptions({
+                startTop: 61
+            });
+        }
+    ]);
+
+    module.controller('settingsController', ['$scope', 'putio', 'Message', '$filter', 'Log', 'Storage', 'interface', '$cookies', 'Notification',
+        function($scope, putio, Message, $filter, Log, Storage, interface, $cookies, notify) {
             var log = new Log(module),
                 message = new Message(),
                 storage = new Storage('settings');
@@ -31,6 +40,8 @@
                         name: node.name,
                         id: node.id
                     };
+
+                    notify.success('Updated download folder');
                 });
             };
 
@@ -61,6 +72,8 @@
                 wp.event(module, 'settings', 'update_home_page', $scope.app.home_page);
 
                 storage.set('home_page', $scope.app.home_page);
+
+                notify.success('Updated home page');
             };
 
             $scope.update_notification = function() {
@@ -70,6 +83,12 @@
 
                 log.debug('sending notification message');
                 message.send('notification', $scope.app.notification);
+
+                if($scope.app.notification) {
+                    notify.success('Enabled notifications');
+                } else {
+                    notify.success('Disabled notifications');
+                }
             };
 
             $scope.reset_auth = function() {
