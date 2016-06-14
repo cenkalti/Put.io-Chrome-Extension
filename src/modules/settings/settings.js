@@ -47,11 +47,11 @@
 
             $scope.selected = function(node) {
                 if (node.content_type == 'application/x-directory') {
-                    $scope.modalOptions.saveBtn.disabled = false;
-                    $scope.modalOptions.saveBtn.text = 'Update to: ' + $filter('limitTo')(node.name, 25);
+                    $scope.treeModalOptions.saveBtn.disabled = false;
+                    $scope.treeModalOptions.saveBtn.text = 'Update to: ' + $filter('limitTo')(node.name, 25);
                 } else {
-                    $scope.modalOptions.saveBtn.text = 'Nope Nope Nope';
-                    $scope.modalOptions.saveBtn.disabled = true;
+                    $scope.treeModalOptions.saveBtn.text = 'Nope Nope Nope';
+                    $scope.treeModalOptions.saveBtn.disabled = true;
                 }
             };
 
