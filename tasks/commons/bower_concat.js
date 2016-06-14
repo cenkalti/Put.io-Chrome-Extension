@@ -19,7 +19,8 @@ module.exports = function(grunt) {
                 'angular-tree-control': 'angular',
                 'angular-sanitize': 'angular',
                 'angular-cookies': 'angular',
-                'angular-local-storage': 'angular'
+                'angular-local-storage': 'angular',
+                'angular-ui-notification': 'angular'
             },
             mainFiles: {
                 'angular': ['angular.js', 'angular-csp.css'],
@@ -52,7 +53,8 @@ module.exports = function(grunt) {
                 'angular-cookies',
                 'angular-loading-bar',
                 'angular-tree-control',
-                'angular-xeditable'
+                'angular-xeditable',
+                'angular-ui-notification'
             ],
             dependencies: {
                 'angular': 'jquery',
@@ -82,7 +84,8 @@ module.exports = function(grunt) {
                 'angular-loading-bar',
                 'angular-xeditable',
                 'angular-tree-control',
-                'video.js'
+                'video.js',
+                'angular-ui-notification'
             ],
             dependencies: {
                 'angular': 'jquery',

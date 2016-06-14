@@ -1,15 +1,26 @@
 (function() {
-    var module = angular.module('filesModule', ['bytesFilter', 'datesFilter', 'stringFilter', 'treeModule', 'interfaceService']);
+    var module = angular.module('filesModule', ['bytesFilter', 'datesFilter', 'stringFilter', 'treeModule', 'interfaceService', 'ui-notification']);
 
     module.config([
         '$compileProvider',
-        function($compileProvider) {
+        'NotificationProvider',
+        function($compileProvider, NotificationProvider) {
             $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
+
+            NotificationProvider.setOptions({
+                delay: 5000,
+                startTop: 20,
+                startRight: 10,
+                verticalSpacing: 20,
+                horizontalSpacing: 20,
+                positionX: 'right',
+                positionY: 'top'
+            });
         }
     ]);
 
-    module.controller('filesController', ['$scope', '$routeParams', '$location', '$route', '$filter', '$timeout', 'putio', '$rootScope', 'interface',
-        function($scope, $routeParams, $location, $route, $filter, $timeout, putio, $rootScope, interface) {
+    module.controller('filesController', ['$scope', '$routeParams', '$location', '$route', '$filter', '$timeout', 'putio', '$rootScope', 'interface', 'Notification',
+        function($scope, $routeParams, $location, $route, $filter, $timeout, putio, $rootScope, interface, notify) {
             var parent_id = $routeParams.parent_id || 0,
                 $input = $('#copy_url'),
                 $files = $('.files');
@@ -206,6 +217,11 @@
                         .select();
 
                     document.execCommand('copy');
+
+                    notify.success({
+                        title: 'Copied',
+                        message: file.name
+                    });
                 } else {
                     putio.zips_create([file.id], function(err, data) {
                         var url = false;
@@ -227,6 +243,11 @@
                                     .select();
 
                                 document.execCommand('copy');
+
+                                notify.success({
+                                    title: 'Copied',
+                                    message: file.name
+                                });
                             }
                         );
                     });
