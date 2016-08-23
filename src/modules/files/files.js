@@ -40,15 +40,15 @@
                         $location.path('/file/' + parent_id);
                     }
                 } else {
-                    var files = data.files,
-                        parent = data.parent;
-
-                    $scope.files = files;
-                    $scope.parent = parent;
+                    $scope.files = data.files;
+                    $scope.parent = data.parent;
+                    $scope.breadcrumbs = data.breadcrumbs;
                     $scope.loading = false;
                 }
 
             });
+
+            console.log($scope);
 
             $scope.is_video = function(file) {
                 return putio.is_video(file.content_type);

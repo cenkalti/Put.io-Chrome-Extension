@@ -9,12 +9,7 @@
         </h1>
     </div>
     <ol class="breadcrumb" ng-if="!loading">
-        <li ng-if="parent.breadcrumbs.length >= 0 && parent.id != 0">
-            <a href="#files/0">
-                Your Files
-            </a>
-        </li>
-        <li ng-repeat="crumb in parent.breadcrumbs">
+        <li ng-repeat="crumb in breadcrumbs">
             <a href="#files/{{ crumb[0] }}">
                 {{ crumb[1] | limitTo : 20 }}
             </a>
